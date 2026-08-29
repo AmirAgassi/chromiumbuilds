@@ -172,6 +172,21 @@ const badVer = manifest.snapshots.filter((t) => !/^\d+\.\d+\.\d+\.\d+$/.test(t.l
 if (badVer.length === 0) ok("every snapshot version resolved from chrome/VERSION");
 else bad("snapshots", `${badVer.length} targets have an unparsable version`);
 
+// The list offers versions, not revisions: repeats mean the day-sampling collapsed.
+const dupes = manifest.snapshots.filter((t) => {
+  const v = [t.latest, ...t.older].map((r) => r.version);
+  return new Set(v).size !== v.length;
+});
+if (dupes.length === 0) ok("every snapshot target lists each version once");
+else bad("snapshots", `${dupes.map((t) => t.bucketPlatform).join(", ")} repeat a version`);
+
+// A short revision is a 2013 build that slipped through the text-compared bucket window.
+const ancient = manifest.snapshots.flatMap((t) =>
+  [t.latest, ...t.older].filter((r) => r.revision.length < 7).map((r) => `${t.bucketPlatform}/${r.revision}`),
+);
+if (ancient.length === 0) ok("no pre-2014 revisions leaked into the history");
+else bad("snapshots", `ancient revisions offered: ${ancient.slice(0, 4).join(", ")}`);
+
 console.log("\n== chrlauncher endpoints ==");
 const clFiles = files.filter((f) => f.includes("/api/chrlauncher/"));
 if (clFiles.length >= 12) ok(`${clFiles.length} chrlauncher endpoints generated`);

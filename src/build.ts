@@ -1181,8 +1181,8 @@ ${releases
 function olderList(t: SnapshotTrack, opts: { scroll?: boolean; heading?: string } = {}): string {
   if (!t.older.length) return "";
   return `${opts.heading ?? "<h3>Older revisions</h3>"}
-<p class="blurb">Every revision Google still has for this platform. Pick an older one only when you are
-bisecting a bug and need the build from just before it appeared.</p>
+<p class="blurb">One build per version, newest first. Take an older one when the current version broke
+something you need working.</p>
 ${revisionRows(t.older, opts.scroll)}`;
 }
 
