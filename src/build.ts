@@ -180,7 +180,7 @@ ${
     : ""
 }
 <a href="${url(`/${p}/`)}">see every ${PLATFORM_LABEL[p]} build</a>.</p>
-${buildList([b], { pickId: b.id })}</div>`);
+${buildList([b], { pickId: b.id, omitLimitations: true, extra: pickHistory(b) })}</div>`);
     }
   }
   blocks.push(`<div hidden id="pick-ios"><div class="note"><p><b>You are on iOS.</b> Apple requires every iOS browser
@@ -1165,13 +1165,9 @@ function snapshotFacts(t: SnapshotTrack, r: SnapshotRelease): string {
 </dl>`;
 }
 
-function olderList(t: SnapshotTrack, opts: { scroll?: boolean; heading?: string } = {}): string {
-  if (!t.older.length) return "";
-  return `${opts.heading ?? "<h3>Older revisions</h3>"}
-<p class="blurb">Every revision Google still has for this platform. Pick an older one only when you are
-bisecting a bug and need the build from just before it appeared.</p>
-<div class="revs${opts.scroll ? " scroll" : ""}"><ol>
-${t.older
+function revisionRows(releases: SnapshotRelease[], scroll = false): string {
+  return `<div class="revs${scroll ? " scroll" : ""}"><ol>
+${releases
   .map(
     (r) => `<li><time datetime="${esc(r.builtAt)}">${shortDate(r.builtAt)}</time>
 <span class="rv">${esc(r.version)}</span>
@@ -1180,6 +1176,22 @@ ${t.older
   )
   .join("")}
 </ol></div>`;
+}
+
+function olderList(t: SnapshotTrack, opts: { scroll?: boolean; heading?: string } = {}): string {
+  if (!t.older.length) return "";
+  return `${opts.heading ?? "<h3>Older revisions</h3>"}
+<p class="blurb">Every revision Google still has for this platform. Pick an older one only when you are
+bisecting a bug and need the build from just before it appeared.</p>
+${revisionRows(t.older, opts.scroll)}`;
+}
+
+/** The homepage pick folds its history away; someone who wants an older build opens it. */
+function pickHistory(build: Build): string {
+  const t = snapshots.find((x) => x.id === build.id);
+  if (!t?.older.length) return "";
+  return `<details class="more"><summary>Other versions (${t.older.length})</summary>
+${revisionRows(t.older, true)}</details>`;
 }
 
 /** The download block for one target. Rendered hidden on the hub, open on the platform page. */

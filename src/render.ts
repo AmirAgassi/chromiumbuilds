@@ -56,7 +56,7 @@ export function homepageFor(build: Build): string | undefined {
 }
 
 /** Human-readable summary of what a build does and does not include. */
-export function traitTags(build: Build): string {
+export function traitTags(build: Build, opts: { omitLimitations?: boolean } = {}): string {
   const t: string[] = [];
   const f = FRESHNESS[build.freshness];
   t.push(`<span class="tag ${f.cls}" title="${esc(f.title)}">${f.label}</span>`);
@@ -69,22 +69,24 @@ export function traitTags(build: Build): string {
     t.push('<span class="tag" title="No Google API keys, so browser sign-in and sync are unavailable.">No sync</span>');
   else t.push('<span class="tag" title="Unmodified upstream build with no API keys.">Unmodified</span>');
 
-  t.push(
-    build.proprietaryCodecs
-      ? `<span class="tag ok" title="H.264 and AAC are compiled in, so ordinary web video plays.">Codecs${build.hevc ? " + H.265" : ""}</span>`
-      : '<span class="tag warn" title="Open codecs only. Some H.264 and AAC media will not play.">Open codecs only</span>',
-  );
+  if (build.proprietaryCodecs)
+    t.push(
+      `<span class="tag ok" title="H.264 and AAC are compiled in, so ordinary web video plays.">Codecs${build.hevc ? " + H.265" : ""}</span>`,
+    );
+  else if (!opts.omitLimitations)
+    t.push('<span class="tag warn" title="Open codecs only. Some H.264 and AAC media will not play.">Open codecs only</span>');
 
   if (build.widevine)
     t.push('<span class="tag ok" title="Widevine DRM is available, so paid streaming services play.">Widevine</span>');
-  else t.push('<span class="tag warn" title="No Widevine DRM, so most paid streaming video will not play.">No DRM</span>');
+  else if (!opts.omitLimitations)
+    t.push('<span class="tag warn" title="No Widevine DRM, so most paid streaming video will not play.">No DRM</span>');
 
   if (build.simd)
     t.push(
       `<span class="tag" title="Requires a CPU supporting ${build.simd.toUpperCase()}.">${build.simd.toUpperCase()} required</span>`,
     );
 
-  if (build.channel !== "stable")
+  if (build.channel !== "stable" && !opts.omitLimitations)
     t.push(`<span class="tag warn">${build.channel === "snapshot" ? "Untested snapshot" : `${build.channel} channel`}</span>`);
 
   return `<div class="tags">${t.join("")}</div>`;
@@ -105,7 +107,10 @@ function checksums(downloads: Download[]): string {
     .join("")}</div></details>`;
 }
 
-export function buildCard(build: Build, opts: { pick?: boolean; showPlatform?: boolean } = {}): string {
+export function buildCard(
+  build: Build,
+  opts: { pick?: boolean; showPlatform?: boolean; omitLimitations?: boolean; extra?: string } = {},
+): string {
   const primary = build.downloads.filter((d) => d.recommended);
   const secondary = build.downloads.filter((d) => !d.recommended);
   const shown = primary.length ? primary : build.downloads.slice(0, 2);
@@ -123,7 +128,7 @@ export function buildCard(build: Build, opts: { pick?: boolean; showPlatform?: b
     <span class="by">by ${esc(build.maintainer)} · ${build.channel === "snapshot" ? "rebuilt continuously" : relDate(build.releasedAt)}</span>
   </div>
   <p class="blurb">${esc(blurbFor(build))}</p>
-  ${traitTags(build)}
+  ${traitTags(build, { omitLimitations: opts.omitLimitations })}
   <div class="dl">${shown.map((d) => downloadButton(d, true)).join("")}</div>
   ${
     rest.length
@@ -132,14 +137,25 @@ export function buildCard(build: Build, opts: { pick?: boolean; showPlatform?: b
           .join("")}</div></details>`
       : ""
   }
+  ${opts.extra ?? ""}
   ${checksums(build.downloads)}
 </li>`;
 }
 
-export function buildList(builds: Build[], opts: { pickId?: string; showPlatform?: boolean } = {}): string {
+export function buildList(
+  builds: Build[],
+  opts: { pickId?: string; showPlatform?: boolean; omitLimitations?: boolean; extra?: string } = {},
+): string {
   if (builds.length === 0) return '<p class="blurb">No builds are currently published for this target.</p>';
   return `<ul class="builds">${builds
-    .map((b) => buildCard(b, { pick: b.id === opts.pickId, showPlatform: opts.showPlatform }))
+    .map((b) =>
+      buildCard(b, {
+        pick: b.id === opts.pickId,
+        showPlatform: opts.showPlatform,
+        omitLimitations: opts.omitLimitations,
+        extra: opts.extra,
+      }),
+    )
     .join("")}</ul>`;
 }
 
