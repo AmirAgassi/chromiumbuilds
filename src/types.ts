@@ -54,6 +54,30 @@ export interface Upstream {
   fetchedAt: string;
 }
 
+/** One official snapshot revision, as published by Google's build bots. */
+export interface SnapshotRelease {
+  revision: string;
+  version: string;
+  commit: string;
+  builtAt: string;
+  size: number;
+  url: string;
+}
+
+/** The snapshot history for one platform/arch target. */
+export interface SnapshotTrack {
+  id: string;
+  slug: string;
+  title: string;
+  requirement: string;
+  platform: Platform;
+  arch: Arch;
+  bucketPlatform: string;
+  file: string;
+  latest: SnapshotRelease;
+  older: SnapshotRelease[];
+}
+
 export interface DistroPackage {
   repo: string;
   distro: string;
@@ -67,6 +91,7 @@ export interface Manifest {
   generatedAt: string;
   upstream: Upstream;
   builds: Build[];
+  snapshots: SnapshotTrack[];
   distros: DistroPackage[];
   errors: { source: string; message: string }[];
 }

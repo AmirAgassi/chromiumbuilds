@@ -299,6 +299,12 @@ export const GITHUB_SOURCES: GithubSource[] = [
 /** Official automated builds straight from the Chromium build bots. */
 export interface SnapshotSource {
   id: string;
+  /** URL segment under /chromium/, and the anchor the platform detector reveals. */
+  slug: string;
+  /** Heading shown above the download, naming the oldest OS the build still runs on. */
+  title: string;
+  /** One sentence a non-expert can check themselves before downloading. */
+  requirement: string;
   bucketPlatform: string;
   platform: Platform;
   arch: Arch;
@@ -308,13 +314,13 @@ export interface SnapshotSource {
 }
 
 export const SNAPSHOT_SOURCES: SnapshotSource[] = [
-  { id: "snapshot-win-x64", bucketPlatform: "Win_x64", platform: "windows", arch: "x64", file: "chrome-win.zip", kind: "archive", label: "Archive (zip)" },
-  { id: "snapshot-win-arm64", bucketPlatform: "Win_Arm64", platform: "windows", arch: "arm64", file: "chrome-win.zip", kind: "archive", label: "Archive (zip)" },
-  { id: "snapshot-win-x86", bucketPlatform: "Win", platform: "windows", arch: "x86", file: "chrome-win.zip", kind: "archive", label: "Archive (zip)" },
-  { id: "snapshot-mac-x64", bucketPlatform: "Mac", platform: "macos", arch: "x64", file: "chrome-mac.zip", kind: "archive", label: "Archive (zip)" },
-  { id: "snapshot-mac-arm64", bucketPlatform: "Mac_Arm", platform: "macos", arch: "arm64", file: "chrome-mac.zip", kind: "archive", label: "Archive (zip)" },
-  { id: "snapshot-linux-x64", bucketPlatform: "Linux_x64", platform: "linux", arch: "x64", file: "chrome-linux.zip", kind: "archive", label: "Archive (zip)" },
-  { id: "snapshot-android", bucketPlatform: "Android", platform: "android", arch: "arm32", file: "chrome-android.zip", kind: "archive", label: "Archive (zip)" },
+  { id: "snapshot-win-x64", slug: "windows", title: "Windows 64-bit", requirement: "Windows 11 or Windows 10 on a 64-bit Intel or AMD processor. This is the right choice for almost every Windows PC.", bucketPlatform: "Win_x64", platform: "windows", arch: "x64", file: "chrome-win.zip", kind: "archive", label: "Archive (zip)" },
+  { id: "snapshot-win-arm64", slug: "windows-arm", title: "Windows on ARM", requirement: "Windows 11 on an ARM processor, such as a Snapdragon-based Copilot+ PC. Choose the 64-bit build instead if you are unsure.", bucketPlatform: "Win_Arm64", platform: "windows", arch: "arm64", file: "chrome-win.zip", kind: "archive", label: "Archive (zip)" },
+  { id: "snapshot-win-x86", slug: "windows-32-bit", title: "Windows 32-bit", requirement: "A 32-bit installation of Windows. Almost no current PC needs this, so choose the 64-bit build unless you know yours is 32-bit.", bucketPlatform: "Win", platform: "windows", arch: "x86", file: "chrome-win.zip", kind: "archive", label: "Archive (zip)" },
+  { id: "snapshot-mac-x64", slug: "mac", title: "macOS on Intel", requirement: "A Mac with an Intel processor. If your Mac has Apple silicon, use the Apple silicon build instead.", bucketPlatform: "Mac", platform: "macos", arch: "x64", file: "chrome-mac.zip", kind: "archive", label: "Archive (zip)" },
+  { id: "snapshot-mac-arm64", slug: "mac-arm", title: "macOS on Apple silicon", requirement: "A Mac with an M1 processor or newer. This is the right choice for every Mac sold since late 2020.", bucketPlatform: "Mac_Arm", platform: "macos", arch: "arm64", file: "chrome-mac.zip", kind: "archive", label: "Archive (zip)" },
+  { id: "snapshot-linux-x64", slug: "linux", title: "Linux 64-bit", requirement: "A 64-bit Linux distribution with a desktop environment. Your package manager may already offer a more convenient Chromium.", bucketPlatform: "Linux_x64", platform: "linux", arch: "x64", file: "chrome-linux.zip", kind: "archive", label: "Archive (zip)" },
+  { id: "snapshot-android", slug: "android", title: "Android", requirement: "Android 10 or newer. The file is an APK you install yourself, which Android asks you to allow the first time.", bucketPlatform: "Android", platform: "android", arch: "arm32", file: "chrome-android.zip", kind: "archive", label: "Archive (zip)" },
 ];
 
 export const SNAPSHOT_META = {

@@ -1,6 +1,9 @@
 import { GITHUB_SOURCES, REPOLOGY_PROJECTS, SNAPSHOT_META, SNAPSHOT_SOURCES, DISTRO_NAMES } from "./sources";
-import type { GithubSource } from "./sources";
-import type { Arch, Build, DistroPackage, Download, Freshness, Manifest, Simd, Upstream } from "./types";
+import type { GithubSource, SnapshotSource } from "./sources";
+import type {
+  Arch, Build, DistroPackage, Download, Freshness, Manifest,
+  Simd, SnapshotRelease, SnapshotTrack, Upstream,
+} from "./types";
 
 const UA = "chromiumbuilds.org (+https://github.com/AmirAgassi/chromiumbuilds)";
 const TOKEN = process.env.GITHUB_TOKEN || process.env.GH_TOKEN || "";
@@ -30,10 +33,19 @@ async function json<T>(url: string, headers: Record<string, string> = {}, tries 
   throw last;
 }
 
-async function text(url: string): Promise<string> {
-  const res = await fetch(url, { headers: { "User-Agent": UA } });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return (await res.text()).trim();
+async function text(url: string, tries = 3): Promise<string> {
+  let last: unknown;
+  for (let i = 0; i < tries; i++) {
+    try {
+      const res = await fetch(url, { headers: { "User-Agent": UA } });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return (await res.text()).trim();
+    } catch (e) {
+      last = e;
+      if (i < tries - 1) await Bun.sleep(500 * (i + 1));
+    }
+  }
+  throw last;
 }
 
 const gh = <T>(path: string) =>
@@ -303,6 +315,209 @@ async function fetchSnapshots(upstream: Upstream): Promise<Build[]> {
   return out;
 }
 
+// ------------------------------------------------------- snapshot history
+
+/** How many revisions to offer per platform. */
+const SNAPSHOT_HISTORY = 25;
+/**
+ * How far back to scan for them. The bots skip most commits and land far fewer over a weekend,
+ * so this is deliberately wider than SNAPSHOT_HISTORY needs on a weekday.
+ */
+const SNAPSHOT_WINDOW = 4000;
+
+async function mapLimit<T, R>(items: T[], limit: number, fn: (item: T) => Promise<R>): Promise<R[]> {
+  const out = new Array<R>(items.length);
+  let next = 0;
+  await Promise.all(
+    Array.from({ length: Math.min(limit, items.length) }, async () => {
+      for (let i = next++; i < items.length; i = next++) out[i] = await fn(items[i]);
+    }),
+  );
+  return out;
+}
+
+/**
+ * chrome/VERSION at a commit is the only place a snapshot's version string exists: the bucket
+ * stores the revision and nothing else. Cached by commit because sibling platforms build the
+ * same commits and a version holds across many consecutive revisions.
+ */
+const versionCache = new Map<string, Promise<string>>();
+function versionAtCommit(commit: string): Promise<string> {
+  const hit = versionCache.get(commit);
+  if (hit) return hit;
+  const p = (async () => {
+    const b64 = await text(`https://chromium.googlesource.com/chromium/src/+/${commit}/chrome/VERSION?format=TEXT`);
+    const f: Record<string, string> = {};
+    for (const line of Buffer.from(b64, "base64").toString("utf8").trim().split("\n")) {
+      const i = line.indexOf("=");
+      if (i > 0) f[line.slice(0, i).trim()] = line.slice(i + 1).trim();
+    }
+    const v = `${f.MAJOR}.${f.MINOR}.${f.BUILD}.${f.PATCH}`;
+    if (!/^\d+\.\d+\.\d+\.\d+$/.test(v)) throw new Error(`unparsable chrome/VERSION at ${commit}`);
+    return v;
+  })();
+  versionCache.set(commit, p);
+  return p;
+}
+
+interface GcsObject {
+  name: string;
+  updated: string;
+  size: string;
+}
+
+interface FoundRevision {
+  revision: string;
+  builtAt: string;
+  size: number;
+}
+
+async function fetchSnapshotHistory(): Promise<SnapshotTrack[]> {
+  const listings = await Promise.all(
+    SNAPSHOT_SOURCES.map(async (s): Promise<{ s: SnapshotSource; found: FoundRevision[] } | undefined> => {
+      try {
+        const head = await text(
+          `https://storage.googleapis.com/chromium-browser-snapshots/${s.bucketPlatform}/LAST_CHANGE`,
+        );
+        if (!/^\d+$/.test(head)) throw new Error(`unexpected LAST_CHANGE body: ${head.slice(0, 40)}`);
+
+        // Revision folders sort lexicographically, so a 6-digit revision from 2021 sorts AFTER a
+        // 7-digit one from today. Bounding both ends keeps the page inside the range we want.
+        const lo = Number(head) - SNAPSHOT_WINDOW;
+        const hi = Number(head) + 1;
+        // Objects come back ascending, so a truncated first page would drop the NEWEST revisions.
+        // Every page has to be followed for the tail of this list to mean anything.
+        const items: GcsObject[] = [];
+        let token = "";
+        for (let page = 0; page < 12; page++) {
+          const listed = await json<{ items?: GcsObject[]; nextPageToken?: string }>(
+            "https://www.googleapis.com/storage/v1/b/chromium-browser-snapshots/o" +
+              `?prefix=${s.bucketPlatform}%2F&startOffset=${s.bucketPlatform}%2F${lo}` +
+              `&endOffset=${s.bucketPlatform}%2F${hi}&maxResults=1000` +
+              `&fields=items(name,updated,size),nextPageToken${token && `&pageToken=${token}`}`,
+          );
+          items.push(...(listed.items ?? []));
+          if (!listed.nextPageToken) break;
+          token = listed.nextPageToken;
+        }
+
+        const found = items
+          .filter((o) => o.name.endsWith(`/${s.file}`))
+          .map((o) => ({ revision: o.name.split("/")[1], builtAt: o.updated, size: Number(o.size) }))
+          .filter((o) => /^\d+$/.test(o.revision))
+          .sort((a, b) => Number(b.revision) - Number(a.revision))
+          .slice(0, SNAPSHOT_HISTORY);
+        if (!found.length) throw new Error(`no ${s.file} objects in the last ${SNAPSHOT_WINDOW} revisions`);
+
+        return { s, found };
+      } catch (e) {
+        note(`snapshot history ${s.bucketPlatform}`, (e as Error).message);
+        return undefined;
+      }
+    }),
+  );
+
+  // Commit hashes are cheap (same bucket as the listing); versions are not.
+  const pending = listings.filter((l): l is NonNullable<typeof l> => l !== undefined);
+  const jobs = pending.flatMap((l) => l.found.map((r) => ({ s: l.s, r })));
+  let dropped = 0;
+  const commits = new Map<string, string>();
+  await mapLimit(jobs, 8, async ({ s, r }) => {
+    try {
+      const rev = await json<{ got_revision?: string }>(
+        `https://storage.googleapis.com/chromium-browser-snapshots/${s.bucketPlatform}/${r.revision}/REVISIONS`,
+      );
+      const commit = rev.got_revision ?? "";
+      if (!/^[0-9a-f]{40}$/.test(commit)) throw new Error("no got_revision");
+      commits.set(`${s.bucketPlatform}/${r.revision}`, commit);
+    } catch {
+      dropped++;
+    }
+  });
+
+  /**
+   * chrome/VERSION only ever increases along main, and a revision number IS a position on main,
+   * so version is monotonic over this sorted list. Asking googlesource per revision throttles and
+   * silently loses builds; bisecting the handful of boundaries costs ~30 requests instead of ~175.
+   */
+  const ordered = [...new Set(commits.values())].length
+    ? [...commits.entries()]
+        .map(([key, commit]) => ({ revision: Number(key.split("/")[1]), commit }))
+        .sort((a, b) => a.revision - b.revision)
+        .filter((x, i, arr) => i === 0 || arr[i - 1].commit !== x.commit)
+    : [];
+  const versionOf = new Map<string, string>();
+  if (ordered.length) {
+    const at = async (i: number) => {
+      const c = ordered[i].commit;
+      const known = versionOf.get(c);
+      if (known) return known;
+      const v = await versionAtCommit(c);
+      versionOf.set(c, v);
+      return v;
+    };
+    const fill = async (lo: number, hi: number, loV: string, hiV: string): Promise<void> => {
+      if (loV === hiV) {
+        for (let i = lo; i <= hi; i++) versionOf.set(ordered[i].commit, loV);
+        return;
+      }
+      if (hi - lo <= 1) return;
+      const mid = (lo + hi) >> 1;
+      const midV = await at(mid);
+      await fill(lo, mid, loV, midV);
+      await fill(mid, hi, midV, hiV);
+    };
+    try {
+      await fill(0, ordered.length - 1, await at(0), await at(ordered.length - 1));
+    } catch (e) {
+      note("snapshot history", `version bisect failed: ${(e as Error).message}`);
+    }
+  }
+
+  const resolved = new Map<string, SnapshotRelease>();
+  for (const { s, r } of jobs) {
+    const key = `${s.bucketPlatform}/${r.revision}`;
+    const commit = commits.get(key);
+    const version = commit && versionOf.get(commit);
+    if (!commit || !version) {
+      dropped++;
+      continue;
+    }
+    resolved.set(key, {
+      revision: r.revision,
+      version,
+      commit,
+      builtAt: r.builtAt,
+      size: r.size,
+      url: `https://storage.googleapis.com/chromium-browser-snapshots/${s.bucketPlatform}/${r.revision}/${s.file}`,
+    });
+  }
+  if (dropped) note("snapshot history", `${dropped} of ${jobs.length} revisions failed to resolve a version`);
+
+  const tracks = pending.map(({ s, found }) => {
+    const releases = found
+      .map((r) => resolved.get(`${s.bucketPlatform}/${r.revision}`))
+      .filter((r): r is SnapshotRelease => r !== undefined);
+    if (!releases.length) {
+      note(`snapshot history ${s.bucketPlatform}`, "every revision failed to resolve a version");
+      return undefined;
+    }
+    return {
+      id: s.id,
+      slug: s.slug,
+      title: s.title,
+      requirement: s.requirement,
+      platform: s.platform,
+      arch: s.arch,
+      bucketPlatform: s.bucketPlatform,
+      file: s.file,
+      latest: releases[0],
+      older: releases.slice(1),
+    };
+  });
+  return tracks.filter((t): t is SnapshotTrack => t !== undefined);
+}
+
 // ---------------------------------------------------------------- repology
 
 interface RepologyPkg {
@@ -396,6 +611,21 @@ async function main() {
   const snapBuilds = await fetchSnapshots(upstream);
   console.log(`  ${snapBuilds.length} snapshot target(s)`);
 
+  console.log("fetching snapshot history...");
+  const snapshots = await fetchSnapshotHistory();
+  for (const t of snapshots) console.log(`  ${t.bucketPlatform.padEnd(12)} ${t.older.length + 1} revision(s), latest ${t.latest.version}`);
+
+  // The snapshot cards guessed the canary version; the history resolves the real one per revision.
+  for (const b of snapBuilds) {
+    const t = snapshots.find((x) => x.id === b.id);
+    if (!t) continue;
+    b.version = t.latest.version;
+    b.milestone = Number(t.latest.version.split(".")[0]);
+    b.releasedAt = t.latest.builtAt;
+    b.revision = t.latest.revision;
+    for (const d of b.downloads) d.size ??= t.latest.size;
+  }
+
   console.log("fetching distro packages...");
   const distros = await fetchDistros();
   console.log(`  ${distros.length} package(s) across distributions`);
@@ -411,6 +641,7 @@ async function main() {
     generatedAt: new Date().toISOString(),
     upstream,
     builds,
+    snapshots,
     distros,
     errors,
   };

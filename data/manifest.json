@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-29T00:44:39.587Z",
+  "generatedAt": "2026-08-29T02:46:28.976Z",
   "upstream": {
     "stable": {
       "version": "152.0.7977.64",
@@ -21,7 +21,7 @@
       "milestone": 154,
       "revision": "1687892"
     },
-    "fetchedAt": "2026-08-29T00:44:36.084Z"
+    "fetchedAt": "2026-08-29T02:46:07.945Z"
   },
   "builds": [
     {
@@ -34,10 +34,10 @@
         "arm32"
       ],
       "channel": "snapshot",
-      "version": "154.0.8030.0",
+      "version": "154.0.8031.0",
       "milestone": 154,
-      "revision": "1688399",
-      "releasedAt": "2026-08-29T00:44:36.634Z",
+      "revision": "1688510",
+      "releasedAt": "2026-08-29T02:34:14.000Z",
       "google": "raw",
       "proprietaryCodecs": false,
       "hevc": false,
@@ -47,12 +47,13 @@
           "kind": "archive",
           "label": "Archive (zip)",
           "filename": "chrome-android.zip",
-          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1688399/chrome-android.zip",
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1688510/chrome-android.zip",
           "arch": "arm32",
-          "recommended": true
+          "recommended": true,
+          "size": 270150187
         }
       ],
-      "releaseUrl": "https://storage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Android/1688399/",
+      "releaseUrl": "https://storage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Android/1688510/",
       "sourceUrl": "https://www.chromium.org/getting-involved/download-chromium/",
       "freshness": "current",
       "ageDays": 0,
@@ -187,10 +188,10 @@
         "x64"
       ],
       "channel": "snapshot",
-      "version": "154.0.8030.0",
+      "version": "154.0.8031.0",
       "milestone": 154,
-      "revision": "1688400",
-      "releasedAt": "2026-08-29T00:44:36.639Z",
+      "revision": "1688512",
+      "releasedAt": "2026-08-29T02:27:06.605Z",
       "google": "raw",
       "proprietaryCodecs": false,
       "hevc": false,
@@ -200,12 +201,13 @@
           "kind": "archive",
           "label": "Archive (zip)",
           "filename": "chrome-linux.zip",
-          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688400/chrome-linux.zip",
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688512/chrome-linux.zip",
           "arch": "x64",
-          "recommended": true
+          "recommended": true,
+          "size": 245930302
         }
       ],
-      "releaseUrl": "https://storage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Linux_x64/1688400/",
+      "releaseUrl": "https://storage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Linux_x64/1688512/",
       "sourceUrl": "https://www.chromium.org/getting-involved/download-chromium/",
       "freshness": "current",
       "ageDays": 0,
@@ -702,10 +704,10 @@
         "arm64"
       ],
       "channel": "snapshot",
-      "version": "154.0.8030.0",
+      "version": "154.0.8031.0",
       "milestone": 154,
-      "revision": "1688400",
-      "releasedAt": "2026-08-29T00:44:36.636Z",
+      "revision": "1688518",
+      "releasedAt": "2026-08-29T02:30:29.780Z",
       "google": "raw",
       "proprietaryCodecs": false,
       "hevc": false,
@@ -715,12 +717,13 @@
           "kind": "archive",
           "label": "Archive (zip)",
           "filename": "chrome-mac.zip",
-          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688400/chrome-mac.zip",
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688518/chrome-mac.zip",
           "arch": "arm64",
-          "recommended": true
+          "recommended": true,
+          "size": 172719903
         }
       ],
-      "releaseUrl": "https://storage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Mac_Arm/1688400/",
+      "releaseUrl": "https://storage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Mac_Arm/1688518/",
       "sourceUrl": "https://www.chromium.org/getting-involved/download-chromium/",
       "freshness": "current",
       "ageDays": 0,
@@ -740,10 +743,10 @@
         "x64"
       ],
       "channel": "snapshot",
-      "version": "154.0.8030.0",
+      "version": "154.0.8031.0",
       "milestone": 154,
-      "revision": "1688400",
-      "releasedAt": "2026-08-29T00:44:36.639Z",
+      "revision": "1688517",
+      "releasedAt": "2026-08-29T02:27:55.225Z",
       "google": "raw",
       "proprietaryCodecs": false,
       "hevc": false,
@@ -753,12 +756,13 @@
           "kind": "archive",
           "label": "Archive (zip)",
           "filename": "chrome-mac.zip",
-          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688400/chrome-mac.zip",
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688517/chrome-mac.zip",
           "arch": "x64",
-          "recommended": true
+          "recommended": true,
+          "size": 193391379
         }
       ],
-      "releaseUrl": "https://storage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Mac/1688400/",
+      "releaseUrl": "https://storage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Mac/1688517/",
       "sourceUrl": "https://www.chromium.org/getting-involved/download-chromium/",
       "freshness": "current",
       "ageDays": 0,
@@ -966,10 +970,10 @@
         "arm64"
       ],
       "channel": "snapshot",
-      "version": "154.0.8030.0",
+      "version": "154.0.8031.0",
       "milestone": 154,
-      "revision": "1688366",
-      "releasedAt": "2026-08-29T00:44:36.639Z",
+      "revision": "1688399",
+      "releasedAt": "2026-08-29T01:02:03.870Z",
       "google": "raw",
       "proprietaryCodecs": false,
       "hevc": false,
@@ -979,12 +983,13 @@
           "kind": "archive",
           "label": "Archive (zip)",
           "filename": "chrome-win.zip",
-          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1688366/chrome-win.zip",
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1688399/chrome-win.zip",
           "arch": "arm64",
-          "recommended": true
+          "recommended": true,
+          "size": 332974965
         }
       ],
-      "releaseUrl": "https://storage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Win_Arm64/1688366/",
+      "releaseUrl": "https://storage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Win_Arm64/1688399/",
       "sourceUrl": "https://www.chromium.org/getting-involved/download-chromium/",
       "freshness": "current",
       "ageDays": 0,
@@ -1004,10 +1009,10 @@
         "x86"
       ],
       "channel": "snapshot",
-      "version": "154.0.8030.0",
+      "version": "154.0.8031.0",
       "milestone": 154,
-      "revision": "1688398",
-      "releasedAt": "2026-08-29T00:44:36.639Z",
+      "revision": "1688399",
+      "releasedAt": "2026-08-29T01:26:20.522Z",
       "google": "raw",
       "proprietaryCodecs": false,
       "hevc": false,
@@ -1017,12 +1022,13 @@
           "kind": "archive",
           "label": "Archive (zip)",
           "filename": "chrome-win.zip",
-          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1688398/chrome-win.zip",
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1688399/chrome-win.zip",
           "arch": "x86",
-          "recommended": true
+          "recommended": true,
+          "size": 321627857
         }
       ],
-      "releaseUrl": "https://storage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Win/1688398/",
+      "releaseUrl": "https://storage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Win/1688399/",
       "sourceUrl": "https://www.chromium.org/getting-involved/download-chromium/",
       "freshness": "current",
       "ageDays": 0,
@@ -1042,10 +1048,10 @@
         "x64"
       ],
       "channel": "snapshot",
-      "version": "154.0.8030.0",
+      "version": "154.0.8031.0",
       "milestone": 154,
-      "revision": "1688399",
-      "releasedAt": "2026-08-29T00:44:36.728Z",
+      "revision": "1688438",
+      "releasedAt": "2026-08-29T01:54:39.442Z",
       "google": "raw",
       "proprietaryCodecs": false,
       "hevc": false,
@@ -1055,12 +1061,13 @@
           "kind": "archive",
           "label": "Archive (zip)",
           "filename": "chrome-win.zip",
-          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1688399/chrome-win.zip",
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1688438/chrome-win.zip",
           "arch": "x64",
-          "recommended": true
+          "recommended": true,
+          "size": 355698555
         }
       ],
-      "releaseUrl": "https://storage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Win_x64/1688399/",
+      "releaseUrl": "https://storage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Win_x64/1688438/",
       "sourceUrl": "https://www.chromium.org/getting-involved/download-chromium/",
       "freshness": "current",
       "ageDays": 0,
@@ -1789,7 +1796,1605 @@
       ]
     }
   ],
+  "snapshots": [
+    {
+      "id": "snapshot-win-x64",
+      "slug": "windows",
+      "title": "Windows 64-bit",
+      "requirement": "Windows 11 or Windows 10 on a 64-bit Intel or AMD processor. This is the right choice for almost every Windows PC.",
+      "platform": "windows",
+      "arch": "x64",
+      "bucketPlatform": "Win_x64",
+      "file": "chrome-win.zip",
+      "latest": {
+        "revision": "1688438",
+        "version": "154.0.8031.0",
+        "commit": "d2d25c8b6db00cf675c31ef2371bb18d7d3300ca",
+        "builtAt": "2026-08-29T01:54:39.442Z",
+        "size": 355698555,
+        "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1688438/chrome-win.zip"
+      },
+      "older": [
+        {
+          "revision": "1688399",
+          "version": "154.0.8031.0",
+          "commit": "169db56ba095487162644a22a35f33cce3bf7ce2",
+          "builtAt": "2026-08-29T00:35:15.800Z",
+          "size": 355709519,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1688399/chrome-win.zip"
+        },
+        {
+          "revision": "1688374",
+          "version": "154.0.8031.0",
+          "commit": "e22521bd38b441cf46732155ab8fd9dccfee5893",
+          "builtAt": "2026-08-28T23:21:48.071Z",
+          "size": 355707112,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1688374/chrome-win.zip"
+        },
+        {
+          "revision": "1688295",
+          "version": "154.0.8031.0",
+          "commit": "40889508e1f85b1785078cafea237c304d5fd0fb",
+          "builtAt": "2026-08-28T22:03:38.227Z",
+          "size": 355683741,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1688295/chrome-win.zip"
+        },
+        {
+          "revision": "1688243",
+          "version": "154.0.8031.0",
+          "commit": "310ba4ef5140822ea7178b37dcb93f95f7ca6981",
+          "builtAt": "2026-08-28T20:45:56.183Z",
+          "size": 355676342,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1688243/chrome-win.zip"
+        },
+        {
+          "revision": "1688160",
+          "version": "154.0.8031.0",
+          "commit": "8f640688c1dc938bbd6663a5a734afdbc8817ab7",
+          "builtAt": "2026-08-28T19:21:13.989Z",
+          "size": 355713877,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1688160/chrome-win.zip"
+        },
+        {
+          "revision": "1688104",
+          "version": "154.0.8031.0",
+          "commit": "23b6885025ac78380b11a3ac32eed1c03a9054ad",
+          "builtAt": "2026-08-28T17:59:30.878Z",
+          "size": 355785436,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1688104/chrome-win.zip"
+        },
+        {
+          "revision": "1688037",
+          "version": "154.0.8031.0",
+          "commit": "aec430984f1f937c855166899ba75f137c9b29c5",
+          "builtAt": "2026-08-28T16:39:57.489Z",
+          "size": 355775325,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1688037/chrome-win.zip"
+        },
+        {
+          "revision": "1687975",
+          "version": "154.0.8031.0",
+          "commit": "86c3741e623dd5f18da2fa05d7df30ee5ac386e1",
+          "builtAt": "2026-08-28T15:20:45.076Z",
+          "size": 355774329,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1687975/chrome-win.zip"
+        },
+        {
+          "revision": "1687929",
+          "version": "154.0.8030.0",
+          "commit": "aaf83fa3b9be3be16a941b1138a0f50630ba73a0",
+          "builtAt": "2026-08-28T14:03:30.169Z",
+          "size": 355753264,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1687929/chrome-win.zip"
+        },
+        {
+          "revision": "1687903",
+          "version": "154.0.8030.0",
+          "commit": "2781189b7e6363a7d370087ff2766e06d323e2b4",
+          "builtAt": "2026-08-28T12:44:29.295Z",
+          "size": 355733080,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1687903/chrome-win.zip"
+        },
+        {
+          "revision": "1687887",
+          "version": "154.0.8030.0",
+          "commit": "85d4ea3ec8f3c289364a4535c7056cde809a523b",
+          "builtAt": "2026-08-28T11:28:18.336Z",
+          "size": 355733082,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1687887/chrome-win.zip"
+        },
+        {
+          "revision": "1687857",
+          "version": "154.0.8030.0",
+          "commit": "825e8de34d6b24acde630f14f7b99c3d72d9ad21",
+          "builtAt": "2026-08-28T10:06:46.782Z",
+          "size": 355727497,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1687857/chrome-win.zip"
+        },
+        {
+          "revision": "1687825",
+          "version": "154.0.8030.0",
+          "commit": "49ab1501084d89368d9b4f1a5931d440ac7edc66",
+          "builtAt": "2026-08-28T08:51:08.632Z",
+          "size": 355717615,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1687825/chrome-win.zip"
+        },
+        {
+          "revision": "1687801",
+          "version": "154.0.8030.0",
+          "commit": "2394435b7af59452551b01d358845dc7a5eff13e",
+          "builtAt": "2026-08-28T07:31:17.125Z",
+          "size": 355665941,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1687801/chrome-win.zip"
+        },
+        {
+          "revision": "1687771",
+          "version": "154.0.8030.0",
+          "commit": "2251fa8c3ddc7fac2233c60316ec85a4269fb165",
+          "builtAt": "2026-08-28T06:14:50.663Z",
+          "size": 355640428,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1687771/chrome-win.zip"
+        },
+        {
+          "revision": "1687751",
+          "version": "154.0.8030.0",
+          "commit": "d512b58f21bfc548a8e6bee56576945dd11ab9d0",
+          "builtAt": "2026-08-28T04:57:59.594Z",
+          "size": 355631800,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1687751/chrome-win.zip"
+        },
+        {
+          "revision": "1687732",
+          "version": "154.0.8029.0",
+          "commit": "c35a81ac8dac1b3dec31a002a499d2fd06472d59",
+          "builtAt": "2026-08-28T03:41:48.345Z",
+          "size": 355646507,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1687732/chrome-win.zip"
+        },
+        {
+          "revision": "1687705",
+          "version": "154.0.8029.0",
+          "commit": "51e218ce6b0502a6e816696dcbd3acb372250e2d",
+          "builtAt": "2026-08-28T02:22:34.319Z",
+          "size": 355639500,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1687705/chrome-win.zip"
+        },
+        {
+          "revision": "1687667",
+          "version": "154.0.8029.0",
+          "commit": "67296d4515fc4ed7c5ec7d45bf311ca76d5803a7",
+          "builtAt": "2026-08-28T01:04:46.338Z",
+          "size": 355680534,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1687667/chrome-win.zip"
+        },
+        {
+          "revision": "1687611",
+          "version": "154.0.8029.0",
+          "commit": "b58ddb0dc736d925f8c6f7b9846c0e9f2ca592f7",
+          "builtAt": "2026-08-27T23:46:29.520Z",
+          "size": 355692510,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1687611/chrome-win.zip"
+        },
+        {
+          "revision": "1687543",
+          "version": "154.0.8029.0",
+          "commit": "4e704b3c0e38d58b35bd4b771c99801cef048080",
+          "builtAt": "2026-08-27T22:27:56.908Z",
+          "size": 355429746,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1687543/chrome-win.zip"
+        },
+        {
+          "revision": "1687487",
+          "version": "154.0.8029.0",
+          "commit": "f90762c31178ee530f17b96380095c711dce099e",
+          "builtAt": "2026-08-27T21:08:58.241Z",
+          "size": 355426555,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1687487/chrome-win.zip"
+        },
+        {
+          "revision": "1687425",
+          "version": "154.0.8029.0",
+          "commit": "4b0f1267d31623a7287804c806ebd7c1d06037e1",
+          "builtAt": "2026-08-27T19:47:16.307Z",
+          "size": 355366209,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1687425/chrome-win.zip"
+        },
+        {
+          "revision": "1687346",
+          "version": "154.0.8029.0",
+          "commit": "bbbaaa9a9a7a8b7bf8ac25d9ca979df22326850d",
+          "builtAt": "2026-08-27T18:24:43.607Z",
+          "size": 355336110,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1687346/chrome-win.zip"
+        }
+      ]
+    },
+    {
+      "id": "snapshot-win-arm64",
+      "slug": "windows-arm",
+      "title": "Windows on ARM",
+      "requirement": "Windows 11 on an ARM processor, such as a Snapdragon-based Copilot+ PC. Choose the 64-bit build instead if you are unsure.",
+      "platform": "windows",
+      "arch": "arm64",
+      "bucketPlatform": "Win_Arm64",
+      "file": "chrome-win.zip",
+      "latest": {
+        "revision": "1688399",
+        "version": "154.0.8031.0",
+        "commit": "169db56ba095487162644a22a35f33cce3bf7ce2",
+        "builtAt": "2026-08-29T01:02:03.870Z",
+        "size": 332974965,
+        "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1688399/chrome-win.zip"
+      },
+      "older": [
+        {
+          "revision": "1688366",
+          "version": "154.0.8031.0",
+          "commit": "7b4ec4a655c97e458d397c5af72a0b655e11f16e",
+          "builtAt": "2026-08-28T23:37:08.899Z",
+          "size": 332984943,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1688366/chrome-win.zip"
+        },
+        {
+          "revision": "1688248",
+          "version": "154.0.8031.0",
+          "commit": "39c09c0b65dd47ab88a20ae93cbfeecf675103b5",
+          "builtAt": "2026-08-28T21:53:29.593Z",
+          "size": 332952430,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1688248/chrome-win.zip"
+        },
+        {
+          "revision": "1688146",
+          "version": "154.0.8031.0",
+          "commit": "69f294e5e58fb1698bfac9bd7e4b15b25bfe43fc",
+          "builtAt": "2026-08-28T19:29:17.697Z",
+          "size": 333065532,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1688146/chrome-win.zip"
+        },
+        {
+          "revision": "1688071",
+          "version": "154.0.8031.0",
+          "commit": "9713182d5a7c64b07ea7a3b063a6c4587df82e67",
+          "builtAt": "2026-08-28T17:46:01.992Z",
+          "size": 333047652,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1688071/chrome-win.zip"
+        },
+        {
+          "revision": "1687978",
+          "version": "154.0.8031.0",
+          "commit": "2bea418621de6c89b584dd77fcf924755b43ffbf",
+          "builtAt": "2026-08-28T15:57:32.502Z",
+          "size": 333030313,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1687978/chrome-win.zip"
+        },
+        {
+          "revision": "1687929",
+          "version": "154.0.8030.0",
+          "commit": "aaf83fa3b9be3be16a941b1138a0f50630ba73a0",
+          "builtAt": "2026-08-28T14:08:49.942Z",
+          "size": 333000368,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1687929/chrome-win.zip"
+        },
+        {
+          "revision": "1687898",
+          "version": "154.0.8030.0",
+          "commit": "9cbe372716e7a5117c67c279d5940e7bf13e05df",
+          "builtAt": "2026-08-28T12:43:41.269Z",
+          "size": 332998833,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1687898/chrome-win.zip"
+        },
+        {
+          "revision": "1687870",
+          "version": "154.0.8030.0",
+          "commit": "83563b22737aa6d2658eeff79f8d15079e9574ea",
+          "builtAt": "2026-08-28T10:55:03.144Z",
+          "size": 332980579,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1687870/chrome-win.zip"
+        },
+        {
+          "revision": "1687812",
+          "version": "154.0.8030.0",
+          "commit": "a8d52333e442796ceca5ef86fee9c29fa74f2250",
+          "builtAt": "2026-08-28T09:28:38.732Z",
+          "size": 332954699,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1687812/chrome-win.zip"
+        },
+        {
+          "revision": "1687782",
+          "version": "154.0.8030.0",
+          "commit": "d3ccfe526ae2de23aa23e35c0f7fdbc63a2ceead",
+          "builtAt": "2026-08-28T06:55:52.906Z",
+          "size": 332932728,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1687782/chrome-win.zip"
+        },
+        {
+          "revision": "1687757",
+          "version": "154.0.8030.0",
+          "commit": "a4e1d274181a6c26595a11abc3dcbc92b2ebf4d7",
+          "builtAt": "2026-08-28T05:34:05.179Z",
+          "size": 332911463,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1687757/chrome-win.zip"
+        },
+        {
+          "revision": "1687740",
+          "version": "154.0.8029.0",
+          "commit": "6bd11c146017bcc9631b901373c68ecba54c467e",
+          "builtAt": "2026-08-28T04:09:57.564Z",
+          "size": 332943892,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1687740/chrome-win.zip"
+        },
+        {
+          "revision": "1687707",
+          "version": "154.0.8029.0",
+          "commit": "258f27920d4c23ddbe51774f90b8230ca3750570",
+          "builtAt": "2026-08-28T02:45:01.352Z",
+          "size": 332936644,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1687707/chrome-win.zip"
+        },
+        {
+          "revision": "1687659",
+          "version": "154.0.8029.0",
+          "commit": "e66b215ef556dba32399deab49e77786bbfdd35b",
+          "builtAt": "2026-08-28T01:07:20.124Z",
+          "size": 332946801,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1687659/chrome-win.zip"
+        },
+        {
+          "revision": "1687583",
+          "version": "154.0.8029.0",
+          "commit": "fe7138e6791cad73d2ee5871afde93bb620dbbe2",
+          "builtAt": "2026-08-27T23:35:10.480Z",
+          "size": 332896063,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1687583/chrome-win.zip"
+        },
+        {
+          "revision": "1687509",
+          "version": "154.0.8029.0",
+          "commit": "5c8c1a228e0d0dba70f0247481ed7d58b312b145",
+          "builtAt": "2026-08-27T21:56:47.680Z",
+          "size": 332683662,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1687509/chrome-win.zip"
+        },
+        {
+          "revision": "1687421",
+          "version": "154.0.8029.0",
+          "commit": "48ee754cdd23dbc7a7045a3caa3f96ed72df5f53",
+          "builtAt": "2026-08-27T20:08:10.166Z",
+          "size": 332589744,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1687421/chrome-win.zip"
+        },
+        {
+          "revision": "1687342",
+          "version": "154.0.8029.0",
+          "commit": "e76a288fb40b9a3e747ded4ee44f38ccc6100563",
+          "builtAt": "2026-08-27T18:21:14.242Z",
+          "size": 332580375,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1687342/chrome-win.zip"
+        },
+        {
+          "revision": "1687263",
+          "version": "154.0.8029.0",
+          "commit": "7caf86cf776ee330a193314fa1cd2fff8fb94e87",
+          "builtAt": "2026-08-27T17:00:38.848Z",
+          "size": 332575112,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1687263/chrome-win.zip"
+        },
+        {
+          "revision": "1687194",
+          "version": "154.0.8029.0",
+          "commit": "6c4b5a5f6d6c3a1a4a850832f80e8272647bc3d3",
+          "builtAt": "2026-08-27T15:32:46.171Z",
+          "size": 332567417,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1687194/chrome-win.zip"
+        },
+        {
+          "revision": "1687123",
+          "version": "154.0.8028.0",
+          "commit": "d8e73f2d345514d1ee493941384032cba9cb6090",
+          "builtAt": "2026-08-27T14:12:02.793Z",
+          "size": 332544617,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1687123/chrome-win.zip"
+        },
+        {
+          "revision": "1687093",
+          "version": "154.0.8028.0",
+          "commit": "6f05108eae1c802f2519a21ae853ed2360f9b293",
+          "builtAt": "2026-08-27T12:32:46.250Z",
+          "size": 332560254,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1687093/chrome-win.zip"
+        },
+        {
+          "revision": "1687050",
+          "version": "154.0.8028.0",
+          "commit": "62ddb381013b9918d1626e19f6db94c66c45a628",
+          "builtAt": "2026-08-27T11:11:44.976Z",
+          "size": 332543722,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1687050/chrome-win.zip"
+        },
+        {
+          "revision": "1687001",
+          "version": "154.0.8028.0",
+          "commit": "665d7269b394ab4a349e71b7f921f9a200c02805",
+          "builtAt": "2026-08-27T08:44:22.515Z",
+          "size": 332520582,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1687001/chrome-win.zip"
+        }
+      ]
+    },
+    {
+      "id": "snapshot-win-x86",
+      "slug": "windows-32-bit",
+      "title": "Windows 32-bit",
+      "requirement": "A 32-bit installation of Windows. Almost no current PC needs this, so choose the 64-bit build unless you know yours is 32-bit.",
+      "platform": "windows",
+      "arch": "x86",
+      "bucketPlatform": "Win",
+      "file": "chrome-win.zip",
+      "latest": {
+        "revision": "1688399",
+        "version": "154.0.8031.0",
+        "commit": "169db56ba095487162644a22a35f33cce3bf7ce2",
+        "builtAt": "2026-08-29T01:26:20.522Z",
+        "size": 321627857,
+        "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1688399/chrome-win.zip"
+      },
+      "older": [
+        {
+          "revision": "1688398",
+          "version": "154.0.8031.0",
+          "commit": "6c67c31750e74e1cc51d8e54af1f4c88c6add978",
+          "builtAt": "2026-08-29T00:06:47.693Z",
+          "size": 321627838,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1688398/chrome-win.zip"
+        },
+        {
+          "revision": "1688323",
+          "version": "154.0.8031.0",
+          "commit": "5a4832337aab8a852b1bd984c9aec9bef907e744",
+          "builtAt": "2026-08-28T22:53:53.806Z",
+          "size": 321613449,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1688323/chrome-win.zip"
+        },
+        {
+          "revision": "1688210",
+          "version": "154.0.8031.0",
+          "commit": "530b7c22dc755922cf4b2b6597a17d21fd2945ec",
+          "builtAt": "2026-08-28T21:11:33.750Z",
+          "size": 321597704,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1688210/chrome-win.zip"
+        },
+        {
+          "revision": "1688141",
+          "version": "154.0.8031.0",
+          "commit": "adacb44824bc79b9a35e415d0d5b5366cb385968",
+          "builtAt": "2026-08-28T18:53:23.092Z",
+          "size": 321730682,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1688141/chrome-win.zip"
+        },
+        {
+          "revision": "1688081",
+          "version": "154.0.8031.0",
+          "commit": "d97533efd827a04cd94f32ac0e4f00654a1e82c2",
+          "builtAt": "2026-08-28T17:37:22.823Z",
+          "size": 321699004,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1688081/chrome-win.zip"
+        },
+        {
+          "revision": "1688013",
+          "version": "154.0.8031.0",
+          "commit": "6fce53a9fa7cf0e5203691d28743dbcc4515137a",
+          "builtAt": "2026-08-28T16:12:06.835Z",
+          "size": 321701540,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1688013/chrome-win.zip"
+        },
+        {
+          "revision": "1687958",
+          "version": "154.0.8030.0",
+          "commit": "c620a772693003984ee7fb6b136ba2e522cf03dc",
+          "builtAt": "2026-08-28T14:57:51.380Z",
+          "size": 321687879,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1687958/chrome-win.zip"
+        },
+        {
+          "revision": "1687920",
+          "version": "154.0.8030.0",
+          "commit": "796d95f11afe18561709217227313319d6660322",
+          "builtAt": "2026-08-28T13:39:25.559Z",
+          "size": 321656024,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1687920/chrome-win.zip"
+        },
+        {
+          "revision": "1687900",
+          "version": "154.0.8030.0",
+          "commit": "0b061b91b5b2e6a5a66394d71527f21e9d8c3441",
+          "builtAt": "2026-08-28T12:21:52.358Z",
+          "size": 321656024,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1687900/chrome-win.zip"
+        },
+        {
+          "revision": "1687876",
+          "version": "154.0.8030.0",
+          "commit": "28c3458493277b076e5416f366effd1a8fa657be",
+          "builtAt": "2026-08-28T11:04:10.811Z",
+          "size": 321639117,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1687876/chrome-win.zip"
+        },
+        {
+          "revision": "1687823",
+          "version": "154.0.8030.0",
+          "commit": "eb8581262510d14f2e6c83a6ff1d414cf8f2eb88",
+          "builtAt": "2026-08-28T09:43:59.292Z",
+          "size": 321629184,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1687823/chrome-win.zip"
+        },
+        {
+          "revision": "1687783",
+          "version": "154.0.8030.0",
+          "commit": "2ffa28ffb837c8a1e8e66bc735310fafba9837fe",
+          "builtAt": "2026-08-28T07:24:11.816Z",
+          "size": 321585565,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1687783/chrome-win.zip"
+        },
+        {
+          "revision": "1687760",
+          "version": "154.0.8030.0",
+          "commit": "40595aade992df8668d3f709ca13f42179cff1eb",
+          "builtAt": "2026-08-28T05:39:30.970Z",
+          "size": 321555204,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1687760/chrome-win.zip"
+        },
+        {
+          "revision": "1687746",
+          "version": "154.0.8030.0",
+          "commit": "00e8b8c2025d403e62e5ec63f44a0daf8e104355",
+          "builtAt": "2026-08-28T04:23:35.034Z",
+          "size": 321597734,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1687746/chrome-win.zip"
+        },
+        {
+          "revision": "1687723",
+          "version": "154.0.8029.0",
+          "commit": "d814133cb7ed42ba154f0a756b1a1591355c85f1",
+          "builtAt": "2026-08-28T03:08:36.357Z",
+          "size": 321577987,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1687723/chrome-win.zip"
+        },
+        {
+          "revision": "1687674",
+          "version": "154.0.8029.0",
+          "commit": "d7569d623de067f90173f712f7f52e42f7287c15",
+          "builtAt": "2026-08-28T01:49:42.901Z",
+          "size": 321634529,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1687674/chrome-win.zip"
+        },
+        {
+          "revision": "1687615",
+          "version": "154.0.8029.0",
+          "commit": "5bbc15f8cdd3fba86ea2f2a25bf0a2add72c6522",
+          "builtAt": "2026-08-28T00:00:47.999Z",
+          "size": 321617363,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1687615/chrome-win.zip"
+        },
+        {
+          "revision": "1687542",
+          "version": "154.0.8029.0",
+          "commit": "23af3c5cfa7d78a1bd4142f87e0d7bbc7bec5787",
+          "builtAt": "2026-08-27T22:31:54.117Z",
+          "size": 321378658,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1687542/chrome-win.zip"
+        },
+        {
+          "revision": "1687468",
+          "version": "154.0.8029.0",
+          "commit": "5b515225c0f91a85ea0717d028f24250c9a8b4b5",
+          "builtAt": "2026-08-27T20:58:34.486Z",
+          "size": 321381822,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1687468/chrome-win.zip"
+        },
+        {
+          "revision": "1687397",
+          "version": "154.0.8029.0",
+          "commit": "fd91deb18b0d9e1a5d45f185edbf0d302c43b096",
+          "builtAt": "2026-08-27T19:11:07.364Z",
+          "size": 321270042,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1687397/chrome-win.zip"
+        },
+        {
+          "revision": "1687323",
+          "version": "154.0.8029.0",
+          "commit": "2d73dab510ee14660dfa533bb2099ca0e83743e6",
+          "builtAt": "2026-08-27T17:56:10.844Z",
+          "size": 321268693,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1687323/chrome-win.zip"
+        },
+        {
+          "revision": "1687256",
+          "version": "154.0.8029.0",
+          "commit": "ac16959cc674ce06709ca0df09406affc4092092",
+          "builtAt": "2026-08-27T16:38:48.180Z",
+          "size": 321268746,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1687256/chrome-win.zip"
+        },
+        {
+          "revision": "1687192",
+          "version": "154.0.8029.0",
+          "commit": "5198a0d6965fb53b8679a835cb20c8a69a60257d",
+          "builtAt": "2026-08-27T15:22:12.313Z",
+          "size": 321261893,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1687192/chrome-win.zip"
+        },
+        {
+          "revision": "1687128",
+          "version": "154.0.8028.0",
+          "commit": "639e36f48d1fa0c63b422c8bb8b65a984920a4e4",
+          "builtAt": "2026-08-27T14:07:50.836Z",
+          "size": 321237211,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1687128/chrome-win.zip"
+        }
+      ]
+    },
+    {
+      "id": "snapshot-mac-x64",
+      "slug": "mac",
+      "title": "macOS on Intel",
+      "requirement": "A Mac with an Intel processor. If your Mac has Apple silicon, use the Apple silicon build instead.",
+      "platform": "macos",
+      "arch": "x64",
+      "bucketPlatform": "Mac",
+      "file": "chrome-mac.zip",
+      "latest": {
+        "revision": "1688517",
+        "version": "154.0.8031.0",
+        "commit": "8726f8b1921acf3dd67107f900f160a03b1d044a",
+        "builtAt": "2026-08-29T02:27:55.225Z",
+        "size": 193391379,
+        "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688517/chrome-mac.zip"
+      },
+      "older": [
+        {
+          "revision": "1688511",
+          "version": "154.0.8031.0",
+          "commit": "0e29f95edcb3a1ee917ebd46bb76af133ad0624a",
+          "builtAt": "2026-08-29T02:14:33.747Z",
+          "size": 193391664,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688511/chrome-mac.zip"
+        },
+        {
+          "revision": "1688509",
+          "version": "154.0.8031.0",
+          "commit": "159536fb5bfc05861c0d1f3336af1ccc70fef569",
+          "builtAt": "2026-08-29T02:01:08.870Z",
+          "size": 193391678,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688509/chrome-mac.zip"
+        },
+        {
+          "revision": "1688501",
+          "version": "154.0.8031.0",
+          "commit": "5411bbf9a923def1a9cf42f31a0e8d35ebe6174e",
+          "builtAt": "2026-08-29T01:47:48.999Z",
+          "size": 193391673,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688501/chrome-mac.zip"
+        },
+        {
+          "revision": "1688454",
+          "version": "154.0.8031.0",
+          "commit": "6f140149aec30457965404ba10f8ff54675cda6f",
+          "builtAt": "2026-08-29T01:25:58.728Z",
+          "size": 193372119,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688454/chrome-mac.zip"
+        },
+        {
+          "revision": "1688417",
+          "version": "154.0.8031.0",
+          "commit": "b2ecf1e4513a3bb8d65687bdb5e9db2bc0c2d5ab",
+          "builtAt": "2026-08-29T00:51:19.507Z",
+          "size": 193363357,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688417/chrome-mac.zip"
+        },
+        {
+          "revision": "1688400",
+          "version": "154.0.8031.0",
+          "commit": "6de267fd3e4e811d0092c7b3dbe9b5ac787a6ea3",
+          "builtAt": "2026-08-29T00:26:42.520Z",
+          "size": 193360614,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688400/chrome-mac.zip"
+        },
+        {
+          "revision": "1688399",
+          "version": "154.0.8031.0",
+          "commit": "169db56ba095487162644a22a35f33cce3bf7ce2",
+          "builtAt": "2026-08-28T23:13:48.559Z",
+          "size": 193360627,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688399/chrome-mac.zip"
+        },
+        {
+          "revision": "1688398",
+          "version": "154.0.8031.0",
+          "commit": "6c67c31750e74e1cc51d8e54af1f4c88c6add978",
+          "builtAt": "2026-08-28T23:00:23.137Z",
+          "size": 193360615,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688398/chrome-mac.zip"
+        },
+        {
+          "revision": "1688370",
+          "version": "154.0.8031.0",
+          "commit": "fbdb8fac8b163b2043bd316b4af71895bb80258a",
+          "builtAt": "2026-08-28T22:43:05.988Z",
+          "size": 193351814,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688370/chrome-mac.zip"
+        },
+        {
+          "revision": "1688331",
+          "version": "154.0.8031.0",
+          "commit": "30179207831d40df4c5285adf651abd5e710e9d5",
+          "builtAt": "2026-08-28T22:03:52.215Z",
+          "size": 193352883,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688331/chrome-mac.zip"
+        },
+        {
+          "revision": "1688234",
+          "version": "154.0.8031.0",
+          "commit": "8720a6054297cd5b85a7569bc55f9d20f81dbb5f",
+          "builtAt": "2026-08-28T21:22:52.502Z",
+          "size": 193320124,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688234/chrome-mac.zip"
+        },
+        {
+          "revision": "1688192",
+          "version": "154.0.8031.0",
+          "commit": "0c473f9179387998a28ccbf6971abdc827e23ae4",
+          "builtAt": "2026-08-28T19:18:24.893Z",
+          "size": 193322261,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688192/chrome-mac.zip"
+        },
+        {
+          "revision": "1688172",
+          "version": "154.0.8031.0",
+          "commit": "57e7c632282ae6206ca2788c84ab36c774a28243",
+          "builtAt": "2026-08-28T18:44:04.284Z",
+          "size": 193348655,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688172/chrome-mac.zip"
+        },
+        {
+          "revision": "1688147",
+          "version": "154.0.8031.0",
+          "commit": "eafd32afbd81be70abbbaf640eb40d4f05a0c4f1",
+          "builtAt": "2026-08-28T18:20:05.112Z",
+          "size": 193423929,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688147/chrome-mac.zip"
+        },
+        {
+          "revision": "1688136",
+          "version": "154.0.8031.0",
+          "commit": "8409aef66ca6a373b92b850a182338b814db3c21",
+          "builtAt": "2026-08-28T17:52:45.638Z",
+          "size": 193425228,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688136/chrome-mac.zip"
+        },
+        {
+          "revision": "1688130",
+          "version": "154.0.8031.0",
+          "commit": "8fc5daec11159b5dc786e7466e4905c974cd8697",
+          "builtAt": "2026-08-28T17:38:09.926Z",
+          "size": 193413476,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688130/chrome-mac.zip"
+        },
+        {
+          "revision": "1688121",
+          "version": "154.0.8031.0",
+          "commit": "c9f67e1d37544c9c8156d373599f5b9d359afb81",
+          "builtAt": "2026-08-28T17:23:16.502Z",
+          "size": 193408073,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688121/chrome-mac.zip"
+        },
+        {
+          "revision": "1688113",
+          "version": "154.0.8031.0",
+          "commit": "fe9fb92effb39b1abc96d5b6a083a8c0c83f7628",
+          "builtAt": "2026-08-28T17:09:39.727Z",
+          "size": 193407887,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688113/chrome-mac.zip"
+        },
+        {
+          "revision": "1688095",
+          "version": "154.0.8031.0",
+          "commit": "3741e189ccabf806dd2f98ed01e50a72daed4f32",
+          "builtAt": "2026-08-28T16:56:11.513Z",
+          "size": 193403277,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688095/chrome-mac.zip"
+        },
+        {
+          "revision": "1688070",
+          "version": "154.0.8031.0",
+          "commit": "fe07e85728010a2962417916cbaa95d87c1d317d",
+          "builtAt": "2026-08-28T16:37:48.007Z",
+          "size": 193392704,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688070/chrome-mac.zip"
+        },
+        {
+          "revision": "1688050",
+          "version": "154.0.8031.0",
+          "commit": "8c4a93880c5b48c096995ba93198dcd16ed79da9",
+          "builtAt": "2026-08-28T16:02:00.879Z",
+          "size": 193393855,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688050/chrome-mac.zip"
+        },
+        {
+          "revision": "1688038",
+          "version": "154.0.8031.0",
+          "commit": "ef0d4410eefab44047f72f8158a694b55ceea261",
+          "builtAt": "2026-08-28T15:40:18.932Z",
+          "size": 193395426,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688038/chrome-mac.zip"
+        },
+        {
+          "revision": "1688023",
+          "version": "154.0.8031.0",
+          "commit": "a41bdc6a42310fbc55391a60f888232a15256b3e",
+          "builtAt": "2026-08-28T15:27:08.612Z",
+          "size": 193394668,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688023/chrome-mac.zip"
+        },
+        {
+          "revision": "1688007",
+          "version": "154.0.8031.0",
+          "commit": "aada2e73442b2638b75d1989e252853148820254",
+          "builtAt": "2026-08-28T15:13:20.517Z",
+          "size": 193395114,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688007/chrome-mac.zip"
+        }
+      ]
+    },
+    {
+      "id": "snapshot-mac-arm64",
+      "slug": "mac-arm",
+      "title": "macOS on Apple silicon",
+      "requirement": "A Mac with an M1 processor or newer. This is the right choice for every Mac sold since late 2020.",
+      "platform": "macos",
+      "arch": "arm64",
+      "bucketPlatform": "Mac_Arm",
+      "file": "chrome-mac.zip",
+      "latest": {
+        "revision": "1688518",
+        "version": "154.0.8031.0",
+        "commit": "5535993c2efb3d0e474597081b5b3d6d70763c0c",
+        "builtAt": "2026-08-29T02:30:29.780Z",
+        "size": 172719903,
+        "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688518/chrome-mac.zip"
+      },
+      "older": [
+        {
+          "revision": "1688515",
+          "version": "154.0.8031.0",
+          "commit": "3ae32e763148ef76c626dc6b4ae7415e81a110fc",
+          "builtAt": "2026-08-29T02:21:24.662Z",
+          "size": 172719895,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688515/chrome-mac.zip"
+        },
+        {
+          "revision": "1688511",
+          "version": "154.0.8031.0",
+          "commit": "0e29f95edcb3a1ee917ebd46bb76af133ad0624a",
+          "builtAt": "2026-08-29T02:11:52.876Z",
+          "size": 172715318,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688511/chrome-mac.zip"
+        },
+        {
+          "revision": "1688510",
+          "version": "154.0.8031.0",
+          "commit": "a9a26a6a3f27fafabcb27335e5fd8dc82ddeaec3",
+          "builtAt": "2026-08-29T02:02:28.954Z",
+          "size": 172715325,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688510/chrome-mac.zip"
+        },
+        {
+          "revision": "1688505",
+          "version": "154.0.8031.0",
+          "commit": "03f79bd22348331d961cc75004d7e624283be9fa",
+          "builtAt": "2026-08-29T01:53:30.269Z",
+          "size": 172715341,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688505/chrome-mac.zip"
+        },
+        {
+          "revision": "1688502",
+          "version": "154.0.8031.0",
+          "commit": "94993495ff9f19f60e39835a7a95572779b12967",
+          "builtAt": "2026-08-29T01:43:15.567Z",
+          "size": 172715329,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688502/chrome-mac.zip"
+        },
+        {
+          "revision": "1688471",
+          "version": "154.0.8031.0",
+          "commit": "c4948416950180d77daaf04f9f4788895bbe438f",
+          "builtAt": "2026-08-29T01:27:10.524Z",
+          "size": 172706487,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688471/chrome-mac.zip"
+        },
+        {
+          "revision": "1688445",
+          "version": "154.0.8031.0",
+          "commit": "d4437a5ddf1975257b062bb3d0639e025fc64e3a",
+          "builtAt": "2026-08-29T01:04:24.351Z",
+          "size": 172693075,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688445/chrome-mac.zip"
+        },
+        {
+          "revision": "1688415",
+          "version": "154.0.8031.0",
+          "commit": "089f22b62ce7ca97469d3edb09b450d3fc0f6af3",
+          "builtAt": "2026-08-29T00:45:36.233Z",
+          "size": 172681512,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688415/chrome-mac.zip"
+        },
+        {
+          "revision": "1688400",
+          "version": "154.0.8031.0",
+          "commit": "6de267fd3e4e811d0092c7b3dbe9b5ac787a6ea3",
+          "builtAt": "2026-08-29T00:25:08.479Z",
+          "size": 172682490,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688400/chrome-mac.zip"
+        },
+        {
+          "revision": "1688399",
+          "version": "154.0.8031.0",
+          "commit": "169db56ba095487162644a22a35f33cce3bf7ce2",
+          "builtAt": "2026-08-28T23:10:11.536Z",
+          "size": 172682495,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688399/chrome-mac.zip"
+        },
+        {
+          "revision": "1688398",
+          "version": "154.0.8031.0",
+          "commit": "6c67c31750e74e1cc51d8e54af1f4c88c6add978",
+          "builtAt": "2026-08-28T22:51:37.666Z",
+          "size": 172682492,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688398/chrome-mac.zip"
+        },
+        {
+          "revision": "1688393",
+          "version": "154.0.8031.0",
+          "commit": "02c4e04f789e70e894e49e18e3fbc5cddb07acd9",
+          "builtAt": "2026-08-28T22:42:19.254Z",
+          "size": 172682487,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688393/chrome-mac.zip"
+        },
+        {
+          "revision": "1688371",
+          "version": "154.0.8031.0",
+          "commit": "33cdeaa9331c90600547986e348649ca67dfc1d7",
+          "builtAt": "2026-08-28T22:30:12.652Z",
+          "size": 172689123,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688371/chrome-mac.zip"
+        },
+        {
+          "revision": "1688362",
+          "version": "154.0.8031.0",
+          "commit": "2682016f0b2f11be254145fa72d839c7f5163c84",
+          "builtAt": "2026-08-28T22:06:01.983Z",
+          "size": 172678994,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688362/chrome-mac.zip"
+        },
+        {
+          "revision": "1688333",
+          "version": "154.0.8031.0",
+          "commit": "de4e04d8129fb96e599707a9eb185e10ccfb3562",
+          "builtAt": "2026-08-28T21:53:10.422Z",
+          "size": 172681307,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688333/chrome-mac.zip"
+        },
+        {
+          "revision": "1688309",
+          "version": "154.0.8031.0",
+          "commit": "ee7464974539426344f30e82d50107a8bd891c48",
+          "builtAt": "2026-08-28T21:25:25.592Z",
+          "size": 172694752,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688309/chrome-mac.zip"
+        },
+        {
+          "revision": "1688286",
+          "version": "154.0.8031.0",
+          "commit": "bda0f7f6920b6e26fe405d3620a956867161fd64",
+          "builtAt": "2026-08-28T21:02:57.673Z",
+          "size": 172679452,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688286/chrome-mac.zip"
+        },
+        {
+          "revision": "1688216",
+          "version": "154.0.8031.0",
+          "commit": "76a7637ef0f19f265dfb044e684ec96b5576d286",
+          "builtAt": "2026-08-28T20:40:45.127Z",
+          "size": 172654066,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688216/chrome-mac.zip"
+        },
+        {
+          "revision": "1688194",
+          "version": "154.0.8031.0",
+          "commit": "f8d53b2c3cd4906ed4fca322a509ae4518eff2d8",
+          "builtAt": "2026-08-28T19:04:53.536Z",
+          "size": 172656589,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688194/chrome-mac.zip"
+        },
+        {
+          "revision": "1688183",
+          "version": "154.0.8031.0",
+          "commit": "48778dd9210562ef1c4772b4b49eefe5669e1ef5",
+          "builtAt": "2026-08-28T18:45:34.607Z",
+          "size": 172646472,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688183/chrome-mac.zip"
+        },
+        {
+          "revision": "1688173",
+          "version": "154.0.8031.0",
+          "commit": "c2cac2e38ce1ccc9c1c9779269224b7f5f8be384",
+          "builtAt": "2026-08-28T18:34:47.424Z",
+          "size": 172673337,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688173/chrome-mac.zip"
+        },
+        {
+          "revision": "1688162",
+          "version": "154.0.8031.0",
+          "commit": "7f27ff342d611a4e99d388c413b944b0a54933bb",
+          "builtAt": "2026-08-28T18:22:58.056Z",
+          "size": 172665011,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688162/chrome-mac.zip"
+        },
+        {
+          "revision": "1688150",
+          "version": "154.0.8031.0",
+          "commit": "50d5c3c190c8aa1beb8a532aa3e708f0adb6ad65",
+          "builtAt": "2026-08-28T18:08:29.053Z",
+          "size": 172732257,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688150/chrome-mac.zip"
+        },
+        {
+          "revision": "1688140",
+          "version": "154.0.8031.0",
+          "commit": "e4e3276c2f96bf02b24a76af11ef52f74b46aa59",
+          "builtAt": "2026-08-28T17:54:40.787Z",
+          "size": 172736759,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688140/chrome-mac.zip"
+        }
+      ]
+    },
+    {
+      "id": "snapshot-linux-x64",
+      "slug": "linux",
+      "title": "Linux 64-bit",
+      "requirement": "A 64-bit Linux distribution with a desktop environment. Your package manager may already offer a more convenient Chromium.",
+      "platform": "linux",
+      "arch": "x64",
+      "bucketPlatform": "Linux_x64",
+      "file": "chrome-linux.zip",
+      "latest": {
+        "revision": "1688512",
+        "version": "154.0.8031.0",
+        "commit": "be94bfc9558cee5123ccff5de9c8b52fceb58ccb",
+        "builtAt": "2026-08-29T02:27:06.605Z",
+        "size": 245930302,
+        "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688512/chrome-linux.zip"
+      },
+      "older": [
+        {
+          "revision": "1688505",
+          "version": "154.0.8031.0",
+          "commit": "03f79bd22348331d961cc75004d7e624283be9fa",
+          "builtAt": "2026-08-29T02:05:33.683Z",
+          "size": 245928515,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688505/chrome-linux.zip"
+        },
+        {
+          "revision": "1688501",
+          "version": "154.0.8031.0",
+          "commit": "5411bbf9a923def1a9cf42f31a0e8d35ebe6174e",
+          "builtAt": "2026-08-29T01:42:59.606Z",
+          "size": 245928335,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688501/chrome-linux.zip"
+        },
+        {
+          "revision": "1688466",
+          "version": "154.0.8031.0",
+          "commit": "3107f5b294c2c958b7fe060286e8b20aff7b3000",
+          "builtAt": "2026-08-29T01:26:52.843Z",
+          "size": 245927866,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688466/chrome-linux.zip"
+        },
+        {
+          "revision": "1688438",
+          "version": "154.0.8031.0",
+          "commit": "d2d25c8b6db00cf675c31ef2371bb18d7d3300ca",
+          "builtAt": "2026-08-29T01:00:02.631Z",
+          "size": 245900239,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688438/chrome-linux.zip"
+        },
+        {
+          "revision": "1688400",
+          "version": "154.0.8031.0",
+          "commit": "6de267fd3e4e811d0092c7b3dbe9b5ac787a6ea3",
+          "builtAt": "2026-08-29T00:40:26.120Z",
+          "size": 245896638,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688400/chrome-linux.zip"
+        },
+        {
+          "revision": "1688399",
+          "version": "154.0.8031.0",
+          "commit": "169db56ba095487162644a22a35f33cce3bf7ce2",
+          "builtAt": "2026-08-28T23:31:00.271Z",
+          "size": 245897140,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688399/chrome-linux.zip"
+        },
+        {
+          "revision": "1688398",
+          "version": "154.0.8031.0",
+          "commit": "6c67c31750e74e1cc51d8e54af1f4c88c6add978",
+          "builtAt": "2026-08-28T23:09:21.323Z",
+          "size": 245897243,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688398/chrome-linux.zip"
+        },
+        {
+          "revision": "1688387",
+          "version": "154.0.8031.0",
+          "commit": "be75132d143e6c0803bb17e4c9018ab7e03bd8cc",
+          "builtAt": "2026-08-28T22:47:33.607Z",
+          "size": 245895876,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688387/chrome-linux.zip"
+        },
+        {
+          "revision": "1688368",
+          "version": "154.0.8031.0",
+          "commit": "67b89ceb9c99ad08fa8a50853370559fc18eb26e",
+          "builtAt": "2026-08-28T22:22:26.007Z",
+          "size": 245881206,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688368/chrome-linux.zip"
+        },
+        {
+          "revision": "1688350",
+          "version": "154.0.8031.0",
+          "commit": "0da5480955fab628a8361a5784c24a8359b63e0b",
+          "builtAt": "2026-08-28T22:02:08.836Z",
+          "size": 245877939,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688350/chrome-linux.zip"
+        },
+        {
+          "revision": "1688325",
+          "version": "154.0.8031.0",
+          "commit": "dd13f474ef2f0c20158f44529ba22e1030dd5228",
+          "builtAt": "2026-08-28T21:40:26.504Z",
+          "size": 245863425,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688325/chrome-linux.zip"
+        },
+        {
+          "revision": "1688300",
+          "version": "154.0.8031.0",
+          "commit": "d5b3078cd5d7ee05c01905e8ddcd6163720e076a",
+          "builtAt": "2026-08-28T21:17:23.289Z",
+          "size": 245873903,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688300/chrome-linux.zip"
+        },
+        {
+          "revision": "1688280",
+          "version": "154.0.8031.0",
+          "commit": "ab36f27e1871c2ecf9672e031dd80da63966044c",
+          "builtAt": "2026-08-28T20:54:24.936Z",
+          "size": 245861199,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688280/chrome-linux.zip"
+        },
+        {
+          "revision": "1688260",
+          "version": "154.0.8031.0",
+          "commit": "4e838bdb6e30edc3ef734f0861ef3e4d999e87a2",
+          "builtAt": "2026-08-28T20:32:03.212Z",
+          "size": 245874190,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688260/chrome-linux.zip"
+        },
+        {
+          "revision": "1688256",
+          "version": "154.0.8031.0",
+          "commit": "da9638cfbbf6b3177c1431ab5c0a30e7a043db70",
+          "builtAt": "2026-08-28T20:13:16.622Z",
+          "size": 245871457,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688256/chrome-linux.zip"
+        },
+        {
+          "revision": "1688217",
+          "version": "154.0.8031.0",
+          "commit": "0a679956372a8ec3817d9355334037c3598e6e44",
+          "builtAt": "2026-08-28T19:54:47.738Z",
+          "size": 245841961,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688217/chrome-linux.zip"
+        },
+        {
+          "revision": "1688191",
+          "version": "154.0.8031.0",
+          "commit": "b93108c108ca7110e5a9ca34b2bc5793de5d3d1e",
+          "builtAt": "2026-08-28T19:04:53.445Z",
+          "size": 245845472,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688191/chrome-linux.zip"
+        },
+        {
+          "revision": "1688176",
+          "version": "154.0.8031.0",
+          "commit": "dcfeb7db0522cf31c5489f2fd5b0b39142f67e06",
+          "builtAt": "2026-08-28T18:42:53.478Z",
+          "size": 245870556,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688176/chrome-linux.zip"
+        },
+        {
+          "revision": "1688144",
+          "version": "154.0.8031.0",
+          "commit": "442a0443dc196f8f01e19200e4a9fa5f21f5dbde",
+          "builtAt": "2026-08-28T18:25:55.600Z",
+          "size": 245952074,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688144/chrome-linux.zip"
+        },
+        {
+          "revision": "1688129",
+          "version": "154.0.8031.0",
+          "commit": "0a8c3d8888fc3178fa654c025e8d5a3bff7b9bf7",
+          "builtAt": "2026-08-28T17:45:05.854Z",
+          "size": 245932906,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688129/chrome-linux.zip"
+        },
+        {
+          "revision": "1688114",
+          "version": "154.0.8031.0",
+          "commit": "1e89bf3f502196f61258be6f010691ee6ab66575",
+          "builtAt": "2026-08-28T17:22:06.152Z",
+          "size": 245927477,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688114/chrome-linux.zip"
+        },
+        {
+          "revision": "1688096",
+          "version": "154.0.8031.0",
+          "commit": "f982aab44c304c85b2cdafb322abadfad8d95cd2",
+          "builtAt": "2026-08-28T16:59:53.723Z",
+          "size": 245925451,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688096/chrome-linux.zip"
+        },
+        {
+          "revision": "1688080",
+          "version": "154.0.8031.0",
+          "commit": "3f5fca1d183f2d35be6820eaa5b74b1a9c24ad9d",
+          "builtAt": "2026-08-28T16:38:52.672Z",
+          "size": 245917920,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688080/chrome-linux.zip"
+        },
+        {
+          "revision": "1688059",
+          "version": "154.0.8031.0",
+          "commit": "931a0def3a5dab2b6973921a16c9487755d6dfb5",
+          "builtAt": "2026-08-28T16:15:41.922Z",
+          "size": 245909897,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688059/chrome-linux.zip"
+        }
+      ]
+    },
+    {
+      "id": "snapshot-android",
+      "slug": "android",
+      "title": "Android",
+      "requirement": "Android 10 or newer. The file is an APK you install yourself, which Android asks you to allow the first time.",
+      "platform": "android",
+      "arch": "arm32",
+      "bucketPlatform": "Android",
+      "file": "chrome-android.zip",
+      "latest": {
+        "revision": "1688510",
+        "version": "154.0.8031.0",
+        "commit": "a9a26a6a3f27fafabcb27335e5fd8dc82ddeaec3",
+        "builtAt": "2026-08-29T02:34:14.000Z",
+        "size": 270150187,
+        "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1688510/chrome-android.zip"
+      },
+      "older": [
+        {
+          "revision": "1688474",
+          "version": "154.0.8031.0",
+          "commit": "78058a1a2e0292e808eca874c5a5e14897f44914",
+          "builtAt": "2026-08-29T01:51:25.541Z",
+          "size": 270143454,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1688474/chrome-android.zip"
+        },
+        {
+          "revision": "1688400",
+          "version": "154.0.8031.0",
+          "commit": "6de267fd3e4e811d0092c7b3dbe9b5ac787a6ea3",
+          "builtAt": "2026-08-29T01:07:23.402Z",
+          "size": 270087174,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1688400/chrome-android.zip"
+        },
+        {
+          "revision": "1688399",
+          "version": "154.0.8031.0",
+          "commit": "169db56ba095487162644a22a35f33cce3bf7ce2",
+          "builtAt": "2026-08-28T23:35:08.678Z",
+          "size": 270084752,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1688399/chrome-android.zip"
+        },
+        {
+          "revision": "1688393",
+          "version": "154.0.8031.0",
+          "commit": "02c4e04f789e70e894e49e18e3fbc5cddb07acd9",
+          "builtAt": "2026-08-28T23:01:36.083Z",
+          "size": 270090380,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1688393/chrome-android.zip"
+        },
+        {
+          "revision": "1688365",
+          "version": "154.0.8031.0",
+          "commit": "1bd5169c0bca36ffa65fc9cff2c6d4cd0f6d4fe9",
+          "builtAt": "2026-08-28T22:30:04.955Z",
+          "size": 270085718,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1688365/chrome-android.zip"
+        },
+        {
+          "revision": "1688332",
+          "version": "154.0.8031.0",
+          "commit": "cf47c62722c17c1c5e355174d05b22ce6c2c44fa",
+          "builtAt": "2026-08-28T21:57:24.395Z",
+          "size": 270092300,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1688332/chrome-android.zip"
+        },
+        {
+          "revision": "1688296",
+          "version": "154.0.8031.0",
+          "commit": "9c2f374b89dd1af16830ce7bc085e8de8e1967bd",
+          "builtAt": "2026-08-28T21:24:22.555Z",
+          "size": 270073136,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1688296/chrome-android.zip"
+        },
+        {
+          "revision": "1688269",
+          "version": "154.0.8031.0",
+          "commit": "b103c33a50c2e51d66497e85c30eaf92c034808b",
+          "builtAt": "2026-08-28T20:53:03.094Z",
+          "size": 270079931,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1688269/chrome-android.zip"
+        },
+        {
+          "revision": "1688225",
+          "version": "154.0.8031.0",
+          "commit": "cc437baf86fab347a95446f8f1cf470a33f3c77c",
+          "builtAt": "2026-08-28T20:25:33.620Z",
+          "size": 270065931,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1688225/chrome-android.zip"
+        },
+        {
+          "revision": "1688189",
+          "version": "154.0.8031.0",
+          "commit": "f21d8f5e70b778f87d3964ec58216f178845859b",
+          "builtAt": "2026-08-28T19:11:31.598Z",
+          "size": 270067999,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1688189/chrome-android.zip"
+        },
+        {
+          "revision": "1688162",
+          "version": "154.0.8031.0",
+          "commit": "7f27ff342d611a4e99d388c413b944b0a54933bb",
+          "builtAt": "2026-08-28T18:41:21.964Z",
+          "size": 270074379,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1688162/chrome-android.zip"
+        },
+        {
+          "revision": "1688124",
+          "version": "154.0.8031.0",
+          "commit": "942bda4298c165efb3635f4149cdbc31a259e6b2",
+          "builtAt": "2026-08-28T18:10:26.001Z",
+          "size": 270065083,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1688124/chrome-android.zip"
+        },
+        {
+          "revision": "1688100",
+          "version": "154.0.8031.0",
+          "commit": "9a779d2399168b8ad7b5fe83cc44a6fe93af14c1",
+          "builtAt": "2026-08-28T17:17:07.636Z",
+          "size": 270059531,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1688100/chrome-android.zip"
+        },
+        {
+          "revision": "1688076",
+          "version": "154.0.8031.0",
+          "commit": "2b3d05fd2330150ed55d8411732c63aff8fc3606",
+          "builtAt": "2026-08-28T16:43:09.810Z",
+          "size": 270037919,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1688076/chrome-android.zip"
+        },
+        {
+          "revision": "1688045",
+          "version": "154.0.8031.0",
+          "commit": "1f84e822b4a57834c5edeaf8fbd214253234f1e7",
+          "builtAt": "2026-08-28T16:11:01.005Z",
+          "size": 270035908,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1688045/chrome-android.zip"
+        },
+        {
+          "revision": "1688012",
+          "version": "154.0.8031.0",
+          "commit": "3f2f4b7d101ca15933a40e92ff586948ac20dbf6",
+          "builtAt": "2026-08-28T15:36:27.750Z",
+          "size": 270028325,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1688012/chrome-android.zip"
+        },
+        {
+          "revision": "1687989",
+          "version": "154.0.8031.0",
+          "commit": "9d138d29dad05630293739ca732984e654f73aa0",
+          "builtAt": "2026-08-28T15:02:24.087Z",
+          "size": 270025628,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1687989/chrome-android.zip"
+        },
+        {
+          "revision": "1687962",
+          "version": "154.0.8030.0",
+          "commit": "4dbfa855393247fcdf2e62b047785384ca622330",
+          "builtAt": "2026-08-28T14:35:17.569Z",
+          "size": 270015352,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1687962/chrome-android.zip"
+        },
+        {
+          "revision": "1687948",
+          "version": "154.0.8030.0",
+          "commit": "86d2501efbfec9676f17e08974f3b0dff3d94288",
+          "builtAt": "2026-08-28T13:53:10.955Z",
+          "size": 270015934,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1687948/chrome-android.zip"
+        },
+        {
+          "revision": "1687925",
+          "version": "154.0.8030.0",
+          "commit": "4384550e39768dc58d3e6f1e255aa1975bdea88d",
+          "builtAt": "2026-08-28T13:25:42.410Z",
+          "size": 270017975,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1687925/chrome-android.zip"
+        },
+        {
+          "revision": "1687918",
+          "version": "154.0.8030.0",
+          "commit": "aace6e815d0d972a34356a247064ba821683e762",
+          "builtAt": "2026-08-28T12:44:44.276Z",
+          "size": 270016811,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1687918/chrome-android.zip"
+        },
+        {
+          "revision": "1687905",
+          "version": "154.0.8030.0",
+          "commit": "3c3be0a17268ce54fe19bdf5945fd6986cc41829",
+          "builtAt": "2026-08-28T12:12:26.161Z",
+          "size": 270005199,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1687905/chrome-android.zip"
+        },
+        {
+          "revision": "1687898",
+          "version": "154.0.8030.0",
+          "commit": "9cbe372716e7a5117c67c279d5940e7bf13e05df",
+          "builtAt": "2026-08-28T11:38:14.365Z",
+          "size": 270002465,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1687898/chrome-android.zip"
+        },
+        {
+          "revision": "1687890",
+          "version": "154.0.8030.0",
+          "commit": "3aeaa03ccb229cddd1fe5a228dda7ce077d00a2e",
+          "builtAt": "2026-08-28T11:05:38.083Z",
+          "size": 270000764,
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1687890/chrome-android.zip"
+        }
+      ]
+    }
+  ],
   "distros": [
+    {
+      "repo": "opensuse_leap_15_6",
+      "distro": "openSUSE Leap 15.6",
+      "version": "147.0.7727.137",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "opensuse_tumbleweed",
+      "distro": "openSUSE Tumbleweed",
+      "version": "151.0.7922.173",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "pclinuxos",
+      "distro": "PCLinuxOS",
+      "version": "151.0.7922.137",
+      "status": "outdated",
+      "package": "chromium-browser",
+      "project": "chromium"
+    },
+    {
+      "repo": "raspbian_stable",
+      "distro": "Raspberry Pi OS",
+      "version": "151.0.7922.173",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "scoop",
+      "distro": "Scoop",
+      "version": "154.0.8031.0-r1688243",
+      "status": "untrusted",
+      "package": "chromium-dev",
+      "project": "chromium"
+    },
+    {
+      "repo": "termux",
+      "distro": "Termux",
+      "version": "149.0.7827.155",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "void_x86_64",
+      "distro": "Void Linux",
+      "version": "151.0.7922.108",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "openbsd",
+      "distro": "OpenBSD Ports",
+      "version": "151.0.7922.169",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "gentoo",
+      "distro": "Gentoo",
+      "version": "151.0.7922.169",
+      "status": "outdated",
+      "package": "www-client/chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "homebrew_casks",
+      "distro": "Homebrew Cask",
+      "version": "150.0.7871.224",
+      "status": "outdated",
+      "package": "chromium-gost",
+      "project": "chromium"
+    },
+    {
+      "repo": "manjaro_stable",
+      "distro": "Manjaro (stable)",
+      "version": "151.0.7922.173",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "openmandriva_rolling",
+      "distro": "OpenMandriva Rolling",
+      "version": "141.0.7390.122",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "alpine_3_24",
+      "distro": "Alpine 3.24",
+      "version": "151.0.7922.173",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "nix_stable_25_05",
+      "distro": "nixpkgs stable",
+      "version": "143.0.7499.169",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
     {
       "repo": "alpine_edge",
       "distro": "Alpine Edge",
@@ -1801,14 +3406,6 @@
     {
       "repo": "arch",
       "distro": "Arch Linux",
-      "version": "151.0.7922.173",
-      "status": "outdated",
-      "package": "chromium",
-      "project": "chromium"
-    },
-    {
-      "repo": "alpine_3_24",
-      "distro": "Alpine 3.24",
       "version": "151.0.7922.173",
       "status": "outdated",
       "package": "chromium",
@@ -1879,6 +3476,14 @@
       "project": "chromium"
     },
     {
+      "repo": "nix_unstable",
+      "distro": "nixpkgs unstable",
+      "version": "152.0.7977.64",
+      "status": "newest",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
       "repo": "fedora_rawhide",
       "distro": "Fedora Rawhide",
       "version": "151.0.7922.173",
@@ -1890,118 +3495,6 @@
       "repo": "freebsd",
       "distro": "FreeBSD Ports",
       "version": "151.0.7922.169",
-      "status": "outdated",
-      "package": "chromium",
-      "project": "chromium"
-    },
-    {
-      "repo": "gentoo",
-      "distro": "Gentoo",
-      "version": "151.0.7922.169",
-      "status": "outdated",
-      "package": "www-client/chromium",
-      "project": "chromium"
-    },
-    {
-      "repo": "homebrew_casks",
-      "distro": "Homebrew Cask",
-      "version": "150.0.7871.224",
-      "status": "outdated",
-      "package": "chromium-gost",
-      "project": "chromium"
-    },
-    {
-      "repo": "manjaro_stable",
-      "distro": "Manjaro (stable)",
-      "version": "151.0.7922.173",
-      "status": "outdated",
-      "package": "chromium",
-      "project": "chromium"
-    },
-    {
-      "repo": "nix_stable_25_05",
-      "distro": "nixpkgs stable",
-      "version": "143.0.7499.169",
-      "status": "outdated",
-      "package": "chromium",
-      "project": "chromium"
-    },
-    {
-      "repo": "nix_unstable",
-      "distro": "nixpkgs unstable",
-      "version": "152.0.7977.64",
-      "status": "newest",
-      "package": "chromium",
-      "project": "chromium"
-    },
-    {
-      "repo": "openbsd",
-      "distro": "OpenBSD Ports",
-      "version": "151.0.7922.169",
-      "status": "outdated",
-      "package": "chromium",
-      "project": "chromium"
-    },
-    {
-      "repo": "openmandriva_rolling",
-      "distro": "OpenMandriva Rolling",
-      "version": "141.0.7390.122",
-      "status": "outdated",
-      "package": "chromium",
-      "project": "chromium"
-    },
-    {
-      "repo": "opensuse_leap_15_6",
-      "distro": "openSUSE Leap 15.6",
-      "version": "147.0.7727.137",
-      "status": "outdated",
-      "package": "chromium",
-      "project": "chromium"
-    },
-    {
-      "repo": "opensuse_tumbleweed",
-      "distro": "openSUSE Tumbleweed",
-      "version": "151.0.7922.173",
-      "status": "outdated",
-      "package": "chromium",
-      "project": "chromium"
-    },
-    {
-      "repo": "pclinuxos",
-      "distro": "PCLinuxOS",
-      "version": "151.0.7922.137",
-      "status": "outdated",
-      "package": "chromium-browser",
-      "project": "chromium"
-    },
-    {
-      "repo": "raspbian_stable",
-      "distro": "Raspberry Pi OS",
-      "version": "151.0.7922.173",
-      "status": "outdated",
-      "package": "chromium",
-      "project": "chromium"
-    },
-    {
-      "repo": "scoop",
-      "distro": "Scoop",
-      "version": "154.0.8031.0-r1688243",
-      "status": "untrusted",
-      "package": "chromium-dev",
-      "project": "chromium"
-    },
-    {
-      "repo": "termux",
-      "distro": "Termux",
-      "version": "149.0.7827.155",
-      "status": "outdated",
-      "package": "chromium",
-      "project": "chromium"
-    },
-    {
-      "repo": "void_x86_64",
-      "distro": "Void Linux",
-      "version": "151.0.7922.108",
       "status": "outdated",
       "package": "chromium",
       "project": "chromium"

@@ -81,6 +81,20 @@ details.more{margin-top:.6rem}
 details.more summary{font-size:.85rem;color:var(--muted);cursor:pointer;user-select:none}
 details.more summary:hover{color:var(--fg)}
 details.more[open] summary{margin-bottom:.6rem}
+/* official snapshot cards */
+.build h4{margin:1.15rem 0 .25rem;font-size:.95rem}
+.facts{display:grid;grid-template-columns:max-content 1fr;gap:.28rem .9rem;margin:.7rem 0 .95rem;font-size:.9rem}
+.facts dt{color:var(--faint)}
+.facts dd{margin:0;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;overflow-wrap:anywhere}
+.btn.big{font-size:.98rem;padding:.6rem 1.1rem}
+.revs{border:1px solid var(--line);border-radius:6px;background:var(--bg)}
+.revs.scroll{max-height:16rem;overflow-y:auto}
+.revs ol{margin:0;padding:0;list-style:none}
+.revs li{display:flex;gap:.7rem;align-items:baseline;padding:.36rem .7rem;font-size:.84rem;border-bottom:1px solid var(--line)}
+.revs li:last-child{border-bottom:0}
+.revs time{color:var(--faint);white-space:nowrap}
+.revs .rv{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--muted)}
+.revs a{margin-left:auto;white-space:nowrap}
 .hashes{margin-top:.7rem;font-size:.78rem;color:var(--faint);overflow-wrap:anywhere;line-height:1.5}
 .hashes code{background:none;padding:0;color:var(--muted)}
 .notes{margin:.7rem 0 0;padding-left:1.05rem;font-size:.86rem;color:var(--muted)}
@@ -153,6 +167,7 @@ export interface PageMeta {
 }
 
 const NAV = [
+  { label: "Official", href: "/chromium/" },
   { label: "Windows", href: "/windows/" },
   { label: "macOS", href: "/macos/" },
   { label: "Linux", href: "/linux/" },

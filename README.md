@@ -23,9 +23,14 @@ all read automatically, no scraping:
 | source | what it provides |
 | --- | --- |
 | github releases api | hibbiki, macchrome (win/mac/linux/android), robrich999, ungoogled-software (win/mac/linux), gz83/thorium, win32ss/supermium |
-| `storage.googleapis.com/chromium-browser-snapshots` | official per-commit snapshots for win/win-arm64/win32/mac/mac-arm/linux/android |
+| `storage.googleapis.com/chromium-browser-snapshots` | official per-commit snapshots for win/win-arm64/win32/mac/mac-arm/linux/android, plus the recent revision history behind `/chromium/` |
+| `chromium.googlesource.com` | `chrome/VERSION` at a commit, the only place a snapshot's version string exists |
 | chrome for testing version feed | current upstream stable, beta, dev and canary, with revisions |
 | repology api | chromium and ungoogled-chromium versions across ~40 distributions |
+
+the snapshot history bisects rather than polling: `chrome/VERSION` only increases along main, so the
+version of every listed revision is found from a handful of boundary lookups instead of one request each.
+asking per revision throttles and silently drops builds.
 
 github's release api now returns a `digest` field per asset, which is where the checksums come from. that
 removed the only part of this that would otherwise have needed downloading gigabytes of binaries.
@@ -58,7 +63,7 @@ their assets surfaces as a failed check rather than a dead button.
 
 everything about a project lives in one entry in [`src/sources.ts`](src/sources.ts): the repo, its traits
 (sync, codecs, widevine), and regexes mapping release asset names to platform, architecture and package type.
-add the entry and the site picks it up on the next run — pages, feed, api and sitemap included.
+add the entry and the site picks it up on the next run - pages, feed, api and sitemap included.
 
 the traits are the only hand-written knowledge in the system, because no api exposes whether a build was
 compiled with widevine. they change roughly never.

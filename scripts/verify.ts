@@ -44,6 +44,11 @@ const required = [
   "bsd/index.html",
   "chromeos/index.html",
   "builds/index.html",
+  "chromium/index.html",
+  "chromium/windows/index.html",
+  "chromium/mac-arm/index.html",
+  "chromium/linux/index.html",
+  "chromium/android/index.html",
   "docs/index.html",
   "api/index.html",
   "about/index.html",
@@ -156,6 +161,16 @@ for (const p of ["windows", "macos", "linux", "android"]) {
 const stale = manifest.builds.filter((b) => b.freshness === "current").length;
 if (stale >= 8) ok(`${stale} builds are level with upstream stable`);
 else bad("freshness", `only ${stale} current builds, sources may be failing`);
+
+console.log("\n== snapshot history ==");
+if (manifest.snapshots.length >= 6) ok(`${manifest.snapshots.length} snapshot targets carry a history`);
+else bad("snapshots", `only ${manifest.snapshots.length} targets, the bucket listing may have changed shape`);
+const thin = manifest.snapshots.filter((t) => t.older.length < 3);
+if (thin.length === 0) ok("every snapshot target offers older revisions");
+else bad("snapshots", `${thin.map((t) => t.bucketPlatform).join(", ")} have almost no history`);
+const badVer = manifest.snapshots.filter((t) => !/^\d+\.\d+\.\d+\.\d+$/.test(t.latest.version));
+if (badVer.length === 0) ok("every snapshot version resolved from chrome/VERSION");
+else bad("snapshots", `${badVer.length} targets have an unparsable version`);
 
 console.log("\n== chrlauncher endpoints ==");
 const clFiles = files.filter((f) => f.includes("/api/chrlauncher/"));

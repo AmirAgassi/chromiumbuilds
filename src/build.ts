@@ -3,7 +3,7 @@ import { marked } from "marked";
 import { GITHUB_SOURCES, INSTALL_COMMANDS, SNAPSHOT_META } from "./sources";
 import { layout } from "./layout";
 import type { PageMeta } from "./layout";
-import { abs, esc, relDate, shortDate, url, SITE } from "./site";
+import { abs, bytes, esc, relDate, shortDate, url, SITE } from "./site";
 import {
   ARCH_LABEL,
   ARCH_SHORT,
@@ -16,11 +16,11 @@ import {
   stamp,
   traitTags,
 } from "./render";
-import type { Arch, Build, Manifest, Platform } from "./types";
+import type { Arch, Build, Manifest, Platform, SnapshotRelease, SnapshotTrack } from "./types";
 
 const OUT = "dist";
 const manifest: Manifest = await Bun.file("data/manifest.json").json();
-const { builds, distros, upstream, generatedAt } = manifest;
+const { builds, distros, snapshots, upstream, generatedAt } = manifest;
 const written: { path: string; changefreq: string; priority: string }[] = [];
 const warnings: string[] = [];
 const note = (source: string, message: string) => warnings.push(`${source}: ${message}`);
@@ -102,12 +102,15 @@ const CHOOSER = [
     cta: "Supermium",
   },
   {
-    b: "You are testing whether a bug is fixed",
-    p: "The raw output of Google's build bots for a single commit. Untested, no auto-update, not for daily use.",
-    href: "/docs/chromium-snapshots/",
-    cta: "Official snapshots",
+    b: "You want the build Google itself produces",
+    p: "The raw output of Google's build bots for a single commit. Untested, no auto-update, no video codecs.",
+    href: "/chromium/",
+    cta: "Official Chromium",
   },
 ];
+
+/** The hub renders the chooser too, minus the row that would point at the hub. */
+const CHOOSER_OTHERS = CHOOSER.filter((c) => c.href !== "/chromium/");
 
 /**
  * Every candidate card is rendered server-side and hidden; this only unhides the matching one.
@@ -133,7 +136,10 @@ const DETECT_SCRIPT = `
   function show(plat,arch){
     if(!plat)return;
     if(plat==="ios"){reveal(document.getElementById("pick-ios"));return;}
-    var el=document.getElementById("pick-"+plat+"-"+arch)||document.getElementById("pick-"+plat+"-x64");
+    var el=document.getElementById("pick-"+plat+"-"+arch)
+      ||document.getElementById("pick-"+plat+"-x64")
+      ||document.getElementById("pick-"+plat+"-arm32")
+      ||document.getElementById("pick-"+plat);
     if(!el)return;
     reveal(el);
   }
@@ -208,6 +214,7 @@ ${CHOOSER.map(
 
 <h2>Browse by platform</h2>
 <ul class="grid-links">${platformCards}
+<a href="${url("/chromium/")}">Official Chromium<small>Google's own per-commit builds</small></a>
 <a href="${url("/bsd/")}">BSD<small>FreeBSD and OpenBSD ports</small></a>
 <a href="${url("/linux/packages/")}">Linux packages<small>${distros.length} distributions tracked</small></a>
 <a href="${url("/chromeos/")}">ChromeOS<small>Open-source builds</small></a>
@@ -1104,6 +1111,221 @@ worth starring, reporting bugs to, and supporting.</p>
   );
 }
 
+// ========================================================= official chromium
+
+const SNAPSHOT_WARNING =
+  "These are the raw output of Google's build bots, published for every commit and tested by nobody. " +
+  "They do not update themselves, they cannot play H.264 or AAC video, and they have no Widevine, so most " +
+  "streaming services will not work.";
+
+function crrev(revision: string): string {
+  return `https://crrev.com/${revision}`;
+}
+
+/** Facts a person needs to tell one snapshot from another, in the order they matter. */
+function snapshotFacts(t: SnapshotTrack, r: SnapshotRelease): string {
+  return `<dl class="facts">
+<dt>Version</dt><dd>${esc(r.version)}</dd>
+<dt>Built</dt><dd>${shortDate(r.builtAt)} <span class="ver">(${relDate(r.builtAt)})</span></dd>
+<dt>Revision</dt><dd><a href="${crrev(r.revision)}" rel="nofollow noopener">${esc(r.revision)}</a></dd>
+<dt>Commit</dt><dd><a href="https://chromium.googlesource.com/chromium/src/+/${esc(r.commit)}" rel="nofollow noopener">${esc(r.commit.slice(0, 12))}</a></dd>
+<dt>Size</dt><dd>${bytes(r.size)}</dd>
+</dl>`;
+}
+
+function olderList(t: SnapshotTrack, opts: { scroll?: boolean; heading?: string } = {}): string {
+  if (!t.older.length) return "";
+  return `${opts.heading ?? "<h3>Older revisions</h3>"}
+<p class="blurb">Every revision Google still has for this platform. Pick an older one only when you are
+bisecting a bug and need the build from just before it appeared.</p>
+<div class="revs${opts.scroll ? " scroll" : ""}"><ol>
+${t.older
+  .map(
+    (r) => `<li><time datetime="${esc(r.builtAt)}">${shortDate(r.builtAt)}</time>
+<span class="rv">${esc(r.version)}</span>
+<a href="${crrev(r.revision)}" rel="nofollow noopener">r${esc(r.revision)}</a>
+<a href="${esc(r.url)}" rel="nofollow noopener">Download</a></li>`,
+  )
+  .join("")}
+</ol></div>`;
+}
+
+/** The download block for one target. Rendered hidden on the hub, open on the platform page. */
+function snapshotCard(t: SnapshotTrack, opts: { hidden?: boolean } = {}): string {
+  const r = t.latest;
+  return `<div class="build pick"${opts.hidden ? ` hidden id="pick-${t.platform}-${t.arch}"` : ""}>
+<div class="build-head"><h3>${esc(t.title)}</h3><span class="ver">${esc(r.version)}</span></div>
+<p class="blurb">${esc(t.requirement)}</p>
+${snapshotFacts(t, r)}
+<div class="dl"><a class="btn big" href="${esc(r.url)}" rel="nofollow noopener">Download Chromium ${esc(r.version)}
+<small>${esc(t.file.endsWith(".zip") ? "zip" : "archive")}, ${bytes(r.size)}</small></a>
+<a class="btn sec" href="${url(`/chromium/${t.slug}/`)}">About this build</a></div>
+${opts.hidden ? olderList(t, { scroll: true, heading: "<h4>Older revisions</h4>" }) : ""}
+</div>`;
+}
+
+async function chromiumHub(tracks: SnapshotTrack[]) {
+  const faq = [
+    {
+      q: "Is there an official Chromium download?",
+      a: "There is no official Chromium installer for end users, and Google does not distribute one. What does exist is a per-commit build produced by Google's own build bots and published to their public storage bucket. That is what this page links to. It is genuinely from Google, but it is a developer artefact rather than a product: nothing about it has been release-tested.",
+    },
+    {
+      q: "Why does video not play in the official Chromium build?",
+      a: "H.264 and AAC are patent-encumbered, so Google does not compile them into the open-source build. Widevine, which streaming services require, is proprietary and is also absent. The practical result is that YouTube mostly works and Netflix does not. Third-party maintainers add these pieces back, which is the main reason their builds exist.",
+    },
+    {
+      q: "Does the official Chromium build update itself?",
+      a: "No. There is no updater of any kind, so the copy you download stays at the version you downloaded and keeps its security holes. You have to come back and replace it yourself. Because a new revision appears every few minutes, an official snapshot goes stale faster than any other build listed on this site.",
+    },
+    {
+      q: "What is a Chromium revision number?",
+      a: "It is the position of a commit in the Chromium main branch, counting from the first commit. Revision 1688518 is the 1,688,518th commit. Google names each snapshot folder after it, so a revision number identifies exactly one build, whereas a version number like 154.0.8031.0 covers hundreds of them.",
+    },
+  ];
+
+  const body = `
+<div class="hero">
+  <h1>Official Chromium builds</h1>
+  <p class="lede">The Chromium build Google's own bots produce, straight from Google's storage. One for every
+  commit, for every platform they build.</p>
+  ${stamp(generatedAt, upstream.stable.version)}
+</div>
+
+<div class="note"><p><b>Read this before you download.</b> ${esc(SNAPSHOT_WARNING)}
+If you want a Chromium that behaves the way Chrome does, with working video and sign-in,
+<a href="${url("/")}">compare the maintained builds instead</a>.</p></div>
+
+<div id="detect" hidden><h2>Your system</h2>
+${tracks.map((t) => snapshotCard(t, { hidden: true })).join("")}
+</div>
+
+<h2>Every platform</h2>
+<p class="blurb">Google builds each of these separately, so their revision numbers differ. Pick the one that
+matches the machine you are going to run it on.</p>
+<ul class="grid-links">
+${tracks
+  .map(
+    (t) => `<a href="${url(`/chromium/${t.slug}/`)}">${esc(t.title)}<small>${esc(t.latest.version)} &middot; r${esc(t.latest.revision)} &middot; ${shortDate(t.latest.builtAt)}</small></a>`,
+  )
+  .join("")}
+</ul>
+
+<h2>How this differs from Chrome</h2>
+<p class="blurb">Chrome is built from this same source, then has the pieces added that make it a product:
+automatic updates, the licensed H.264 and AAC codecs, Widevine for streaming DRM, crash reporting and
+Google account integration. Strip those out and you have what is on this page.
+<a href="${url("/docs/chromium-vs-chrome/")}">The full comparison</a> goes through each one.</p>
+
+<h2>Keeping it up to date</h2>
+<p class="blurb">Nothing here updates itself, and a build a month old is a build with a month of published
+security fixes missing. Either check back and replace it by hand, or use a build that has an updater.
+<a href="${url("/docs/updating-chromium/")}">How to update Chromium</a> covers both.</p>
+
+<h2>Other kinds of Chromium build</h2>
+<p class="blurb">Most people are better served by one of the maintained builds. They are compiled by
+volunteers from the same source, with the missing pieces added back.</p>
+<ul class="chooser">
+${CHOOSER_OTHERS.map(
+  (c) => `<li><b>${esc(c.b)}</b><p>${esc(c.p)}</p><a href="${url(c.href)}">${esc(c.cta)} &rarr;</a></li>`,
+).join("")}
+</ul>
+
+<h2>Common questions</h2>
+${faq.map((f) => `<h3>${esc(f.q)}</h3><p class="blurb">${esc(f.a)}</p>`).join("")}
+<p><a href="${url("/builds/chromium-snapshot/")}">More about the snapshot build &rarr;</a></p>
+<script>var B=${JSON.stringify(SITE.base)};${DETECT_SCRIPT}</script>
+`;
+
+  await page(
+    "/chromium/",
+    {
+      title: "Official Chromium Builds - direct from Google's build bots",
+      description:
+        "Download the official Chromium build for Windows, macOS, Linux and Android, straight from Google's own storage. Latest revision plus the full recent history, updated automatically.",
+      crumbs: [{ label: "Home", href: "/" }, { label: "Official Chromium" }],
+      schema: [faqSchema(faq)],
+    },
+    body,
+    { changefreq: "hourly", priority: "0.9" },
+  );
+}
+
+async function chromiumPlatformPage(t: SnapshotTrack, tracks: SnapshotTrack[]) {
+  const others = tracks.filter((x) => x.slug !== t.slug);
+  const r = t.latest;
+  const body = `
+<div class="hero">
+  <h1>Official Chromium for ${esc(t.title)}</h1>
+  <p class="lede">Revision ${esc(r.revision)}, built ${shortDate(r.builtAt)} by Google's build bots and
+  published unmodified.</p>
+</div>
+
+<div class="note"><p><b>Untested developer build.</b> ${esc(SNAPSHOT_WARNING)}
+<a href="${url(`/${t.platform}/`)}">See the maintained ${PLATFORM_LABEL[t.platform]} builds</a> if you want one
+that plays video and updates itself.</p></div>
+
+${snapshotCard(t)}
+
+<h2>Installing it</h2>
+<p class="blurb">${esc(INSTALL_NOTE[t.platform])}</p>
+
+${olderList(t, { heading: "<h2>Older revisions</h2>" })}
+
+<h2>Other platforms</h2>
+<ul class="grid-links">
+${others
+  .map(
+    (o) => `<a href="${url(`/chromium/${o.slug}/`)}">${esc(o.title)}<small>${esc(o.latest.version)} &middot; ${shortDate(o.latest.builtAt)}</small></a>`,
+  )
+  .join("")}
+</ul>
+<p><a href="${url("/chromium/")}">&larr; All official Chromium builds</a></p>
+`;
+
+  await page(
+    `/chromium/${t.slug}/`,
+    {
+      title: `Official Chromium for ${t.title} - ${r.version}`,
+      description:
+        `Download the official Chromium build for ${t.title}, version ${r.version}, revision ${r.revision}. ` +
+        `Direct from Google's storage, with the ${t.older.length} previous revisions.`,
+      crumbs: [
+        { label: "Home", href: "/" },
+        { label: "Official Chromium", href: "/chromium/" },
+        { label: t.title },
+      ],
+      schema: [
+        {
+          "@type": "SoftwareApplication",
+          name: `Chromium for ${t.title}`,
+          applicationCategory: "BrowserApplication",
+          operatingSystem: PLATFORM_LABEL[t.platform],
+          softwareVersion: r.version,
+          datePublished: r.builtAt,
+          downloadUrl: r.url,
+          fileSize: String(r.size),
+          author: { "@type": "Organization", name: "The Chromium Authors" },
+          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+        },
+      ],
+    },
+    body,
+    { changefreq: "hourly", priority: "0.8" },
+  );
+}
+
+const INSTALL_NOTE: Record<string, string> = {
+  windows:
+    "Unzip the archive anywhere you like and run chrome.exe from inside it. There is no installer and nothing is written to the registry, so deleting the folder removes it completely. Windows SmartScreen will warn you the first time because these builds are not code-signed.",
+  macos:
+    "Unzip the archive and drag Chromium out of it. The build is not notarised by Apple, so a double-click is refused: right-click the app and choose Open, then confirm once. After that it launches normally.",
+  linux:
+    "Unzip the archive and run the chrome binary inside it. If it refuses to start, you are usually missing a shared library your distribution ships separately, and the error names it. Your package manager's own chromium package is the easier option unless you specifically need this revision.",
+  android:
+    "The download is an APK. Android blocks installing one from a browser until you allow it for that browser, which it prompts you to do the first time. This build does not go through the Play Store, so it never updates on its own.",
+};
+
 async function feeds() {
   const recent = [...builds]
     .filter((b) => b.channel !== "snapshot")
@@ -1239,6 +1461,10 @@ await archPage("windows", "x86", "32-bit", "Chromium for 32-bit Windows", "32-bi
 await archPage("macos", "arm64", "apple-silicon", "Chromium for Apple Silicon Macs", "Native ARM64 Chromium builds for M1, M2, M3 and M4 Macs, plus what to do about Apple's unidentified developer warning.");
 await archPage("macos", "x64", "intel", "Chromium for Intel Macs", "Chromium builds for Intel-based Macs, which also run on Apple silicon through Rosetta 2.");
 await archPage("linux", "arm64", "arm64", "Chromium for ARM64 Linux", "Chromium builds for 64-bit ARM Linux machines, including the Raspberry Pi 4 and 5.");
+if (snapshots.length) {
+  await chromiumHub(snapshots);
+  for (const t of snapshots) await chromiumPlatformPage(t, snapshots);
+} else note("chromium pages", "no snapshot history in the manifest, skipped /chromium/");
 await projectPages();
 await packagesPage();
 await bsdPage();
