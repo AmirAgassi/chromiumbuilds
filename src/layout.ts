@@ -275,8 +275,6 @@ ${body}
       </div>
     </div>
     <p style="margin:0">
-      Every download links straight to the maintainer's own release page. Nothing is mirrored or
-      re-hosted here, and this site has no analytics, no cookies and no trackers.
       Chromium is a project of The Chromium Authors; this site is not affiliated with Google.
     </p>
   </div>
