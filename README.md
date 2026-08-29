@@ -1,7 +1,7 @@
 # chromiumbuilds
 
 an automatically maintained index of trusted chromium builds, built to replace
-[chromium.woolyss.com](https://chromium.woolyss.com/) — which shuts down permanently on 31 august 2026
+[chromium.woolyss.com](https://chromium.woolyss.com/) - which shuts down permanently on 31 august 2026
 after nineteen years.
 
 the builds themselves are fine, they all live on github. what the community loses is the one page that made
