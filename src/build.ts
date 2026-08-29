@@ -1192,10 +1192,6 @@ async function chromiumHub(tracks: SnapshotTrack[]) {
   ${stamp(generatedAt, upstream.stable.version)}
 </div>
 
-<div class="note"><p><b>Read this before you download.</b> ${esc(SNAPSHOT_WARNING)}
-If you want a Chromium that behaves the way Chrome does, with working video and sign-in,
-<a href="${url("/")}">compare the maintained builds instead</a>.</p></div>
-
 <div id="detect" hidden><h2>Your system</h2>
 ${tracks.map((t) => snapshotCard(t, { hidden: true })).join("")}
 </div>
