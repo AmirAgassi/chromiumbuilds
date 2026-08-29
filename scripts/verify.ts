@@ -157,6 +157,31 @@ const stale = manifest.builds.filter((b) => b.freshness === "current").length;
 if (stale >= 8) ok(`${stale} builds are level with upstream stable`);
 else bad("freshness", `only ${stale} current builds, sources may be failing`);
 
+console.log("\n== chrlauncher endpoints ==");
+const clFiles = files.filter((f) => f.includes("/api/chrlauncher/"));
+if (clFiles.length >= 12) ok(`${clFiles.length} chrlauncher endpoints generated`);
+else bad("chrlauncher", `only ${clFiles.length} endpoints`);
+
+for (const f of clFiles) {
+  const body = (await Bun.file(f).text()).trim();
+  // Parse exactly as chrlauncher does: split on ';', then on '='.
+  const kv = Object.fromEntries(
+    body.split(";").map((pair) => {
+      const i = pair.indexOf("=");
+      return [pair.slice(0, i), pair.slice(i + 1)];
+    }),
+  );
+  const problems: string[] = [];
+  if (!/^\d+\.\d+\.\d+\.\d+$/.test(kv.version ?? "")) problems.push(`bad version "${kv.version}"`);
+  if (!/^https:\/\//.test(kv.download ?? "")) problems.push("download is not an https url");
+  // chrlauncher extracts the archive itself, so an installer here would break the install.
+  if (/mini_installer\.exe$|installer.*\.exe$/i.test(kv.download ?? "")) problems.push("download is an installer, not an archive");
+  if (!/\.(7z|zip)$/i.test(kv.download ?? "")) problems.push(`download is not a 7z/zip archive: ${kv.download}`);
+  if (!/^\d{10}$/.test(kv.timestamp ?? "")) problems.push(`bad timestamp "${kv.timestamp}"`);
+  if (problems.length) bad(f.replace(OUT, ""), problems.join("; "));
+}
+if (failures === 0) ok("every chrlauncher endpoint parses and points at an extractable archive");
+
 if (!SKIP_NETWORK) {
   console.log("\n== download urls resolve (HEAD) ==");
   // One representative download per build, so a maintainer moving assets is caught.

@@ -22,6 +22,8 @@ const OUT = "dist";
 const manifest: Manifest = await Bun.file("data/manifest.json").json();
 const { builds, distros, upstream, generatedAt } = manifest;
 const written: { path: string; changefreq: string; priority: string }[] = [];
+const warnings: string[] = [];
+const note = (source: string, message: string) => warnings.push(`${source}: ${message}`);
 
 async function page(path: string, meta: Omit<PageMeta, "path">, body: string, seo = { changefreq: "weekly", priority: "0.6" }) {
   const full = path.endsWith("/") ? `${path}index.html` : path;
@@ -838,6 +840,203 @@ The generator is <a href="${SITE.repo}" rel="noopener">open source</a>, so you c
   );
 }
 
+/**
+ * chrlauncher fetches ChromiumUpdateUrl and parses the body as `key=value` pairs split on `;`,
+ * reading `download`, `version` and `timestamp` (see henrypp/chrlauncher src/main.c). Its default
+ * URL is a format string taking architecture then build type, so serving
+ * `/api/chrlauncher/windows-%d-%s.txt` keeps arch and type switching working on a static host.
+ *
+ * The download must be an archive, not an installer: chrlauncher extracts it itself.
+ */
+const CHRLAUNCHER_TYPES: Record<string, { x64: string[]; x86: string[] }> = {
+  "dev-official": { x64: ["snapshot-win-x64"], x86: ["snapshot-win-x86"] },
+  "stable-codecs-sync": { x64: ["hibbiki-windows-x64"], x86: ["thorium-windows-x86", "snapshot-win-x86"] },
+  "dev-nosync": { x64: ["robrich-windows-x64-avx2", "robrich-windows-x64-avx"], x86: ["snapshot-win-x86"] },
+  "dev-codecs-sync": { x64: ["hibbiki-windows-x64"], x86: ["thorium-windows-x86"] },
+  "dev-codecs-nosync": { x64: ["marmaduke-windows-x64", "thorium-windows-x64"], x86: ["thorium-windows-x86"] },
+  "ungoogled-chromium": {
+    x64: ["marmaduke-windows-x64", "ungoogled-chromium-windows-x64"],
+    x86: ["ungoogled-chromium-windows-x86"],
+  },
+  // Convenience aliases for people setting this up fresh.
+  stable: { x64: ["hibbiki-windows-x64"], x86: ["thorium-windows-x86"] },
+  thorium: { x64: ["thorium-windows-x64"], x86: ["thorium-windows-x86"] },
+};
+
+async function chrlauncherEndpoints() {
+  await mkdir(`${OUT}/api/chrlauncher`, { recursive: true });
+  const rows: string[] = [];
+
+  for (const [type, arches] of Object.entries(CHRLAUNCHER_TYPES)) {
+    for (const [archKey, bits] of [
+      ["x64", 64],
+      ["x86", 32],
+    ] as const) {
+      const candidates = arches[archKey];
+      let chosen: Build | undefined;
+      let dl: Build["downloads"][number] | undefined;
+      for (const id of candidates) {
+        const b = builds.find((x) => x.id === id);
+        if (!b) continue;
+        // chrlauncher unpacks the archive itself, so never hand it an installer.
+        const archive = b.downloads.find((d) => d.kind === "portable" || d.kind === "archive");
+        if (!archive) continue;
+        chosen = b;
+        dl = archive;
+        break;
+      }
+      const file = `windows-${bits}-${type}.txt`;
+      if (!chosen || !dl) {
+        note(`chrlauncher ${file}`, "no suitable archive build");
+        continue;
+      }
+      const body =
+        [
+          `version=${chosen.version}`,
+          `download=${dl.url}`,
+          `timestamp=${Math.floor(new Date(chosen.releasedAt).getTime() / 1000)}`,
+          ...(chosen.revision ? [`revision=${chosen.revision}`] : []),
+          ...(dl.sha256 ? [`sha256=${dl.sha256}`] : []),
+          `size=${dl.size ?? 0}`,
+        ].join(";") + "\n";
+      await Bun.write(`${OUT}/api/chrlauncher/${file}`, body);
+      rows.push(
+        `<tr><td><code>${esc(type)}</code></td><td>${bits}-bit</td><td>${esc(chosen.projectName)}</td><td><code>${esc(
+          chosen.version,
+        )}</code></td></tr>`,
+      );
+    }
+  }
+
+  await page(
+    "/docs/chrlauncher/",
+    {
+      title: "chrlauncher after woolyss: repointing the update URL",
+      description:
+        "chrlauncher's default update URL stops working when chromium.woolyss.com shuts down. Here is the one line to change to keep automatic Chromium updates working.",
+      crumbs: [{ label: "Home", href: "/" }, { label: "Guides", href: "/docs/" }, { label: "chrlauncher" }],
+    },
+    `<div class="hero"><h1>Keeping chrlauncher working</h1>
+<p class="lede">chrlauncher checks for Chromium updates against chromium.woolyss.com, which shuts down on
+31 August 2026. When it goes, chrlauncher stops finding updates. One line in its config fixes that.</p></div>
+<div class="prose">
+<h2>The fix</h2>
+<p>Open <code>chrlauncher.ini</code> next to <code>chrlauncher.exe</code> and set:</p>
+<pre><code>ChromiumUpdateUrl=${esc(abs("/api/chrlauncher/windows-%d-%s.txt"))}</code></pre>
+<p>Make sure the line is not commented out; the default ships with a <code>#</code> in front of it.
+That is the whole change. chrlauncher substitutes your architecture and build type into the URL exactly as it
+did before, so switching <code>ChromiumType</code> keeps working.</p>
+
+<h2>Why this works on a static site</h2>
+<p>chrlauncher's update URL is a format string: it fills in the architecture and the configured build type,
+then parses the response as <code>key=value</code> pairs separated by semicolons. Because those values land in
+the path rather than a query string, every combination can be served as a plain file. Nothing dynamic is
+involved, which is also why it cannot go down the way a single API endpoint can.</p>
+
+<h2>Build types available</h2>
+<p>Set <code>ChromiumType</code> in the same file. The original woolyss names all still work and point at
+sensible current equivalents:</p>
+<div class="tw"><table><thead><tr><th>ChromiumType</th><th>Architecture</th><th>Now serves</th><th>Version</th></tr></thead>
+<tbody>${rows.join("")}</tbody></table></div>
+
+<h2>What the response looks like</h2>
+<pre><code>$ curl ${esc(abs("/api/chrlauncher/windows-64-stable-codecs-sync.txt"))}
+version=${esc(builds.find((b) => b.id === "hibbiki-windows-x64")?.version ?? "")};download=https://github.com/...;timestamp=...</code></pre>
+<p>The <code>download</code> value always points at a portable archive rather than an installer, because
+chrlauncher extracts the archive itself. <code>sha256</code> and <code>size</code> are extra fields older
+clients ignore harmlessly.</p>
+
+<h2>A note on trust</h2>
+<p>This endpoint tells chrlauncher where to download from, and chrlauncher will install what it finds there.
+Every URL served points at the maintainer's own GitHub release, and the files are regenerated automatically
+from those releases several times a day. If you would rather not point an auto-updater at someone else's
+server, the alternative is to check the <a href="/feed.xml">release feed</a> and update by hand.</p>
+
+<h2>Other updaters</h2>
+<p><a href="https://github.com/mkorthof/chrupd" rel="noopener">chrupd</a> reads GitHub release APIs directly
+and never depended on woolyss, so it keeps working untouched. On Windows,
+<a href="/docs/updating-chromium/">winget or Chocolatey</a> will also keep a Chromium build current without
+any of this.</p>
+</div>`,
+    { changefreq: "weekly", priority: "0.7" },
+  );
+}
+
+async function versionCheckerPage() {
+  const script = `
+(function(){
+  var out=document.getElementById("ver-result");if(!out)return;
+  var m=navigator.userAgent.match(/Chrom(?:e|ium)\\/(\\d+)\\.(\\d+)\\.(\\d+)\\.(\\d+)/);
+  var stable=${JSON.stringify(upstream.stable.milestone)};
+  var stableVer=${JSON.stringify(upstream.stable.version)};
+  var box=document.createElement("div");
+  if(!m){
+    box.className="note warn";
+    box.appendChild(el("p","This browser does not identify itself as Chrome or Chromium, so there is no version to compare."));
+  } else {
+    var mine=parseInt(m[1],10),gap=stable-mine;
+    box.className="note"+(gap<=0?"":gap===1?" warn":" warn");
+    var p1=el("p","");
+    var b=document.createElement("b");b.textContent="You are running version "+m[0].split("/")[1]+".";
+    p1.appendChild(b);
+    p1.appendChild(document.createTextNode(" The current Chromium stable release is "+stableVer+"."));
+    box.appendChild(p1);
+    var verdict=gap<=0
+      ?"You are up to date. Nothing to do."
+      :gap===1
+      ?"You are one milestone behind. That is common for volunteer builds and usually acceptable, but you are missing the newest security fixes."
+      :"You are "+gap+" milestones behind and missing published security fixes. You should update this build.";
+    box.appendChild(el("p",verdict));
+  }
+  out.replaceChildren(box);
+  function el(t,txt){var e=document.createElement(t);e.textContent=txt;return e;}
+})();`.trim();
+
+  await page(
+    "/my-version/",
+    {
+      title: "What version of Chromium am I running?",
+      description:
+        "Check which Chromium version this browser is running, compare it against the current upstream stable release, and find out whether you are missing security fixes.",
+      crumbs: [{ label: "Home", href: "/" }, { label: "My version" }],
+    },
+    `<div class="hero"><h1>What Chromium version am I running?</h1>
+<p class="lede">Read from your browser locally and compared against the current upstream release. Nothing is
+sent anywhere.</p></div>
+<div id="ver-result"><div class="note"><p>Checking requires JavaScript. You can also open
+<code>chrome://version</code> in your browser, which shows the same thing plus the revision it was built
+from.</p></div></div>
+<div class="prose">
+<h2>What the comparison means</h2>
+<p>Only the first number of a Chromium version, the milestone, matters for judging whether a build is current.
+Chromium ships a new milestone roughly every four weeks and security fixes roughly every two.</p>
+<ul>
+<li><b>Same milestone as stable.</b> Current, with this cycle's security fixes.</li>
+<li><b>One behind.</b> Normal for volunteer builds, which need patches rebased onto new source. Usually fine.</li>
+<li><b>Two or more behind.</b> Missing at least a full cycle of published security fixes, in the program that
+runs the most untrusted code on your machine.</li>
+</ul>
+<p>See <a href="${url("/docs/chromium-version-numbers/")}">how Chromium version numbers work</a> for the full
+explanation, and <a href="${url("/docs/updating-chromium/")}">updating Chromium</a> for what to do about it.</p>
+<h2>Finding out more about your build</h2>
+<p>Open <code>chrome://version</code>. It shows the full version, the revision it was built from, the exact
+command line the browser is running with, and your profile path. If you are not sure which build you have
+installed, that page is the place to look.</p>
+<h2>Current upstream versions</h2>
+<div class="tw"><table><thead><tr><th>Channel</th><th>Version</th><th>Revision</th></tr></thead><tbody>
+<tr><td>Stable</td><td><code>${esc(upstream.stable.version)}</code></td><td><code>${esc(upstream.stable.revision)}</code></td></tr>
+<tr><td>Beta</td><td><code>${esc(upstream.beta.version)}</code></td><td><code>${esc(upstream.beta.revision)}</code></td></tr>
+<tr><td>Dev</td><td><code>${esc(upstream.dev.version)}</code></td><td><code>${esc(upstream.dev.revision)}</code></td></tr>
+<tr><td>Canary</td><td><code>${esc(upstream.canary.version)}</code></td><td><code>${esc(upstream.canary.revision)}</code></td></tr>
+</tbody></table></div>
+<p class="stamp">Read automatically from Google's own version feed, ${shortDate(generatedAt)}. Also available as
+<a href="${url("/api/v1/upstream.json")}">JSON</a>.</p>
+</div>
+<script>${script}</script>`,
+    { changefreq: "daily", priority: "0.7" },
+  );
+}
+
 async function aboutPage() {
   const sourceRows = [...new Set(builds.map((b) => b.sourceUrl))]
     .sort()
@@ -1042,8 +1241,14 @@ await bsdPage();
 await chromeosPage();
 await docsPages(docs);
 await apiPages();
+await chrlauncherEndpoints();
+await versionCheckerPage();
 await aboutPage();
 await feeds();
 
+if (warnings.length) {
+  console.warn(`\n${warnings.length} warning(s):`);
+  for (const w of warnings) console.warn(`  ! ${w}`);
+}
 console.log(`built ${written.length} pages into ${OUT}/`);
 console.log(`  ${builds.length} builds, ${distros.length} distro packages, ${docs.length} guides`);

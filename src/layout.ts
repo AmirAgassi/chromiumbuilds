@@ -259,6 +259,7 @@ ${body}
           <li><a href="${url("/docs/which-chromium-build/")}">Which build should I use?</a></li>
           <li><a href="${url("/docs/chromium-vs-chrome/")}">Chromium vs Chrome</a></li>
           <li><a href="${url("/docs/verify-your-download/")}">Verify a download</a></li>
+          <li><a href="${url("/my-version/")}">What version am I on?</a></li>
           <li><a href="${url("/docs/")}">All guides</a></li>
         </ul>
       </div>
@@ -266,6 +267,7 @@ ${body}
         <h4>Project</h4>
         <ul>
           <li><a href="${url("/api/")}">JSON API</a></li>
+          <li><a href="${url("/docs/chrlauncher/")}">chrlauncher setup</a></li>
           <li><a href="${url("/feed.xml")}">Release feed</a></li>
           <li><a href="${url("/about/")}">About this site</a></li>
           <li><a href="${SITE.repo}" rel="noopener">Source on GitHub</a></li>
