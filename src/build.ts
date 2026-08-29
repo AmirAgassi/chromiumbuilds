@@ -220,7 +220,6 @@ async function home() {
   const body = `
 <div class="hero">
   <h1>Download Chromium</h1>
-  <p class="lede">${esc(SITE.description)}</p>
   ${stamp(generatedAt, upstream.stable.version)}
 </div>
 
@@ -451,7 +450,7 @@ ${comparisonTable()}
     const body = `
 <div class="hero">
   <h1>${esc(first.projectName)}</h1>
-  <p class="lede">${esc(blurbFor(first))}</p>
+  ${blurbFor(first) ? `<p class="lede">${esc(blurbFor(first))}</p>` : ""}
   <p class="stamp">Maintained by ${esc(first.maintainer)} · latest ${esc(first.version)} · released ${relDate(
     first.releasedAt,
   )}</p>
@@ -480,7 +479,10 @@ SHA-256 checksums shown come from the release itself so you can
       `/builds/${id}/`,
       {
         title: `${first.projectName} - download and what it changes`,
-        description: `${first.projectName} ${first.version}: ${blurbFor(first).slice(0, 120)}`,
+        description:
+          `${first.projectName} ${first.version}: ` +
+          (blurbFor(first).slice(0, 120) ||
+            `direct downloads for ${platforms.join(", ")}, with checksums and older versions.`),
         crumbs: [{ label: "Home", href: "/" }, { label: "Builds", href: "/builds/" }, { label: first.projectName }],
         schema: list.slice(0, 8).map(buildSchema),
       },
@@ -1389,7 +1391,7 @@ ${recent
     <link href="${abs(`/builds/${b.project}/`)}"/>
     <id>tag:${SITE.origin.replace(/^https?:\/\//, "")},2026:${esc(b.id)}:${esc(b.version)}</id>
     <updated>${new Date(b.releasedAt).toISOString()}</updated>
-    <summary>${esc(`${b.projectName} ${b.version} by ${b.maintainer}. ${blurbFor(b)}`)}</summary>
+    <summary>${esc(`${b.projectName} ${b.version} by ${b.maintainer}. ${blurbFor(b)}`.trim())}</summary>
   </entry>`,
   )
   .join("\n")}
@@ -1439,7 +1441,8 @@ ${(["windows", "macos", "linux", "android"] as Platform[])
 ${[...new Set(builds.map((b) => b.project))]
   .map((id) => {
     const b = builds.find((x) => x.project === id)!;
-    return `- [${b.projectName}](${abs(`/builds/${id}/`)}): ${blurbFor(b).split(".")[0]}.`;
+    const gist = blurbFor(b).split(".")[0] || `${b.projectName} ${b.version} for ${b.platform}`;
+    return `- [${b.projectName}](${abs(`/builds/${id}/`)}): ${gist}.`;
   })
   .join("\n")}
 

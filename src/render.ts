@@ -127,7 +127,7 @@ export function buildCard(
     ${platformNote}
     <span class="by">by ${esc(build.maintainer)} · ${build.channel === "snapshot" ? "rebuilt continuously" : relDate(build.releasedAt)}</span>
   </div>
-  <p class="blurb">${esc(blurbFor(build))}</p>
+  ${blurbFor(build) ? `<p class="blurb">${esc(blurbFor(build))}</p>` : ""}
   ${traitTags(build, { omitLimitations: opts.omitLimitations })}
   <div class="dl">${shown.map((d) => downloadButton(d, true)).join("")}</div>
   ${

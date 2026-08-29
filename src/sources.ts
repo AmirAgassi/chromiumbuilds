@@ -327,8 +327,8 @@ export const SNAPSHOT_META = {
   name: "Official Chromium snapshot",
   maintainer: "The Chromium Authors",
   maintainerUrl: "https://www.chromium.org/",
-  blurb:
-    "The raw output of Google's own build bots, published for every commit to the Chromium main branch. Completely untested, no auto-update, no proprietary codecs, no Widevine, and no installer. Use it to check whether a bug is already fixed upstream, not as your everyday browser.",
+  /** Empty on purpose: the card says what the build is, and the caveats live in the notes below it. */
+  blurb: "",
   notes: [
     "Built from an arbitrary commit. No release testing of any kind has happened.",
     "No auto-update. You are responsible for replacing it yourself.",
