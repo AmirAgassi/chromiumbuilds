@@ -94,6 +94,7 @@ details.more[open] summary{margin-bottom:.6rem}
 .revs li{display:flex;gap:.7rem;align-items:baseline;padding:.36rem .7rem;font-size:.84rem;border-bottom:1px solid var(--line)}
 .revs li:last-child{border-bottom:0}
 .revs time{color:var(--faint);white-space:nowrap}
+.revs .mst{font-weight:650;min-width:2.1rem}
 .revs .rv{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--muted)}
 .revs a{margin-left:auto;white-space:nowrap}
 .hashes{margin-top:.7rem;font-size:.78rem;color:var(--faint);overflow-wrap:anywhere;line-height:1.5}

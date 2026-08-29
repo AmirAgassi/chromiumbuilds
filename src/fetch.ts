@@ -317,15 +317,16 @@ async function fetchSnapshots(upstream: Upstream): Promise<Build[]> {
 
 // ------------------------------------------------------- snapshot history
 
-/** How many distinct VERSIONS to offer per platform. */
-const SNAPSHOT_HISTORY = 15;
+/** How many milestones (major versions) to offer per platform. */
+const MILESTONE_HISTORY = 40;
 /**
- * How far back to scan. The bots land ~1000 revisions a day, so this is about a month, which is
- * what it takes to see fifteen different versions.
+ * How far past a branch point to look for that milestone's first build. Trunk keeps the
+ * milestone's version for a while after the branch is cut, so the FIRST build at or after the
+ * branch point is a build OF that milestone. Verified against chrome/VERSION across M115-M153.
  */
-const SNAPSHOT_WINDOW = 20_000;
-/** Listing pages per platform. A month is ~27 at 1000 objects each; the cap is a runaway guard. */
-const SNAPSHOT_PAGES = 40;
+const MILESTONE_SPAN = 4000;
+/** How far back from LAST_CHANGE to look for the newest complete build. */
+const LATEST_SPAN = 1500;
 
 async function mapLimit<T, R>(items: T[], limit: number, fn: (item: T) => Promise<R>): Promise<R[]> {
   const out = new Array<R>(items.length);
@@ -339,9 +340,8 @@ async function mapLimit<T, R>(items: T[], limit: number, fn: (item: T) => Promis
 }
 
 /**
- * chrome/VERSION at a commit is the only place a snapshot's version string exists: the bucket
- * stores the revision and nothing else. Cached by commit because sibling platforms build the
- * same commits and a version holds across many consecutive revisions.
+ * chrome/VERSION at a commit. Only the newest build needs this: a milestone build's version is
+ * known from the milestone itself, which is what keeps this off the throttled googlesource path.
  */
 const versionCache = new Map<string, Promise<string>>();
 function versionAtCommit(commit: string): Promise<string> {
@@ -369,123 +369,149 @@ interface GcsObject {
 }
 
 interface FoundRevision {
-  revision: string;
+  revision: number;
   builtAt: string;
   size: number;
 }
 
+/**
+ * Revision folders holding `file` with a revision numerically inside [lo, hi].
+ *
+ * The bucket's startOffset/endOffset compare as TEXT, so a six-digit revision from 2013 sits
+ * inside a seven-digit window: 168851 falls between 1668620 and 1688620. Those carry the
+ * pre-2014 REVISIONS schema and would otherwise be published as a current build, so the
+ * numeric bound is load-bearing rather than defensive.
+ */
+async function listRevisions(
+  bucketPlatform: string,
+  file: string,
+  lo: number,
+  hi: number,
+  maxPages = 1,
+): Promise<FoundRevision[]> {
+  const out: FoundRevision[] = [];
+  let token = "";
+  for (let page = 0; page < maxPages; page++) {
+    const listed = await json<{ items?: GcsObject[]; nextPageToken?: string }>(
+      "https://www.googleapis.com/storage/v1/b/chromium-browser-snapshots/o" +
+        `?prefix=${bucketPlatform}%2F&startOffset=${bucketPlatform}%2F${lo}` +
+        `&endOffset=${bucketPlatform}%2F${hi}&maxResults=1000` +
+        `&fields=items(name,updated,size),nextPageToken${token && `&pageToken=${token}`}`,
+    );
+    for (const o of listed.items ?? []) {
+      if (!o.name.endsWith(`/${file}`)) continue;
+      const seg = o.name.split("/")[1];
+      if (!/^\d+$/.test(seg)) continue;
+      const revision = Number(seg);
+      if (revision < lo || revision > hi) continue;
+      out.push({ revision, builtAt: o.updated, size: Number(o.size) });
+    }
+    if (!listed.nextPageToken) break;
+    token = listed.nextPageToken;
+  }
+  return out.sort((a, b) => a.revision - b.revision);
+}
+
+interface Milestone {
+  milestone: number;
+  branchPos: number;
+  branch: string;
+}
+
+/** Milestone branch points, newest first. `branch` is the BUILD number of that major version. */
+async function fetchMilestones(): Promise<Milestone[]> {
+  const raw = await json<
+    { milestone: number; chromium_main_branch_position?: number; chromium_branch?: string }[]
+  >("https://chromiumdash.appspot.com/fetch_milestones?only_branched=true");
+  return raw
+    .filter((m) => m.chromium_main_branch_position && m.chromium_branch)
+    .map((m) => ({
+      milestone: m.milestone,
+      branchPos: m.chromium_main_branch_position as number,
+      branch: m.chromium_branch as string,
+    }))
+    .sort((a, b) => b.milestone - a.milestone)
+    .slice(0, MILESTONE_HISTORY);
+}
+
 async function fetchSnapshotHistory(): Promise<SnapshotTrack[]> {
-  const listings = await Promise.all(
-    SNAPSHOT_SOURCES.map(async (s): Promise<{ s: SnapshotSource; found: FoundRevision[] } | undefined> => {
+  let milestones: Milestone[] = [];
+  try {
+    milestones = await fetchMilestones();
+  } catch (e) {
+    note("snapshot history", `milestone list unavailable: ${(e as Error).message}`);
+  }
+
+  // The newest build needs its exact version, which is the only googlesource call left.
+  const latest = new Map<string, SnapshotRelease>();
+  await Promise.all(
+    SNAPSHOT_SOURCES.map(async (s) => {
       try {
         const head = await text(
           `https://storage.googleapis.com/chromium-browser-snapshots/${s.bucketPlatform}/LAST_CHANGE`,
         );
         if (!/^\d+$/.test(head)) throw new Error(`unexpected LAST_CHANGE body: ${head.slice(0, 40)}`);
-
-        // Revision folders sort lexicographically, so a 6-digit revision from 2021 sorts AFTER a
-        // 7-digit one from today. Bounding both ends keeps the page inside the range we want.
-        const lo = Number(head) - SNAPSHOT_WINDOW;
-        const hi = Number(head) + 1;
-        // Objects come back ascending, so a truncated first page would drop the NEWEST revisions.
-        // Every page has to be followed for the tail of this list to mean anything.
-        const items: GcsObject[] = [];
-        let token = "";
-        for (let page = 0; page < SNAPSHOT_PAGES; page++) {
-          const listed = await json<{ items?: GcsObject[]; nextPageToken?: string }>(
-            "https://www.googleapis.com/storage/v1/b/chromium-browser-snapshots/o" +
-              `?prefix=${s.bucketPlatform}%2F&startOffset=${s.bucketPlatform}%2F${lo}` +
-              `&endOffset=${s.bucketPlatform}%2F${hi}&maxResults=1000` +
-              `&fields=items(name,updated,size),nextPageToken${token && `&pageToken=${token}`}`,
-          );
-          items.push(...(listed.items ?? []));
-          if (!listed.nextPageToken) break;
-          token = listed.nextPageToken;
-        }
-
-        const all = items
-          .filter((o) => o.name.endsWith(`/${s.file}`))
-          .map((o) => ({ revision: o.name.split("/")[1], builtAt: o.updated, size: Number(o.size) }))
-          // startOffset/endOffset compare as TEXT, so a short old revision sits inside a
-          // seven-digit window: "168851" (a 2013 build) is between "1668620" and "1688620".
-          // Those carry the pre-2014 REVISIONS schema and would otherwise be offered as versions.
-          .filter((o) => /^\d+$/.test(o.revision) && Number(o.revision) >= lo && Number(o.revision) <= hi)
-          .sort((a, b) => Number(b.revision) - Number(a.revision));
-
-        // The newest build of each day. Consecutive revisions almost always share a version, so
-        // sampling by day is what makes the list span versions instead of one afternoon.
-        const perDay = new Map<string, FoundRevision>();
-        for (const r of all) if (!perDay.has(r.builtAt.slice(0, 10))) perDay.set(r.builtAt.slice(0, 10), r);
-        const found = [...perDay.values()].slice(0, SNAPSHOT_HISTORY * 2 + 5);
-        if (!found.length) throw new Error(`no ${s.file} objects in the last ${SNAPSHOT_WINDOW} revisions`);
-
-        return { s, found };
+        const found = await listRevisions(
+          s.bucketPlatform,
+          s.file,
+          Number(head) - LATEST_SPAN,
+          Number(head),
+          4,
+        );
+        const newest = found.at(-1);
+        if (!newest) throw new Error("no build near LAST_CHANGE");
+        const rev = await json<{ got_revision?: string }>(
+          `https://storage.googleapis.com/chromium-browser-snapshots/${s.bucketPlatform}/${newest.revision}/REVISIONS`,
+        );
+        const commit = rev.got_revision ?? "";
+        if (!/^[0-9a-f]{40}$/.test(commit)) throw new Error("no got_revision on the newest build");
+        const version = await versionAtCommit(commit);
+        latest.set(s.id, {
+          revision: String(newest.revision),
+          version,
+          milestone: Number(version.split(".")[0]),
+          commit,
+          builtAt: newest.builtAt,
+          size: newest.size,
+          url: `https://storage.googleapis.com/chromium-browser-snapshots/${s.bucketPlatform}/${newest.revision}/${s.file}`,
+        });
       } catch (e) {
         note(`snapshot history ${s.bucketPlatform}`, (e as Error).message);
-        return undefined;
       }
     }),
   );
 
-  // Commit hashes are cheap (same bucket as the listing); versions are not.
-  const pending = listings.filter((l): l is NonNullable<typeof l> => l !== undefined);
-  const jobs = pending.flatMap((l) => l.found.map((r) => ({ s: l.s, r })));
-  let dropped = 0;
-  const commits = new Map<string, string>();
-  await mapLimit(jobs, 8, async ({ s, r }) => {
+  // One build per milestone. A single page suffices: results arrive in text order, so the
+  // seven-digit revisions at the branch point come before any short legacy folder.
+  const jobs = SNAPSHOT_SOURCES.flatMap((s) => milestones.map((m) => ({ s, m })));
+  const rows = new Map<string, SnapshotRelease[]>();
+  await mapLimit(jobs, 10, async ({ s, m }) => {
     try {
-      const rev = await json<{ got_revision?: string }>(
-        `https://storage.googleapis.com/chromium-browser-snapshots/${s.bucketPlatform}/${r.revision}/REVISIONS`,
-      );
-      const commit = rev.got_revision ?? "";
-      if (!/^[0-9a-f]{40}$/.test(commit)) throw new Error("no got_revision");
-      commits.set(`${s.bucketPlatform}/${r.revision}`, commit);
+      const found = await listRevisions(s.bucketPlatform, s.file, m.branchPos, m.branchPos + MILESTONE_SPAN);
+      const first = found[0];
+      if (!first) return;
+      const list = rows.get(s.id) ?? [];
+      list.push({
+        revision: String(first.revision),
+        version: `${m.milestone}.0.${m.branch}.0`,
+        milestone: m.milestone,
+        commit: "",
+        builtAt: first.builtAt,
+        size: first.size,
+        url: `https://storage.googleapis.com/chromium-browser-snapshots/${s.bucketPlatform}/${first.revision}/${s.file}`,
+      });
+      rows.set(s.id, list);
     } catch {
-      /* counted once in assembly, where the revision is actually discarded */
+      /* a milestone the bucket no longer holds for this platform is simply not offered */
     }
   });
 
-  const versionOf = new Map<string, string>();
-  await mapLimit([...new Set(commits.values())], 2, async (commit) => {
-    try {
-      versionOf.set(commit, await versionAtCommit(commit));
-    } catch {
-      /* counted below, where the revision it belongs to is dropped */
-    }
-  });
-
-  const resolved = new Map<string, SnapshotRelease>();
-  for (const { s, r } of jobs) {
-    const key = `${s.bucketPlatform}/${r.revision}`;
-    const commit = commits.get(key);
-    const version = commit && versionOf.get(commit);
-    if (!commit || !version) {
-      dropped++;
-      continue;
-    }
-    resolved.set(key, {
-      revision: r.revision,
-      version,
-      commit,
-      builtAt: r.builtAt,
-      size: r.size,
-      url: `https://storage.googleapis.com/chromium-browser-snapshots/${s.bucketPlatform}/${r.revision}/${s.file}`,
-    });
-  }
-  if (dropped) note("snapshot history", `${dropped} of ${jobs.length} revisions failed to resolve a version`);
-
-  const tracks = pending.map(({ s, found }) => {
-    const seen = new Set<string>();
-    const releases = found
-      .map((r) => resolved.get(`${s.bucketPlatform}/${r.revision}`))
-      .filter((r): r is SnapshotRelease => r !== undefined)
-      // Twenty-four rows of one version is noise: a person picking an older build picks a version.
-      .filter((r) => !seen.has(r.version) && seen.add(r.version))
-      .slice(0, SNAPSHOT_HISTORY);
-    if (!releases.length) {
-      note(`snapshot history ${s.bucketPlatform}`, "every revision failed to resolve a version");
-      return undefined;
-    }
+  return SNAPSHOT_SOURCES.map((s): SnapshotTrack | undefined => {
+    const head = latest.get(s.id);
+    if (!head) return undefined;
+    const older = (rows.get(s.id) ?? [])
+      .sort((a, b) => (b.milestone ?? 0) - (a.milestone ?? 0))
+      .filter((r) => (r.milestone ?? 0) < (head.milestone ?? 0));
     return {
       id: s.id,
       slug: s.slug,
@@ -495,11 +521,10 @@ async function fetchSnapshotHistory(): Promise<SnapshotTrack[]> {
       arch: s.arch,
       bucketPlatform: s.bucketPlatform,
       file: s.file,
-      latest: releases[0],
-      older: releases.slice(1),
+      latest: head,
+      older,
     };
-  });
-  return tracks.filter((t): t is SnapshotTrack => t !== undefined);
+  }).filter((t): t is SnapshotTrack => t !== undefined);
 }
 
 // ---------------------------------------------------------------- repology

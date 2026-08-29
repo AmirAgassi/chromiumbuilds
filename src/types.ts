@@ -58,6 +58,8 @@ export interface Upstream {
 export interface SnapshotRelease {
   revision: string;
   version: string;
+  /** Major version. Present on every row; the history offers one build per milestone. */
+  milestone?: number;
   commit: string;
   builtAt: string;
   size: number;

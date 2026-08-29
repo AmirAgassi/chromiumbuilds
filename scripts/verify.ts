@@ -166,19 +166,41 @@ console.log("\n== snapshot history ==");
 if (manifest.snapshots.length >= 6) ok(`${manifest.snapshots.length} snapshot targets carry a history`);
 else bad("snapshots", `only ${manifest.snapshots.length} targets, the bucket listing may have changed shape`);
 const thin = manifest.snapshots.filter((t) => t.older.length < 3);
-if (thin.length === 0) ok("every snapshot target offers older revisions");
+if (thin.length === 0) ok("every snapshot target offers older versions");
 else bad("snapshots", `${thin.map((t) => t.bucketPlatform).join(", ")} have almost no history`);
 const badVer = manifest.snapshots.filter((t) => !/^\d+\.\d+\.\d+\.\d+$/.test(t.latest.version));
 if (badVer.length === 0) ok("every snapshot version resolved from chrome/VERSION");
 else bad("snapshots", `${badVer.length} targets have an unparsable version`);
 
-// The list offers versions, not revisions: repeats mean the day-sampling collapsed.
+// The list offers one build per MAJOR version. A repeat means two milestones resolved to the
+// same build, which is how the window would look if a branch point stopped being honoured.
 const dupes = manifest.snapshots.filter((t) => {
-  const v = [t.latest, ...t.older].map((r) => r.version);
-  return new Set(v).size !== v.length;
+  const m = [t.latest, ...t.older].map((r) => r.milestone);
+  return new Set(m).size !== m.length;
 });
-if (dupes.length === 0) ok("every snapshot target lists each version once");
-else bad("snapshots", `${dupes.map((t) => t.bucketPlatform).join(", ")} repeat a version`);
+if (dupes.length === 0) ok("every snapshot target lists each major version once");
+else bad("snapshots", `${dupes.map((t) => t.bucketPlatform).join(", ")} repeat a major version`);
+
+const unordered = manifest.snapshots.filter((t) =>
+  t.older.some((r, i) => i > 0 && (r.milestone ?? 0) >= (t.older[i - 1].milestone ?? 0)),
+);
+if (unordered.length === 0) ok("older versions descend by major version on every target");
+else bad("snapshots", `${unordered.map((t) => t.bucketPlatform).join(", ")} are out of order`);
+
+// A milestone row's version is asserted from the branch point rather than read per build, so a
+// mismatch between the two would ship a mislabelled download.
+const mislabelled = manifest.snapshots.flatMap((t) =>
+  [t.latest, ...t.older]
+    .filter((r) => String(r.milestone) !== r.version.split(".")[0])
+    .map((r) => `${t.bucketPlatform}/${r.version}`),
+);
+if (mislabelled.length === 0) ok("every listed version matches the major version it is filed under");
+else bad("snapshots", `mislabelled: ${mislabelled.slice(0, 4).join(", ")}`);
+
+// The point of the rewrite: a person wanting a specific major release can get it.
+const shallow = manifest.snapshots.filter((t) => t.older.length < 12);
+if (shallow.length === 0) ok(`history reaches back ${Math.min(...manifest.snapshots.map((t) => t.older.length))}+ major versions on every target`);
+else bad("snapshots", `${shallow.map((t) => `${t.bucketPlatform} (${t.older.length})`).join(", ")} offer too few major versions`);
 
 // A short revision is a 2013 build that slipped through the text-compared bucket window.
 const ancient = manifest.snapshots.flatMap((t) =>

@@ -23,14 +23,17 @@ all read automatically, no scraping:
 | source | what it provides |
 | --- | --- |
 | github releases api | hibbiki, macchrome (win/mac/linux/android), robrich999, ungoogled-software (win/mac/linux), gz83/thorium, win32ss/supermium |
-| `storage.googleapis.com/chromium-browser-snapshots` | official per-commit snapshots for win/win-arm64/win32/mac/mac-arm/linux/android, plus the recent revision history behind `/chromium/` |
-| `chromium.googlesource.com` | `chrome/VERSION` at a commit, the only place a snapshot's version string exists |
+| `storage.googleapis.com/chromium-browser-snapshots` | official per-commit snapshots for win/win-arm64/win32/mac/mac-arm/linux/android, plus every major version behind `/chromium/` |
+| chromiumdash | milestone branch points, which is what makes a specific major version findable |
+| `chromium.googlesource.com` | `chrome/VERSION` at a commit, for the exact version of the newest snapshot |
 | chrome for testing version feed | current upstream stable, beta, dev and canary, with revisions |
 | repology api | chromium and ungoogled-chromium versions across ~40 distributions |
 
-the snapshot history bisects rather than polling: `chrome/VERSION` only increases along main, so the
-version of every listed revision is found from a handful of boundary lookups instead of one request each.
-asking per revision throttles and silently drops builds.
+the snapshot history is keyed on milestones, not on time. chromiumdash publishes the main-branch
+position where each major version branched, and the first snapshot at or after that position is a build
+of that version - so `/chromium/` offers chromium 114 through current, one build each, and the version
+string is known from the branch point without a per-revision lookup. that matters: asking
+googlesource per revision throttles and silently drops builds.
 
 github's release api now returns a `digest` field per asset, which is where the checksums come from. that
 removed the only part of this that would otherwise have needed downloading gigabytes of binaries.

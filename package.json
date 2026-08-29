@@ -6,8 +6,7 @@
     "fetch": "bun run src/fetch.ts",
     "build": "bun run src/build.ts",
     "all": "bun run fetch && bun run build",
-    "verify": "bun run scripts/verify.ts",
-    "serve": "bunx serve dist"
+    "verify": "bun run scripts/verify.ts"
   },
   "dependencies": {
     "marked": "^18.0.11"

@@ -1169,8 +1169,9 @@ function revisionRows(releases: SnapshotRelease[], scroll = false): string {
   return `<div class="revs${scroll ? " scroll" : ""}"><ol>
 ${releases
   .map(
-    (r) => `<li><time datetime="${esc(r.builtAt)}">${shortDate(r.builtAt)}</time>
+    (r) => `<li><span class="mst">${esc(String(r.milestone ?? r.version.split(".")[0]))}</span>
 <span class="rv">${esc(r.version)}</span>
+<time datetime="${esc(r.builtAt)}">${shortDate(r.builtAt)}</time>
 <a href="${crrev(r.revision)}" rel="nofollow noopener">r${esc(r.revision)}</a>
 <a href="${esc(r.url)}" rel="nofollow noopener">Download</a></li>`,
   )
@@ -1180,9 +1181,10 @@ ${releases
 
 function olderList(t: SnapshotTrack, opts: { scroll?: boolean; heading?: string } = {}): string {
   if (!t.older.length) return "";
-  return `${opts.heading ?? "<h3>Older revisions</h3>"}
-<p class="blurb">One build per version, newest first. Take an older one when the current version broke
-something you need working.</p>
+  return `${opts.heading ?? "<h3>Older versions</h3>"}
+<p class="blurb">One build per major version, newest first. Every Chromium release from
+${esc(String(t.older.at(-1)?.milestone ?? ""))} onwards is here, so take an older one when the current
+version broke something you need working.</p>
 ${revisionRows(t.older, opts.scroll)}`;
 }
 
@@ -1190,7 +1192,7 @@ ${revisionRows(t.older, opts.scroll)}`;
 function pickHistory(build: Build): string {
   const t = snapshots.find((x) => x.id === build.id);
   if (!t?.older.length) return "";
-  return `<details class="more"><summary>Other versions (${t.older.length})</summary>
+  return `<details class="more"><summary>Other versions (${t.older.length}, back to Chromium ${t.older.at(-1)?.milestone})</summary>
 ${revisionRows(t.older, true)}</details>`;
 }
 
@@ -1204,7 +1206,7 @@ ${snapshotFacts(t, r)}
 <div class="dl"><a class="btn big" href="${esc(r.url)}" rel="nofollow noopener">Download Chromium ${esc(r.version)}
 <small>${esc(t.file.endsWith(".zip") ? "zip" : "archive")}, ${bytes(r.size)}</small></a>
 <a class="btn sec" href="${url(`/chromium/${t.slug}/`)}">About this build</a></div>
-${opts.hidden ? olderList(t, { scroll: true, heading: "<h4>Older revisions</h4>" }) : ""}
+${opts.hidden ? olderList(t, { scroll: true, heading: "<h4>Older versions</h4>" }) : ""}
 </div>`;
 }
 
@@ -1310,7 +1312,7 @@ ${snapshotCard(t)}
 <h2>Installing it</h2>
 <p class="blurb">${esc(INSTALL_NOTE[t.platform])}</p>
 
-${olderList(t, { heading: "<h2>Older revisions</h2>" })}
+${olderList(t, { heading: "<h2>Older versions</h2>" })}
 
 <h2>Other platforms</h2>
 <ul class="grid-links">
