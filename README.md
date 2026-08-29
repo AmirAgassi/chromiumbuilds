@@ -80,6 +80,14 @@ content/docs/    the reference guides, markdown with frontmatter
 scripts/verify.ts post-build checks
 ```
 
+## the logo
+
+`assets/chromium-logo.svg` is the chromium product logo, copied unmodified from
+`chrome/app/theme/chromium/product_logo.svg` in the chromium source tree, which ships under the
+chromium bsd licence. it is the open-source *chromium* branding, not the proprietary google chrome
+marks in the sibling `google_chrome/` directory. it is served as the favicon and the header mark.
+see [`assets/README.md`](assets/README.md) to refresh it.
+
 ## licence
 
 MIT for this code. the builds it indexes belong to their respective maintainers, who do the actual work of

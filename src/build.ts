@@ -1454,10 +1454,8 @@ ${[...new Set(builds.map((b) => b.project))]
 `,
   );
 
-  await Bun.write(
-    `${OUT}/favicon.svg`,
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#1a56c4"/><path d="M32 14a18 18 0 0 1 15.6 9H33.4a9 9 0 0 0-8.2 5.2L18.6 18A18 18 0 0 1 32 14Zm-16 6.4 7.1 12.3a9 9 0 0 0 6.6 10.1l-6.6 11.4A18 18 0 0 1 16 20.4Zm34.9 6.2A18 18 0 0 1 34.4 50l7.1-12.3a9 9 0 0 0 1.6-11.1ZM32 25.5a6.5 6.5 0 1 1 0 13 6.5 6.5 0 0 1 0-13Z" fill="#fff"/></svg>`,
-  );
+  // The real Chromium mark, copied unmodified from the source tree; see assets/README.md.
+  await Bun.write(`${OUT}/favicon.svg`, await Bun.file("assets/chromium-logo.svg").text());
 
   await Bun.write(
     `${OUT}/404.html`,

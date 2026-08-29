@@ -40,8 +40,9 @@ hr{border:0;border-top:1px solid var(--line);margin:2.5rem 0}
 /* header */
 .top{border-bottom:1px solid var(--line);background:var(--bg);position:sticky;top:0;z-index:10}
 .top .wrap{display:flex;align-items:center;gap:1.25rem;height:3.5rem}
-.brand{font-weight:670;color:var(--fg);text-decoration:none;letter-spacing:-.02em;font-size:1.02rem;white-space:nowrap}
+.brand{display:inline-flex;align-items:center;gap:.42rem;font-weight:670;color:var(--fg);text-decoration:none;letter-spacing:-.02em;font-size:1.02rem;white-space:nowrap}
 .brand span{color:var(--accent)}
+.brand img{width:22px;height:22px;display:block}
 .nav{display:flex;gap:.1rem;margin-left:auto;flex-wrap:wrap}
 .nav a{color:var(--muted);text-decoration:none;padding:.35rem .6rem;border-radius:6px;font-size:.9rem}
 .nav a:hover{background:var(--card);color:var(--fg)}
@@ -242,7 +243,7 @@ ${meta.head ?? ""}
 <a class="skip" href="#main">Skip to content</a>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="${url("/")}">Chromium<span>Builds</span></a>
+    <a class="brand" href="${url("/")}"><img src="${url("/favicon.svg")}" alt="" width="22" height="22" decoding="async">Chromium<span>Builds</span></a>
     <nav class="nav" aria-label="Primary">
       ${NAV.map(
         (n) =>
