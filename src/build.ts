@@ -35,21 +35,25 @@ async function page(path: string, meta: Omit<PageMeta, "path">, body: string, se
 
 const byPlatform = (p: Platform) => builds.filter((b) => b.platform === p);
 const rank = (b: Build) => {
-  // Order a platform page the way a person decides: real releases first, snapshots last,
-  // then freshest, then most complete.
-  const channelWeight = b.channel === "snapshot" ? 2 : b.channel === "dev" ? 1 : 0;
+  // The official build is what this site recommends, so it leads; a highlighted pick stranded
+  // at the bottom of its own list reads as a rendering fault.
+  const channelWeight = b.channel === "snapshot" ? -1 : b.channel === "dev" ? 1 : 0;
   const freshWeight = { current: 0, behind: 1, outdated: 2, abandoned: 3 }[b.freshness];
   return channelWeight * 10 + freshWeight;
 };
 const sorted = (list: Build[]) =>
   [...list].sort((a, b) => rank(a) - rank(b) || b.version.localeCompare(a.version, undefined, { numeric: true }));
 
-/** The build we point a first-time visitor at for a given platform and architecture. */
-function recommended(platform: Platform, arch: Arch): Build | undefined {
-  const cands = builds.filter((b) => b.platform === platform && b.arch.includes(arch));
+/**
+ * The best build by a third-party maintainer: current, with video and Widevine working, and not
+ * pinned to a CPU generation the visitor may not have.
+ */
+function maintained(platform: Platform, arch: Arch): Build | undefined {
+  const cands = builds.filter(
+    (b) => b.platform === platform && b.arch.includes(arch) && b.channel !== "snapshot",
+  );
   const score = (b: Build) => {
     let s = 0;
-    if (b.channel === "snapshot") s += 100;
     if (b.channel === "dev") s += 30;
     if (b.freshness === "behind") s += 8;
     if (b.freshness === "outdated") s += 40;
@@ -60,6 +64,18 @@ function recommended(platform: Platform, arch: Arch): Build | undefined {
     return s;
   };
   return [...cands].sort((a, b) => score(a) - score(b))[0];
+}
+
+/** Google's own build for this target, which is the one this site leads with. */
+const official = (platform: Platform, arch: Arch): Build | undefined =>
+  builds.find((b) => b.channel === "snapshot" && b.platform === platform && b.arch.includes(arch));
+
+/**
+ * The build we point a first-time visitor at. Chromium itself wherever Google builds it; a
+ * maintainer's build only where they do not (linux arm64, android arm64).
+ */
+function recommended(platform: Platform, arch: Arch): Build | undefined {
+  return official(platform, arch) ?? maintained(platform, arch);
 }
 
 const archesFor = (p: Platform): Arch[] => {
@@ -153,10 +169,17 @@ function pickCards(): string {
     for (const a of archesFor(p)) {
       const b = recommended(p, a);
       if (!b) continue;
+      // Where the pick IS Chromium, the maintained build is the answer to what it cannot do.
+      const alt = b.channel === "snapshot" ? maintained(p, a) : undefined;
       blocks.push(`<div hidden id="pick-${p}-${a}">
 <p class="blurb" style="margin-top:-.25rem">Detected ${PLATFORM_LABEL[p]} on ${esc(ARCH_LABEL[a])}.
-<a href="${url(`/${p}/`)}">See every ${PLATFORM_LABEL[p]} build</a>, or
-<a href="${url("/docs/which-chromium-build/")}">compare them first</a>.</p>
+${
+  alt
+    ? `This is Chromium itself, as Google builds it. For one that plays streaming video and updates itself,
+<a href="${url(`/builds/${alt.project}/`)}">try ${esc(alt.projectName)}</a>, or`
+    : ""
+}
+<a href="${url(`/${p}/`)}">see every ${PLATFORM_LABEL[p]} build</a>.</p>
 ${buildList([b], { pickId: b.id })}</div>`);
     }
   }
@@ -276,6 +299,7 @@ async function platformPage(p: Platform) {
   const list = sorted(byPlatform(p));
   const arches = archesFor(p);
   const rec = recommended(p, arches[0]);
+  const recAlt = rec?.channel === "snapshot" ? maintained(p, arches[0]) : undefined;
 
   const sections = arches
     .map((a) => {
@@ -296,9 +320,17 @@ ${buildList(forArch, { pickId: recArch?.id })}`;
 </div>
 ${
   rec
-    ? `<div class="note"><p><b>Not sure?</b> ${esc(rec.projectName)} ${esc(rec.version)} is the safest default for most
-${PLATFORM_LABEL[p]} users. <a href="#${esc(rec.id)}">Jump to it</a>, or read
-<a href="${url("/docs/which-chromium-build/")}">how the builds differ</a>.</p></div>`
+    ? `<div class="note"><p><b>Not sure?</b> ${
+        rec.channel === "snapshot"
+          ? `${esc(rec.projectName)} ${esc(rec.version)} is Chromium itself, straight from Google.
+<a href="#${esc(rec.id)}">Jump to it</a>${
+              recAlt
+                ? `, or take <a href="#${esc(recAlt.id)}">${esc(recAlt.projectName)}</a> if you need streaming video and an updater`
+                : ""
+            }.`
+          : `${esc(rec.projectName)} ${esc(rec.version)} is the safest default for most
+${PLATFORM_LABEL[p]} users. <a href="#${esc(rec.id)}">Jump to it</a>.`
+      } Read <a href="${url("/docs/which-chromium-build/")}">how the builds differ</a>.</p></div>`
     : ""
 }
 ${sections}
