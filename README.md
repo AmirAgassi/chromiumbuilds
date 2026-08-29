@@ -46,9 +46,10 @@ set `GITHUB_TOKEN` when fetching to avoid the unauthenticated rate limit.
 
 ## deployment
 
-github actions rebuilds every three hours and deploys to github pages. `SITE_URL` and `BASE_PATH` repo
-variables control canonical urls and the path prefix, so moving to a custom domain is two variable changes
-plus a `CNAME` file.
+github actions rebuilds every three hours and deploys to github pages at
+[chromiumbuilds.org](https://chromiumbuilds.org). `SITE_URL` and `BASE_PATH` are set in
+[the workflow](.github/workflows/deploy.yml); the generator emits `CNAME` itself, so the custom domain
+survives every rebuild.
 
 a separate daily workflow runs the full verification including live download urls, so a maintainer moving
 their assets surfaces as a failed check rather than a dead button.

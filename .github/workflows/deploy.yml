@@ -34,13 +34,11 @@ jobs:
 
       - name: generate site
         env:
-          SITE_URL: ${{ vars.SITE_URL || 'https://amiragassi.github.io' }}
-          BASE_PATH: ${{ vars.BASE_PATH || '/chromiumbuilds' }}
+          SITE_URL: https://chromiumbuilds.org
+          BASE_PATH: ""
         run: bun run build
 
       - name: verify output
-        env:
-          BASE_PATH: ${{ vars.BASE_PATH || '/chromiumbuilds' }}
         run: bun run verify --no-network
 
       - uses: actions/upload-pages-artifact@v3

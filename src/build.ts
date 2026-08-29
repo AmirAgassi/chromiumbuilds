@@ -1220,6 +1220,10 @@ ${[...new Set(builds.map((b) => b.project))]
 
   // Keep GitHub Pages from running the output through Jekyll.
   await Bun.write(`${OUT}/.nojekyll`, "");
+
+  // Pages reads the custom domain from this file on every deploy, so the generator owns it.
+  const host = new URL(SITE.origin).hostname;
+  if (!host.endsWith("github.io") && !SITE.base) await Bun.write(`${OUT}/CNAME`, `${host}\n`);
 }
 
 // ============================================================ run
