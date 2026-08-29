@@ -482,7 +482,7 @@ async function packagesPage() {
       .map((d) => {
         const cmd = INSTALL_COMMANDS[d.repo]?.[project === "chromium" ? "chromium" : "ungoogled"];
         return `<tr><td>${esc(d.distro)}</td><td><code>${esc(d.version)}</code></td><td class="wrap-cell">${
-          cmd ? `<code>${esc(cmd)}</code>` : "&mdash;"
+          cmd ? `<code>${esc(cmd)}</code>` : "Not packaged"
         }</td></tr>`;
       })
       .join("");
