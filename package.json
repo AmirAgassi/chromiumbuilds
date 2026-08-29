@@ -1,0 +1,15 @@
+{
+  "name": "chromiumbuilds",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "fetch": "bun run src/fetch.ts",
+    "build": "bun run src/build.ts",
+    "all": "bun run fetch && bun run build",
+    "verify": "bun run scripts/verify.ts",
+    "serve": "bunx serve dist"
+  },
+  "dependencies": {
+    "marked": "^18.0.11"
+  }
+}

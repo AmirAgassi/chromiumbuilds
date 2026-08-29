@@ -1,0 +1,2115 @@
+{
+  "generatedAt": "2026-08-29T00:44:39.587Z",
+  "upstream": {
+    "stable": {
+      "version": "152.0.7977.64",
+      "milestone": 152,
+      "revision": "1669021"
+    },
+    "beta": {
+      "version": "153.0.8010.12",
+      "milestone": 153,
+      "revision": "1681091"
+    },
+    "dev": {
+      "version": "154.0.8025.0",
+      "milestone": 154,
+      "revision": "1686064"
+    },
+    "canary": {
+      "version": "154.0.8030.0",
+      "milestone": 154,
+      "revision": "1687892"
+    },
+    "fetchedAt": "2026-08-29T00:44:36.084Z"
+  },
+  "builds": [
+    {
+      "id": "snapshot-android",
+      "project": "chromium-snapshot",
+      "projectName": "Official Chromium snapshot",
+      "maintainer": "The Chromium Authors",
+      "platform": "android",
+      "arch": [
+        "arm32"
+      ],
+      "channel": "snapshot",
+      "version": "154.0.8030.0",
+      "milestone": 154,
+      "revision": "1688399",
+      "releasedAt": "2026-08-29T00:44:36.634Z",
+      "google": "raw",
+      "proprietaryCodecs": false,
+      "hevc": false,
+      "widevine": false,
+      "downloads": [
+        {
+          "kind": "archive",
+          "label": "Archive (zip)",
+          "filename": "chrome-android.zip",
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Android/1688399/chrome-android.zip",
+          "arch": "arm32",
+          "recommended": true
+        }
+      ],
+      "releaseUrl": "https://storage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Android/1688399/",
+      "sourceUrl": "https://www.chromium.org/getting-involved/download-chromium/",
+      "freshness": "current",
+      "ageDays": 0,
+      "notes": [
+        "Built from an arbitrary commit. No release testing of any kind has happened.",
+        "No auto-update. You are responsible for replacing it yourself.",
+        "Open codecs only, and no Widevine, so most streaming video will not play."
+      ]
+    },
+    {
+      "id": "thorium-android-arm32",
+      "project": "thorium",
+      "projectName": "Thorium",
+      "maintainer": "Alex313031 and gz83",
+      "platform": "android",
+      "arch": [
+        "arm32"
+      ],
+      "channel": "stable",
+      "version": "152.0.7977.55",
+      "milestone": 152,
+      "releasedAt": "2026-08-23T16:14:11Z",
+      "google": "nosync",
+      "proprietaryCodecs": true,
+      "hevc": true,
+      "widevine": true,
+      "downloads": [
+        {
+          "kind": "apk",
+          "label": "APK (32-bit)",
+          "filename": "Thorium_Public_arm32.apk",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/Thorium_Public_arm32.apk",
+          "size": 228029859,
+          "sha256": "327a2fe6a74292492433f610df036bb557eb8024da2fadb6eb6cfe594d112f78",
+          "arch": "arm32",
+          "recommended": true
+        }
+      ],
+      "releaseUrl": "https://github.com/gz83/thorium/releases/tag/M152.0.7977.55",
+      "sourceUrl": "https://github.com/gz83/thorium",
+      "freshness": "current",
+      "ageDays": 5,
+      "notes": [
+        "Alex313031 stepped back from the project. gz83 is publishing current builds.",
+        "Pick AVX2 unless your CPU predates roughly 2013."
+      ]
+    },
+    {
+      "id": "thorium-android-arm64",
+      "project": "thorium",
+      "projectName": "Thorium",
+      "maintainer": "Alex313031 and gz83",
+      "platform": "android",
+      "arch": [
+        "arm64"
+      ],
+      "channel": "stable",
+      "version": "152.0.7977.55",
+      "milestone": 152,
+      "releasedAt": "2026-08-23T16:14:11Z",
+      "google": "nosync",
+      "proprietaryCodecs": true,
+      "hevc": true,
+      "widevine": true,
+      "downloads": [
+        {
+          "kind": "apk",
+          "label": "APK",
+          "filename": "Thorium_Public_arm64.apk",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/Thorium_Public_arm64.apk",
+          "size": 337790754,
+          "sha256": "cd61d64286e965f93746c6c960521685d432a1f18f4bf21c574513c09b37d14e",
+          "arch": "arm64",
+          "recommended": true
+        }
+      ],
+      "releaseUrl": "https://github.com/gz83/thorium/releases/tag/M152.0.7977.55",
+      "sourceUrl": "https://github.com/gz83/thorium",
+      "freshness": "current",
+      "ageDays": 5,
+      "notes": [
+        "Alex313031 stepped back from the project. gz83 is publishing current builds.",
+        "Pick AVX2 unless your CPU predates roughly 2013."
+      ]
+    },
+    {
+      "id": "marmaduke-android-arm64",
+      "project": "marmaduke-android",
+      "projectName": "Marmaduke ungoogled (Android)",
+      "maintainer": "Marmaduke",
+      "platform": "android",
+      "arch": [
+        "arm64"
+      ],
+      "channel": "stable",
+      "version": "148.0.7778.288",
+      "milestone": 148,
+      "revision": "1610480",
+      "releasedAt": "2026-07-12T13:09:00Z",
+      "google": "ungoogled",
+      "proprietaryCodecs": true,
+      "hevc": true,
+      "widevine": false,
+      "downloads": [
+        {
+          "kind": "apk",
+          "label": "APK",
+          "filename": "arm64_ChromePublic_HEVC-148.0.7778.288.apk",
+          "url": "https://github.com/macchrome/droidchrome/releases/download/v148.7778.288-M148.0.7778.288-r1610480-Ungoogled-And64/arm64_ChromePublic_HEVC-148.0.7778.288.apk",
+          "size": 242069657,
+          "sha256": "2c8e7ab6a660798099f79ab544904ff4922b67262ec425a65b984d9845ba0b23",
+          "arch": "arm64",
+          "recommended": true
+        }
+      ],
+      "releaseUrl": "https://github.com/macchrome/droidchrome/releases/tag/v148.7778.288-M148.0.7778.288-r1610480-Ungoogled-And64",
+      "sourceUrl": "https://github.com/macchrome/droidchrome",
+      "freshness": "outdated",
+      "ageDays": 47,
+      "notes": [
+        "Carries Bromite patches. Bromite itself is discontinued.",
+        "Sideloading requires allowing installs from unknown sources."
+      ]
+    },
+    {
+      "id": "snapshot-linux-x64",
+      "project": "chromium-snapshot",
+      "projectName": "Official Chromium snapshot",
+      "maintainer": "The Chromium Authors",
+      "platform": "linux",
+      "arch": [
+        "x64"
+      ],
+      "channel": "snapshot",
+      "version": "154.0.8030.0",
+      "milestone": 154,
+      "revision": "1688400",
+      "releasedAt": "2026-08-29T00:44:36.639Z",
+      "google": "raw",
+      "proprietaryCodecs": false,
+      "hevc": false,
+      "widevine": false,
+      "downloads": [
+        {
+          "kind": "archive",
+          "label": "Archive (zip)",
+          "filename": "chrome-linux.zip",
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/1688400/chrome-linux.zip",
+          "arch": "x64",
+          "recommended": true
+        }
+      ],
+      "releaseUrl": "https://storage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Linux_x64/1688400/",
+      "sourceUrl": "https://www.chromium.org/getting-involved/download-chromium/",
+      "freshness": "current",
+      "ageDays": 0,
+      "notes": [
+        "Built from an arbitrary commit. No release testing of any kind has happened.",
+        "No auto-update. You are responsible for replacing it yourself.",
+        "Open codecs only, and no Widevine, so most streaming video will not play."
+      ]
+    },
+    {
+      "id": "robrich-linux-x64-avx",
+      "project": "robrich",
+      "projectName": "RobRich Chromium (Clang/LLVM)",
+      "maintainer": "RobRich999",
+      "platform": "linux",
+      "arch": [
+        "x64"
+      ],
+      "channel": "dev",
+      "version": "153.0.7993.0",
+      "milestone": 153,
+      "revision": "1673900",
+      "releasedAt": "2026-08-05T09:52:58Z",
+      "google": "nosync",
+      "proprietaryCodecs": true,
+      "hevc": true,
+      "widevine": true,
+      "simd": "avx",
+      "downloads": [
+        {
+          "kind": "deb",
+          "label": "Debian package",
+          "filename": "chromium-browser-unstable_153.0.7993.0-1_amd64.deb",
+          "url": "https://github.com/RobRich999/Chromium_Clang/releases/download/v153.0.7993.0-r1673900-linux64-deb-avx/chromium-browser-unstable_153.0.7993.0-1_amd64.deb",
+          "size": 130439700,
+          "sha256": "9a09cf04679edb9f7afba6dd4c23094ba8a07fa58ed25b10437308437a673421",
+          "arch": "x64",
+          "simd": "avx",
+          "recommended": true
+        },
+        {
+          "kind": "rpm",
+          "label": "RPM package",
+          "filename": "chromium-browser-unstable-153.0.7993.0-1.x86_64.rpm",
+          "url": "https://github.com/RobRich999/Chromium_Clang/releases/download/153.0.7993.0-r1673900-linux64-rpm-avx/chromium-browser-unstable-153.0.7993.0-1.x86_64.rpm",
+          "size": 130678433,
+          "sha256": "51908c4383a3028fa974bda5a69eaa6a6018da70f89f4c65296d710ad8e76931",
+          "arch": "x64",
+          "simd": "avx",
+          "recommended": true
+        }
+      ],
+      "releaseUrl": "https://github.com/RobRich999/Chromium_Clang/releases/tag/v153.0.7993.0-r1673900-linux64-deb-avx",
+      "sourceUrl": "https://github.com/RobRich999/Chromium_Clang",
+      "freshness": "current",
+      "ageDays": 23,
+      "notes": [
+        "Development channel. Expect the occasional regression.",
+        "Check which instruction set your CPU supports before downloading."
+      ]
+    },
+    {
+      "id": "robrich-linux-x64-avx2",
+      "project": "robrich",
+      "projectName": "RobRich Chromium (Clang/LLVM)",
+      "maintainer": "RobRich999",
+      "platform": "linux",
+      "arch": [
+        "x64"
+      ],
+      "channel": "dev",
+      "version": "153.0.7993.0",
+      "milestone": 153,
+      "revision": "1673900",
+      "releasedAt": "2026-08-05T09:41:39Z",
+      "google": "nosync",
+      "proprietaryCodecs": true,
+      "hevc": true,
+      "widevine": true,
+      "simd": "avx2",
+      "downloads": [
+        {
+          "kind": "deb",
+          "label": "Debian package",
+          "filename": "chromium-browser-unstable_153.0.7993.0-1_amd64.deb",
+          "url": "https://github.com/RobRich999/Chromium_Clang/releases/download/v153.0.7993.0-r1673900-linux64-deb-avx2/chromium-browser-unstable_153.0.7993.0-1_amd64.deb",
+          "size": 129765512,
+          "sha256": "52dc57dea97b7f0132b13b8bc0e18810fac35a15550ac285420d5fec7da7e423",
+          "arch": "x64",
+          "simd": "avx2",
+          "recommended": true
+        },
+        {
+          "kind": "rpm",
+          "label": "RPM package",
+          "filename": "chromium-browser-unstable-153.0.7993.0-1.x86_64.rpm",
+          "url": "https://github.com/RobRich999/Chromium_Clang/releases/download/v153.0.7993.0-r1673900-linux64-rpm-avx2/chromium-browser-unstable-153.0.7993.0-1.x86_64.rpm",
+          "size": 129994737,
+          "sha256": "e65171601fa1734b5c016333caef0be2c8e646064ca8a5381c59f4195dc3908e",
+          "arch": "x64",
+          "simd": "avx2",
+          "recommended": true
+        }
+      ],
+      "releaseUrl": "https://github.com/RobRich999/Chromium_Clang/releases/tag/v153.0.7993.0-r1673900-linux64-rpm-avx2",
+      "sourceUrl": "https://github.com/RobRich999/Chromium_Clang",
+      "freshness": "current",
+      "ageDays": 23,
+      "notes": [
+        "Development channel. Expect the occasional regression.",
+        "Check which instruction set your CPU supports before downloading."
+      ]
+    },
+    {
+      "id": "thorium-linux-arm64",
+      "project": "thorium",
+      "projectName": "Thorium",
+      "maintainer": "Alex313031 and gz83",
+      "platform": "linux",
+      "arch": [
+        "arm64"
+      ],
+      "channel": "stable",
+      "version": "152.0.7977.55",
+      "milestone": 152,
+      "releasedAt": "2026-08-23T16:14:11Z",
+      "google": "nosync",
+      "proprietaryCodecs": true,
+      "hevc": true,
+      "widevine": true,
+      "downloads": [
+        {
+          "kind": "appimage",
+          "label": "AppImage",
+          "filename": "Thorium_Browser_152.0.7977.55_arm64.AppImage",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/Thorium_Browser_152.0.7977.55_arm64.AppImage",
+          "size": 247622152,
+          "sha256": "e9027f693d6185a54c45902e3c7b0d5ffe8aa954b527cbf27f7d6caf0b17da59",
+          "arch": "arm64",
+          "recommended": true
+        },
+        {
+          "kind": "deb",
+          "label": "Debian package",
+          "filename": "thorium-browser_152.0.7977.55_arm64.deb",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/thorium-browser_152.0.7977.55_arm64.deb",
+          "size": 182105624,
+          "sha256": "d45818754b3f67c209767a46ed67d0070d80a3d862da4d236230dcf06816b94d",
+          "arch": "arm64"
+        },
+        {
+          "kind": "rpm",
+          "label": "RPM package",
+          "filename": "thorium-browser_152.0.7977.55_arm64.rpm",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/thorium-browser_152.0.7977.55_arm64.rpm",
+          "size": 182363583,
+          "sha256": "87663e24239c28b6b76a814e45917e7f5f141089d6e4462c3c60c8320d5838f1",
+          "arch": "arm64"
+        }
+      ],
+      "releaseUrl": "https://github.com/gz83/thorium/releases/tag/M152.0.7977.55",
+      "sourceUrl": "https://github.com/gz83/thorium",
+      "freshness": "current",
+      "ageDays": 5,
+      "notes": [
+        "Alex313031 stepped back from the project. gz83 is publishing current builds.",
+        "Pick AVX2 unless your CPU predates roughly 2013."
+      ]
+    },
+    {
+      "id": "thorium-linux-x64",
+      "project": "thorium",
+      "projectName": "Thorium",
+      "maintainer": "Alex313031 and gz83",
+      "platform": "linux",
+      "arch": [
+        "x64"
+      ],
+      "channel": "stable",
+      "version": "152.0.7977.55",
+      "milestone": 152,
+      "releasedAt": "2026-08-23T16:14:11Z",
+      "google": "nosync",
+      "proprietaryCodecs": true,
+      "hevc": true,
+      "widevine": true,
+      "downloads": [
+        {
+          "kind": "appimage",
+          "label": "AppImage (AVX2)",
+          "filename": "Thorium_Browser_152.0.7977.55_AVX2.AppImage",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/Thorium_Browser_152.0.7977.55_AVX2.AppImage",
+          "size": 286083576,
+          "sha256": "4f21f11e1370556fadfb4ae9317d0300018a7f3cc5f8bfc5f551a28d60eab74d",
+          "arch": "x64",
+          "simd": "avx2",
+          "recommended": true
+        },
+        {
+          "kind": "appimage",
+          "label": "AppImage (AVX-512)",
+          "filename": "Thorium_Browser_152.0.7977.55_AVX512.AppImage",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/Thorium_Browser_152.0.7977.55_AVX512.AppImage",
+          "size": 285555192,
+          "sha256": "6579853ec749e1a1ba9317494e615e8d2708a0ba5c41b4fc6bc3d48c0eb29794",
+          "arch": "x64",
+          "simd": "avx512"
+        },
+        {
+          "kind": "appimage",
+          "label": "AppImage (AVX)",
+          "filename": "Thorium_Browser_152.0.7977.55_AVX.AppImage",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/Thorium_Browser_152.0.7977.55_AVX.AppImage",
+          "size": 287562232,
+          "sha256": "ec348e662f23b6af2557ada1a98ac9c21734aec337561f997fedbf4348ca31af",
+          "arch": "x64",
+          "simd": "avx"
+        },
+        {
+          "kind": "appimage",
+          "label": "AppImage (SSE3)",
+          "filename": "Thorium_Browser_152.0.7977.55_SSE3.AppImage",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/Thorium_Browser_152.0.7977.55_SSE3.AppImage",
+          "size": 286783992,
+          "sha256": "5f53d4b79dba4550f0a01794ade5257ef7fc85a485b786e1ea797326be879ed3",
+          "arch": "x64",
+          "simd": "sse3"
+        },
+        {
+          "kind": "appimage",
+          "label": "AppImage (SSE4)",
+          "filename": "Thorium_Browser_152.0.7977.55_SSE4.AppImage",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/Thorium_Browser_152.0.7977.55_SSE4.AppImage",
+          "size": 287369720,
+          "sha256": "7d9900352a0c590298b69c888ed841e378831b82690d7d6cf69bd642d6dd0582",
+          "arch": "x64",
+          "simd": "sse4"
+        },
+        {
+          "kind": "deb",
+          "label": "Debian package (AVX)",
+          "filename": "thorium-browser_152.0.7977.55_AVX.deb",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/thorium-browser_152.0.7977.55_AVX.deb",
+          "size": 233624944,
+          "sha256": "1b3eee95310af6440026f00d39b4a457a4d73c1fafdf658667675487f7ce522b",
+          "arch": "x64",
+          "simd": "avx"
+        },
+        {
+          "kind": "deb",
+          "label": "Debian package (AVX2)",
+          "filename": "thorium-browser_152.0.7977.55_AVX2.deb",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/thorium-browser_152.0.7977.55_AVX2.deb",
+          "size": 233247296,
+          "sha256": "2dcec0a63128759be434828712f17e7701940ea3b781da80adc3b4854a246559",
+          "arch": "x64",
+          "simd": "avx2"
+        },
+        {
+          "kind": "deb",
+          "label": "Debian package (SSE3)",
+          "filename": "thorium-browser_152.0.7977.55_SSE3.deb",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/thorium-browser_152.0.7977.55_SSE3.deb",
+          "size": 233273716,
+          "sha256": "f9c9be22db78bb9f7767f215c3e244e53151945901375a2316617c1740047d21",
+          "arch": "x64",
+          "simd": "sse3"
+        },
+        {
+          "kind": "deb",
+          "label": "Debian package (SSE4)",
+          "filename": "thorium-browser_152.0.7977.55_SSE4.deb",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/thorium-browser_152.0.7977.55_SSE4.deb",
+          "size": 233483552,
+          "sha256": "265cd5f58f53eb38a71bd61e0e4a8df137c3e2bc8f5b0df0d4571096fcfd6f7a",
+          "arch": "x64",
+          "simd": "sse4"
+        },
+        {
+          "kind": "rpm",
+          "label": "RPM package (AVX)",
+          "filename": "thorium-browser_152.0.7977.55_AVX.rpm",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/thorium-browser_152.0.7977.55_AVX.rpm",
+          "size": 233885018,
+          "sha256": "393fcf26f42fa3fff66bc21e84dc2a293e9d3cc42f9cfa973250c8d5b473566f",
+          "arch": "x64",
+          "simd": "avx"
+        },
+        {
+          "kind": "rpm",
+          "label": "RPM package (AVX2)",
+          "filename": "thorium-browser_152.0.7977.55_AVX2.rpm",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/thorium-browser_152.0.7977.55_AVX2.rpm",
+          "size": 233520338,
+          "sha256": "485e21b14c8039410983524ca04323175dba89d4f20118a63664b261416e78b5",
+          "arch": "x64",
+          "simd": "avx2"
+        }
+      ],
+      "releaseUrl": "https://github.com/gz83/thorium/releases/tag/M152.0.7977.55",
+      "sourceUrl": "https://github.com/gz83/thorium",
+      "freshness": "current",
+      "ageDays": 5,
+      "notes": [
+        "Alex313031 stepped back from the project. gz83 is publishing current builds.",
+        "Pick AVX2 unless your CPU predates roughly 2013."
+      ]
+    },
+    {
+      "id": "thorium-linux-x86",
+      "project": "thorium",
+      "projectName": "Thorium",
+      "maintainer": "Alex313031 and gz83",
+      "platform": "linux",
+      "arch": [
+        "x86"
+      ],
+      "channel": "stable",
+      "version": "152.0.7977.55",
+      "milestone": 152,
+      "releasedAt": "2026-08-23T16:14:11Z",
+      "google": "nosync",
+      "proprietaryCodecs": true,
+      "hevc": true,
+      "widevine": true,
+      "downloads": [
+        {
+          "kind": "deb",
+          "label": "Debian package (32-bit)",
+          "filename": "thorium-browser_152.0.7977.55_i386.deb",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/thorium-browser_152.0.7977.55_i386.deb",
+          "size": 217532508,
+          "sha256": "2c6140333c4179cd9130e16bb02e7f6f8f21383975dd00e40ff0f2c6de5cfc2f",
+          "arch": "x86",
+          "recommended": true
+        },
+        {
+          "kind": "rpm",
+          "label": "RPM package (32-bit)",
+          "filename": "thorium-browser_152.0.7977.55_i386.rpm",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/thorium-browser_152.0.7977.55_i386.rpm",
+          "size": 217542430,
+          "sha256": "ec8303daa7ce008f785aa2c2c85bd92ded488bdd80442f96056192cefee68ad7",
+          "arch": "x86"
+        }
+      ],
+      "releaseUrl": "https://github.com/gz83/thorium/releases/tag/M152.0.7977.55",
+      "sourceUrl": "https://github.com/gz83/thorium",
+      "freshness": "current",
+      "ageDays": 5,
+      "notes": [
+        "Alex313031 stepped back from the project. gz83 is publishing current builds.",
+        "Pick AVX2 unless your CPU predates roughly 2013."
+      ]
+    },
+    {
+      "id": "ungoogled-chromium-linux-arm64",
+      "project": "ungoogled-chromium-linux",
+      "projectName": "ungoogled-chromium",
+      "maintainer": "ungoogled-software",
+      "platform": "linux",
+      "arch": [
+        "arm64"
+      ],
+      "channel": "stable",
+      "version": "151.0.7922.173",
+      "milestone": 151,
+      "releasedAt": "2026-08-22T15:37:39Z",
+      "google": "ungoogled",
+      "proprietaryCodecs": false,
+      "hevc": false,
+      "widevine": false,
+      "downloads": [
+        {
+          "kind": "appimage",
+          "label": "AppImage",
+          "filename": "ungoogled-chromium-151.0.7922.173-1-arm64.AppImage",
+          "url": "https://github.com/ungoogled-software/ungoogled-chromium-portablelinux/releases/download/151.0.7922.173-1/ungoogled-chromium-151.0.7922.173-1-arm64.AppImage",
+          "size": 190904840,
+          "sha256": "6f2a5d4fea623e64752a97b5f5abed52b30e83a62410b5e0455df51e10eab48c",
+          "arch": "arm64",
+          "recommended": true
+        },
+        {
+          "kind": "archive",
+          "label": "Portable (tar.xz)",
+          "filename": "ungoogled-chromium-151.0.7922.173-1-arm64_linux.tar.xz",
+          "url": "https://github.com/ungoogled-software/ungoogled-chromium-portablelinux/releases/download/151.0.7922.173-1/ungoogled-chromium-151.0.7922.173-1-arm64_linux.tar.xz",
+          "size": 137422304,
+          "sha256": "aaff0e10fef7628b0e5cb09049312b6c811ca7e741e96c8c196d9b8dc3c992f1",
+          "arch": "arm64"
+        }
+      ],
+      "releaseUrl": "https://github.com/ungoogled-software/ungoogled-chromium-portablelinux/releases/tag/151.0.7922.173-1",
+      "sourceUrl": "https://github.com/ungoogled-software/ungoogled-chromium-portablelinux",
+      "freshness": "behind",
+      "ageDays": 6,
+      "notes": [
+        "AppImage needs the executable bit: chmod +x the file before running it."
+      ]
+    },
+    {
+      "id": "ungoogled-chromium-linux-x64",
+      "project": "ungoogled-chromium-linux",
+      "projectName": "ungoogled-chromium",
+      "maintainer": "ungoogled-software",
+      "platform": "linux",
+      "arch": [
+        "x64"
+      ],
+      "channel": "stable",
+      "version": "151.0.7922.173",
+      "milestone": 151,
+      "releasedAt": "2026-08-22T15:37:39Z",
+      "google": "ungoogled",
+      "proprietaryCodecs": false,
+      "hevc": false,
+      "widevine": false,
+      "downloads": [
+        {
+          "kind": "appimage",
+          "label": "AppImage",
+          "filename": "ungoogled-chromium-151.0.7922.173-1-x86_64.AppImage",
+          "url": "https://github.com/ungoogled-software/ungoogled-chromium-portablelinux/releases/download/151.0.7922.173-1/ungoogled-chromium-151.0.7922.173-1-x86_64.AppImage",
+          "size": 201103864,
+          "sha256": "2d4aa8ab953692170d9a151162f353f8a7abc6054c0e95ac1f32b97ba87daea7",
+          "arch": "x64",
+          "recommended": true
+        },
+        {
+          "kind": "archive",
+          "label": "Portable (tar.xz)",
+          "filename": "ungoogled-chromium-151.0.7922.173-1-x86_64_linux.tar.xz",
+          "url": "https://github.com/ungoogled-software/ungoogled-chromium-portablelinux/releases/download/151.0.7922.173-1/ungoogled-chromium-151.0.7922.173-1-x86_64_linux.tar.xz",
+          "size": 151191844,
+          "sha256": "e8149d382cf378456536371a4998cb8e6a0c3a2fcd12c05ed022e42d9e9f8f34",
+          "arch": "x64"
+        }
+      ],
+      "releaseUrl": "https://github.com/ungoogled-software/ungoogled-chromium-portablelinux/releases/tag/151.0.7922.173-1",
+      "sourceUrl": "https://github.com/ungoogled-software/ungoogled-chromium-portablelinux",
+      "freshness": "behind",
+      "ageDays": 6,
+      "notes": [
+        "AppImage needs the executable bit: chmod +x the file before running it."
+      ]
+    },
+    {
+      "id": "marmaduke-linux-x64",
+      "project": "marmaduke-linux",
+      "projectName": "Marmaduke ungoogled (Linux)",
+      "maintainer": "Marmaduke",
+      "platform": "linux",
+      "arch": [
+        "x64"
+      ],
+      "channel": "stable",
+      "version": "150.0.7871.208",
+      "milestone": 150,
+      "revision": "1639810",
+      "releasedAt": "2026-07-25T13:43:05Z",
+      "google": "ungoogled",
+      "proprietaryCodecs": true,
+      "hevc": false,
+      "widevine": true,
+      "downloads": [
+        {
+          "kind": "archive",
+          "label": "Portable (tar.xz)",
+          "filename": "ungoogled-chromium_150.0.7871.208_1.vaapi_linux.tar.xz",
+          "url": "https://github.com/macchrome/linchrome/releases/download/v150.7871.208-M150.0.7871.208-r1639810-portable-ungoogled-Lin64/ungoogled-chromium_150.0.7871.208_1.vaapi_linux.tar.xz",
+          "size": 135954984,
+          "sha256": "dc74bcec812e1c71db01f08d967a8a6af72dd4f75d4bd2d8093b56cf6e5c341d",
+          "arch": "x64",
+          "recommended": true
+        }
+      ],
+      "releaseUrl": "https://github.com/macchrome/linchrome/releases/tag/v150.7871.208-M150.0.7871.208-r1639810-portable-ungoogled-Lin64",
+      "sourceUrl": "https://github.com/macchrome/linchrome",
+      "freshness": "outdated",
+      "ageDays": 34,
+      "notes": [
+        "Built with VA-API enabled for hardware video decoding.",
+        "Tested on Ubuntu 18.04 and newer."
+      ]
+    },
+    {
+      "id": "snapshot-mac-arm64",
+      "project": "chromium-snapshot",
+      "projectName": "Official Chromium snapshot",
+      "maintainer": "The Chromium Authors",
+      "platform": "macos",
+      "arch": [
+        "arm64"
+      ],
+      "channel": "snapshot",
+      "version": "154.0.8030.0",
+      "milestone": 154,
+      "revision": "1688400",
+      "releasedAt": "2026-08-29T00:44:36.636Z",
+      "google": "raw",
+      "proprietaryCodecs": false,
+      "hevc": false,
+      "widevine": false,
+      "downloads": [
+        {
+          "kind": "archive",
+          "label": "Archive (zip)",
+          "filename": "chrome-mac.zip",
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac_Arm/1688400/chrome-mac.zip",
+          "arch": "arm64",
+          "recommended": true
+        }
+      ],
+      "releaseUrl": "https://storage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Mac_Arm/1688400/",
+      "sourceUrl": "https://www.chromium.org/getting-involved/download-chromium/",
+      "freshness": "current",
+      "ageDays": 0,
+      "notes": [
+        "Built from an arbitrary commit. No release testing of any kind has happened.",
+        "No auto-update. You are responsible for replacing it yourself.",
+        "Open codecs only, and no Widevine, so most streaming video will not play."
+      ]
+    },
+    {
+      "id": "snapshot-mac-x64",
+      "project": "chromium-snapshot",
+      "projectName": "Official Chromium snapshot",
+      "maintainer": "The Chromium Authors",
+      "platform": "macos",
+      "arch": [
+        "x64"
+      ],
+      "channel": "snapshot",
+      "version": "154.0.8030.0",
+      "milestone": 154,
+      "revision": "1688400",
+      "releasedAt": "2026-08-29T00:44:36.639Z",
+      "google": "raw",
+      "proprietaryCodecs": false,
+      "hevc": false,
+      "widevine": false,
+      "downloads": [
+        {
+          "kind": "archive",
+          "label": "Archive (zip)",
+          "filename": "chrome-mac.zip",
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Mac/1688400/chrome-mac.zip",
+          "arch": "x64",
+          "recommended": true
+        }
+      ],
+      "releaseUrl": "https://storage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Mac/1688400/",
+      "sourceUrl": "https://www.chromium.org/getting-involved/download-chromium/",
+      "freshness": "current",
+      "ageDays": 0,
+      "notes": [
+        "Built from an arbitrary commit. No release testing of any kind has happened.",
+        "No auto-update. You are responsible for replacing it yourself.",
+        "Open codecs only, and no Widevine, so most streaming video will not play."
+      ]
+    },
+    {
+      "id": "thorium-macos-arm64",
+      "project": "thorium",
+      "projectName": "Thorium",
+      "maintainer": "Alex313031 and gz83",
+      "platform": "macos",
+      "arch": [
+        "arm64"
+      ],
+      "channel": "stable",
+      "version": "152.0.7977.55",
+      "milestone": 152,
+      "releasedAt": "2026-08-23T16:14:11Z",
+      "google": "nosync",
+      "proprietaryCodecs": true,
+      "hevc": true,
+      "widevine": true,
+      "downloads": [
+        {
+          "kind": "dmg",
+          "label": "Disk image",
+          "filename": "Thorium_MacOS_ARM64.dmg",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/Thorium_MacOS_ARM64.dmg",
+          "size": 170876853,
+          "sha256": "2fd9d3b47cbce042039e0d4cb22c9dad5f9b328e13f0e84270b58d8df0471ab8",
+          "arch": "arm64",
+          "recommended": true
+        }
+      ],
+      "releaseUrl": "https://github.com/gz83/thorium/releases/tag/M152.0.7977.55",
+      "sourceUrl": "https://github.com/gz83/thorium",
+      "freshness": "current",
+      "ageDays": 5,
+      "notes": [
+        "Alex313031 stepped back from the project. gz83 is publishing current builds.",
+        "Pick AVX2 unless your CPU predates roughly 2013."
+      ]
+    },
+    {
+      "id": "thorium-macos-x64",
+      "project": "thorium",
+      "projectName": "Thorium",
+      "maintainer": "Alex313031 and gz83",
+      "platform": "macos",
+      "arch": [
+        "x64"
+      ],
+      "channel": "stable",
+      "version": "152.0.7977.55",
+      "milestone": 152,
+      "releasedAt": "2026-08-23T16:14:11Z",
+      "google": "nosync",
+      "proprietaryCodecs": true,
+      "hevc": true,
+      "widevine": true,
+      "downloads": [
+        {
+          "kind": "dmg",
+          "label": "Disk image",
+          "filename": "Thorium_MacOS_x64.dmg",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/Thorium_MacOS_x64.dmg",
+          "size": 181188919,
+          "sha256": "b993fe1f9251b325b12f3705da6358cb8a921d3a0653ee930332f4f53f29c2be",
+          "arch": "x64",
+          "recommended": true
+        }
+      ],
+      "releaseUrl": "https://github.com/gz83/thorium/releases/tag/M152.0.7977.55",
+      "sourceUrl": "https://github.com/gz83/thorium",
+      "freshness": "current",
+      "ageDays": 5,
+      "notes": [
+        "Alex313031 stepped back from the project. gz83 is publishing current builds.",
+        "Pick AVX2 unless your CPU predates roughly 2013."
+      ]
+    },
+    {
+      "id": "marmaduke-macos-x64",
+      "project": "marmaduke-macos",
+      "projectName": "Marmaduke ungoogled (macOS)",
+      "maintainer": "Marmaduke",
+      "platform": "macos",
+      "arch": [
+        "x64"
+      ],
+      "channel": "stable",
+      "version": "150.0.7871.208",
+      "milestone": 150,
+      "revision": "1639810",
+      "releasedAt": "2026-07-25T11:10:23Z",
+      "google": "ungoogled",
+      "proprietaryCodecs": true,
+      "hevc": false,
+      "widevine": true,
+      "downloads": [
+        {
+          "kind": "archive",
+          "label": "Application (tar.xz)",
+          "filename": "Chromium.app.ungoogled-150.0.7871.208.tar.xz",
+          "url": "https://github.com/macchrome/macstable/releases/download/v150.7871.208-M150.0.7871.208-r1639810-macOS/Chromium.app.ungoogled-150.0.7871.208.tar.xz",
+          "size": 145810512,
+          "sha256": "7d2f6b6e4618891680e9bb48bd057e55eb5071b2cb7fdedecaf9ed5b23c49a63",
+          "arch": "x64",
+          "recommended": true
+        }
+      ],
+      "releaseUrl": "https://github.com/macchrome/macstable/releases/tag/v150.7871.208-M150.0.7871.208-r1639810-macOS",
+      "sourceUrl": "https://github.com/macchrome/macstable",
+      "freshness": "outdated",
+      "ageDays": 34,
+      "notes": [
+        "Intel build. It runs on Apple silicon through Rosetta 2."
+      ]
+    },
+    {
+      "id": "ungoogled-chromium-macos-arm64",
+      "project": "ungoogled-chromium-macos",
+      "projectName": "ungoogled-chromium",
+      "maintainer": "ungoogled-software",
+      "platform": "macos",
+      "arch": [
+        "arm64"
+      ],
+      "channel": "stable",
+      "version": "150.0.7871.46",
+      "milestone": 150,
+      "releasedAt": "2026-07-06T21:07:59Z",
+      "google": "ungoogled",
+      "proprietaryCodecs": false,
+      "hevc": false,
+      "widevine": false,
+      "downloads": [
+        {
+          "kind": "dmg",
+          "label": "Disk image",
+          "filename": "ungoogled-chromium_150.0.7871.46-1.1_arm64-macos.dmg",
+          "url": "https://github.com/ungoogled-software/ungoogled-chromium-macos/releases/download/150.0.7871.46-1.1/ungoogled-chromium_150.0.7871.46-1.1_arm64-macos.dmg",
+          "size": 143407955,
+          "sha256": "fe7548ad436e37bba7231f864551d88f77f6697fce1c7b6942fab8129e8a079a",
+          "arch": "arm64",
+          "recommended": true
+        }
+      ],
+      "releaseUrl": "https://github.com/ungoogled-software/ungoogled-chromium-macos/releases/tag/150.0.7871.46-1.1",
+      "sourceUrl": "https://github.com/ungoogled-software/ungoogled-chromium-macos",
+      "freshness": "outdated",
+      "ageDays": 53,
+      "notes": [
+        "Not notarised by Apple. You must right-click and choose Open the first time."
+      ]
+    },
+    {
+      "id": "ungoogled-chromium-macos-x64",
+      "project": "ungoogled-chromium-macos",
+      "projectName": "ungoogled-chromium",
+      "maintainer": "ungoogled-software",
+      "platform": "macos",
+      "arch": [
+        "x64"
+      ],
+      "channel": "stable",
+      "version": "150.0.7871.46",
+      "milestone": 150,
+      "releasedAt": "2026-07-06T21:07:59Z",
+      "google": "ungoogled",
+      "proprietaryCodecs": false,
+      "hevc": false,
+      "widevine": false,
+      "downloads": [
+        {
+          "kind": "dmg",
+          "label": "Disk image",
+          "filename": "ungoogled-chromium_150.0.7871.46-1.1_x86_64-macos.dmg",
+          "url": "https://github.com/ungoogled-software/ungoogled-chromium-macos/releases/download/150.0.7871.46-1.1/ungoogled-chromium_150.0.7871.46-1.1_x86_64-macos.dmg",
+          "size": 153545654,
+          "sha256": "9d507095c6bee1dfeb4d03614d3d0161e5d9871b3ea2684829f663ca4826d5d1",
+          "arch": "x64",
+          "recommended": true
+        }
+      ],
+      "releaseUrl": "https://github.com/ungoogled-software/ungoogled-chromium-macos/releases/tag/150.0.7871.46-1.1",
+      "sourceUrl": "https://github.com/ungoogled-software/ungoogled-chromium-macos",
+      "freshness": "outdated",
+      "ageDays": 53,
+      "notes": [
+        "Not notarised by Apple. You must right-click and choose Open the first time."
+      ]
+    },
+    {
+      "id": "snapshot-win-arm64",
+      "project": "chromium-snapshot",
+      "projectName": "Official Chromium snapshot",
+      "maintainer": "The Chromium Authors",
+      "platform": "windows",
+      "arch": [
+        "arm64"
+      ],
+      "channel": "snapshot",
+      "version": "154.0.8030.0",
+      "milestone": 154,
+      "revision": "1688366",
+      "releasedAt": "2026-08-29T00:44:36.639Z",
+      "google": "raw",
+      "proprietaryCodecs": false,
+      "hevc": false,
+      "widevine": false,
+      "downloads": [
+        {
+          "kind": "archive",
+          "label": "Archive (zip)",
+          "filename": "chrome-win.zip",
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_Arm64/1688366/chrome-win.zip",
+          "arch": "arm64",
+          "recommended": true
+        }
+      ],
+      "releaseUrl": "https://storage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Win_Arm64/1688366/",
+      "sourceUrl": "https://www.chromium.org/getting-involved/download-chromium/",
+      "freshness": "current",
+      "ageDays": 0,
+      "notes": [
+        "Built from an arbitrary commit. No release testing of any kind has happened.",
+        "No auto-update. You are responsible for replacing it yourself.",
+        "Open codecs only, and no Widevine, so most streaming video will not play."
+      ]
+    },
+    {
+      "id": "snapshot-win-x86",
+      "project": "chromium-snapshot",
+      "projectName": "Official Chromium snapshot",
+      "maintainer": "The Chromium Authors",
+      "platform": "windows",
+      "arch": [
+        "x86"
+      ],
+      "channel": "snapshot",
+      "version": "154.0.8030.0",
+      "milestone": 154,
+      "revision": "1688398",
+      "releasedAt": "2026-08-29T00:44:36.639Z",
+      "google": "raw",
+      "proprietaryCodecs": false,
+      "hevc": false,
+      "widevine": false,
+      "downloads": [
+        {
+          "kind": "archive",
+          "label": "Archive (zip)",
+          "filename": "chrome-win.zip",
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win/1688398/chrome-win.zip",
+          "arch": "x86",
+          "recommended": true
+        }
+      ],
+      "releaseUrl": "https://storage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Win/1688398/",
+      "sourceUrl": "https://www.chromium.org/getting-involved/download-chromium/",
+      "freshness": "current",
+      "ageDays": 0,
+      "notes": [
+        "Built from an arbitrary commit. No release testing of any kind has happened.",
+        "No auto-update. You are responsible for replacing it yourself.",
+        "Open codecs only, and no Widevine, so most streaming video will not play."
+      ]
+    },
+    {
+      "id": "snapshot-win-x64",
+      "project": "chromium-snapshot",
+      "projectName": "Official Chromium snapshot",
+      "maintainer": "The Chromium Authors",
+      "platform": "windows",
+      "arch": [
+        "x64"
+      ],
+      "channel": "snapshot",
+      "version": "154.0.8030.0",
+      "milestone": 154,
+      "revision": "1688399",
+      "releasedAt": "2026-08-29T00:44:36.728Z",
+      "google": "raw",
+      "proprietaryCodecs": false,
+      "hevc": false,
+      "widevine": false,
+      "downloads": [
+        {
+          "kind": "archive",
+          "label": "Archive (zip)",
+          "filename": "chrome-win.zip",
+          "url": "https://storage.googleapis.com/chromium-browser-snapshots/Win_x64/1688399/chrome-win.zip",
+          "arch": "x64",
+          "recommended": true
+        }
+      ],
+      "releaseUrl": "https://storage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Win_x64/1688399/",
+      "sourceUrl": "https://www.chromium.org/getting-involved/download-chromium/",
+      "freshness": "current",
+      "ageDays": 0,
+      "notes": [
+        "Built from an arbitrary commit. No release testing of any kind has happened.",
+        "No auto-update. You are responsible for replacing it yourself.",
+        "Open codecs only, and no Widevine, so most streaming video will not play."
+      ]
+    },
+    {
+      "id": "robrich-windows-x64-avx512",
+      "project": "robrich",
+      "projectName": "RobRich Chromium (Clang/LLVM)",
+      "maintainer": "RobRich999",
+      "platform": "windows",
+      "arch": [
+        "x64"
+      ],
+      "channel": "dev",
+      "version": "153.0.7993.0",
+      "milestone": 153,
+      "revision": "1674068",
+      "releasedAt": "2026-08-05T17:15:17Z",
+      "google": "nosync",
+      "proprietaryCodecs": true,
+      "hevc": true,
+      "widevine": true,
+      "simd": "avx512",
+      "downloads": [
+        {
+          "kind": "installer",
+          "label": "Installer",
+          "filename": "mini_installer.exe",
+          "url": "https://github.com/RobRich999/Chromium_Clang/releases/download/v153.0.7993.0-r1674068-win64-avx512/mini_installer.exe",
+          "size": 150170112,
+          "sha256": "b94e4e2632173c53fde2c2cdf3c6d0aaf99978bef1e974f591981a8c59f5be5e",
+          "arch": "x64",
+          "simd": "avx512",
+          "recommended": true
+        },
+        {
+          "kind": "portable",
+          "label": "Portable (zip)",
+          "filename": "chrome.zip",
+          "url": "https://github.com/RobRich999/Chromium_Clang/releases/download/v153.0.7993.0-r1674068-win64-avx512/chrome.zip",
+          "size": 201704462,
+          "sha256": "e0fdaeadcd284580c0b99767c29776c06f452a01b7c0ba0a3a7784f293b41462",
+          "arch": "x64",
+          "simd": "avx512"
+        }
+      ],
+      "releaseUrl": "https://github.com/RobRich999/Chromium_Clang/releases/tag/v153.0.7993.0-r1674068-win64-avx512",
+      "sourceUrl": "https://github.com/RobRich999/Chromium_Clang",
+      "freshness": "current",
+      "ageDays": 23,
+      "notes": [
+        "Development channel. Expect the occasional regression.",
+        "Check which instruction set your CPU supports before downloading."
+      ]
+    },
+    {
+      "id": "robrich-windows-x64-avx2",
+      "project": "robrich",
+      "projectName": "RobRich Chromium (Clang/LLVM)",
+      "maintainer": "RobRich999",
+      "platform": "windows",
+      "arch": [
+        "x64"
+      ],
+      "channel": "dev",
+      "version": "153.0.7993.0",
+      "milestone": 153,
+      "revision": "1674068",
+      "releasedAt": "2026-08-05T14:21:48Z",
+      "google": "nosync",
+      "proprietaryCodecs": true,
+      "hevc": true,
+      "widevine": true,
+      "simd": "avx2",
+      "downloads": [
+        {
+          "kind": "installer",
+          "label": "Installer",
+          "filename": "mini_installer.exe",
+          "url": "https://github.com/RobRich999/Chromium_Clang/releases/download/v153.0.7993.0-r1674068-win64-avx2/mini_installer.exe",
+          "size": 150149632,
+          "sha256": "b4f20a6cc386e04cdbc58bea6185706a34c58b9e75c7933eb00085e5ecb29279",
+          "arch": "x64",
+          "simd": "avx2",
+          "recommended": true
+        },
+        {
+          "kind": "portable",
+          "label": "Portable (zip)",
+          "filename": "chrome.zip",
+          "url": "https://github.com/RobRich999/Chromium_Clang/releases/download/v153.0.7993.0-r1674068-win64-avx2/chrome.zip",
+          "size": 201752993,
+          "sha256": "9bbf2f77eb32454ce60e1d69ed82d334eba3f807ca6f6513a76d571cc78c70dd",
+          "arch": "x64",
+          "simd": "avx2"
+        }
+      ],
+      "releaseUrl": "https://github.com/RobRich999/Chromium_Clang/releases/tag/v153.0.7993.0-r1674068-win64-avx2",
+      "sourceUrl": "https://github.com/RobRich999/Chromium_Clang",
+      "freshness": "current",
+      "ageDays": 23,
+      "notes": [
+        "Development channel. Expect the occasional regression.",
+        "Check which instruction set your CPU supports before downloading."
+      ]
+    },
+    {
+      "id": "robrich-windows-x64-avx",
+      "project": "robrich",
+      "projectName": "RobRich Chromium (Clang/LLVM)",
+      "maintainer": "RobRich999",
+      "platform": "windows",
+      "arch": [
+        "x64"
+      ],
+      "channel": "dev",
+      "version": "153.0.7993.0",
+      "milestone": 153,
+      "revision": "1674068",
+      "releasedAt": "2026-08-05T15:35:07Z",
+      "google": "nosync",
+      "proprietaryCodecs": true,
+      "hevc": true,
+      "widevine": true,
+      "simd": "avx",
+      "downloads": [
+        {
+          "kind": "installer",
+          "label": "Installer",
+          "filename": "mini_installer.exe",
+          "url": "https://github.com/RobRich999/Chromium_Clang/releases/download/v153.0.7993.0-r1674068-win64-avx/mini_installer.exe",
+          "size": 150601216,
+          "sha256": "60c5f36aeb41db7047a44e0f691cf10ad0138dfcf645722289b627f05d1282b4",
+          "arch": "x64",
+          "simd": "avx",
+          "recommended": true
+        },
+        {
+          "kind": "portable",
+          "label": "Portable (zip)",
+          "filename": "chrome.zip",
+          "url": "https://github.com/RobRich999/Chromium_Clang/releases/download/v153.0.7993.0-r1674068-win64-avx/chrome.zip",
+          "size": 202674315,
+          "sha256": "1cc2a009fd108e61c1c8409cf57927f3448c40f8189edec5200789b233cc3195",
+          "arch": "x64",
+          "simd": "avx"
+        }
+      ],
+      "releaseUrl": "https://github.com/RobRich999/Chromium_Clang/releases/tag/v153.0.7993.0-r1674068-win64-avx",
+      "sourceUrl": "https://github.com/RobRich999/Chromium_Clang",
+      "freshness": "current",
+      "ageDays": 23,
+      "notes": [
+        "Development channel. Expect the occasional regression.",
+        "Check which instruction set your CPU supports before downloading."
+      ]
+    },
+    {
+      "id": "hibbiki-windows-x64",
+      "project": "hibbiki",
+      "projectName": "Hibbiki Chromium",
+      "maintainer": "Hibbiki",
+      "platform": "windows",
+      "arch": [
+        "x64"
+      ],
+      "channel": "stable",
+      "version": "152.0.7977.65",
+      "milestone": 152,
+      "revision": "1669021",
+      "releasedAt": "2026-08-27T09:49:53Z",
+      "google": "sync",
+      "proprietaryCodecs": true,
+      "hevc": true,
+      "widevine": true,
+      "downloads": [
+        {
+          "kind": "installer",
+          "label": "Installer",
+          "filename": "mini_installer.exe",
+          "url": "https://github.com/Hibbiki/chromium-win64/releases/download/v152.0.7977.65-r1669021/mini_installer.exe",
+          "size": 124774400,
+          "sha256": "47972f8f871788cc4399b48064e2b4cab3d07ca5483c0ad30841d4e044e22de0",
+          "arch": "x64",
+          "recommended": true
+        },
+        {
+          "kind": "portable",
+          "label": "Portable (7z)",
+          "filename": "chrome.7z",
+          "url": "https://github.com/Hibbiki/chromium-win64/releases/download/v152.0.7977.65-r1669021/chrome.7z",
+          "size": 438750507,
+          "sha256": "97bffabfdd24fd5e27f035f8fa4d2c05b58c8ef3a669b354d8e4d7137b601ecd",
+          "arch": "x64"
+        }
+      ],
+      "releaseUrl": "https://github.com/Hibbiki/chromium-win64/releases/tag/v152.0.7977.65-r1669021",
+      "sourceUrl": "https://github.com/Hibbiki/chromium-win64",
+      "freshness": "current",
+      "ageDays": 1,
+      "notes": [
+        "Ships Google API keys, so browser sign-in and sync work.",
+        "Widevine is bundled, so Netflix and Spotify play."
+      ]
+    },
+    {
+      "id": "thorium-windows-arm64",
+      "project": "thorium",
+      "projectName": "Thorium",
+      "maintainer": "Alex313031 and gz83",
+      "platform": "windows",
+      "arch": [
+        "arm64"
+      ],
+      "channel": "stable",
+      "version": "152.0.7977.55",
+      "milestone": 152,
+      "releasedAt": "2026-08-23T16:14:11Z",
+      "google": "nosync",
+      "proprietaryCodecs": true,
+      "hevc": true,
+      "widevine": true,
+      "downloads": [
+        {
+          "kind": "installer",
+          "label": "Installer",
+          "filename": "thorium_ARM64_installer.exe",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/thorium_ARM64_installer.exe",
+          "size": 210750976,
+          "sha256": "76a7cda60f1cbf81e4f5703c99ed3d31ac9cb5b9c4126a7e6eae995a658c0f78",
+          "arch": "arm64",
+          "recommended": true
+        },
+        {
+          "kind": "portable",
+          "label": "Portable (zip)",
+          "filename": "Thorium_ARM64_152.0.7977.55.zip",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/Thorium_ARM64_152.0.7977.55.zip",
+          "size": 314900797,
+          "sha256": "14c1dca2160984b82f9e561bb3eb27f2b2b7cca8e0b6f463e664d2c540929a14",
+          "arch": "arm64"
+        }
+      ],
+      "releaseUrl": "https://github.com/gz83/thorium/releases/tag/M152.0.7977.55",
+      "sourceUrl": "https://github.com/gz83/thorium",
+      "freshness": "current",
+      "ageDays": 5,
+      "notes": [
+        "Alex313031 stepped back from the project. gz83 is publishing current builds.",
+        "Pick AVX2 unless your CPU predates roughly 2013."
+      ]
+    },
+    {
+      "id": "thorium-windows-x64",
+      "project": "thorium",
+      "projectName": "Thorium",
+      "maintainer": "Alex313031 and gz83",
+      "platform": "windows",
+      "arch": [
+        "x64"
+      ],
+      "channel": "stable",
+      "version": "152.0.7977.55",
+      "milestone": 152,
+      "releasedAt": "2026-08-23T16:14:11Z",
+      "google": "nosync",
+      "proprietaryCodecs": true,
+      "hevc": true,
+      "widevine": true,
+      "downloads": [
+        {
+          "kind": "installer",
+          "label": "Installer (AVX2)",
+          "filename": "thorium_AVX2_mini_installer.exe",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/thorium_AVX2_mini_installer.exe",
+          "size": 215226368,
+          "sha256": "ac9526628dd1073ae1453d7ffe4e019d18d68faf9f21840ed7202baa292d8462",
+          "arch": "x64",
+          "simd": "avx2",
+          "recommended": true
+        },
+        {
+          "kind": "installer",
+          "label": "Installer (AVX-512)",
+          "filename": "thorium_AVX512_mini_installer.exe",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/thorium_AVX512_mini_installer.exe",
+          "size": 215131648,
+          "sha256": "c8831a8cebf3448a6ee98cc06e984e25ea739767c7c7409269daeb1bbaf8a7e5",
+          "arch": "x64",
+          "simd": "avx512"
+        },
+        {
+          "kind": "installer",
+          "label": "Installer (AVX)",
+          "filename": "thorium_AVX_mini_installer.exe",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/thorium_AVX_mini_installer.exe",
+          "size": 215864832,
+          "sha256": "83407b89ceaa7925a816f7b459f002559ae6cd1f9f57002adb99d5099eac3b29",
+          "arch": "x64",
+          "simd": "avx"
+        },
+        {
+          "kind": "installer",
+          "label": "Installer (SSE3)",
+          "filename": "thorium_SSE3_mini_installer.exe",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/thorium_SSE3_mini_installer.exe",
+          "size": 215424512,
+          "sha256": "48b1eb3af9faf545d143cc32523e8f820e27a982f1be0a2107461ffec9891588",
+          "arch": "x64",
+          "simd": "sse3"
+        },
+        {
+          "kind": "installer",
+          "label": "Installer (SSE4)",
+          "filename": "thorium_SSE4_mini_installer.exe",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/thorium_SSE4_mini_installer.exe",
+          "size": 215576576,
+          "sha256": "36fd97c4f676a3b88c588a00592ab60a0e1648f3f6444e8cd654ff33fec5dcc6",
+          "arch": "x64",
+          "simd": "sse4"
+        },
+        {
+          "kind": "portable",
+          "label": "Portable (AVX-512)",
+          "filename": "Thorium_AVX512_152.0.7977.55.zip",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/Thorium_AVX512_152.0.7977.55.zip",
+          "size": 348191963,
+          "sha256": "9c5c22391a2ffcd1f3fb63dc9a3e0a1ef5995c93a7ec730be0f65c985fd8d1cd",
+          "arch": "x64",
+          "simd": "avx512"
+        },
+        {
+          "kind": "portable",
+          "label": "Portable (AVX)",
+          "filename": "Thorium_AVX_152.0.7977.55.zip",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/Thorium_AVX_152.0.7977.55.zip",
+          "size": 350106458,
+          "sha256": "4a7a30a2657266eb9878f2d50d9e007f32c69819484934bc1096a85d4d08cdbf",
+          "arch": "x64",
+          "simd": "avx"
+        },
+        {
+          "kind": "portable",
+          "label": "Portable (AVX2)",
+          "filename": "Thorium_AVX2_152.0.7977.55.zip",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/Thorium_AVX2_152.0.7977.55.zip",
+          "size": 348437355,
+          "sha256": "d1311e8b980082e93b1cc574cc88d518fef4cc9f1adb67d49e669402c06f8364",
+          "arch": "x64",
+          "simd": "avx2"
+        },
+        {
+          "kind": "portable",
+          "label": "Portable (SSE3)",
+          "filename": "Thorium_SSE3_152.0.7977.55.zip",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/Thorium_SSE3_152.0.7977.55.zip",
+          "size": 349221932,
+          "sha256": "f27a506aa10b5f83059cc7df80ace64bad5a3ccd4f2816d621c13b1c74b71375",
+          "arch": "x64",
+          "simd": "sse3"
+        },
+        {
+          "kind": "portable",
+          "label": "Portable (SSE4)",
+          "filename": "Thorium_SSE4_152.0.7977.55.zip",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/Thorium_SSE4_152.0.7977.55.zip",
+          "size": 349702802,
+          "sha256": "a5e566bc9e830844ac72fa4e5df0f48b92717ebf2d7fcfb8099dfe8a9d2edd2a",
+          "arch": "x64",
+          "simd": "sse4"
+        }
+      ],
+      "releaseUrl": "https://github.com/gz83/thorium/releases/tag/M152.0.7977.55",
+      "sourceUrl": "https://github.com/gz83/thorium",
+      "freshness": "current",
+      "ageDays": 5,
+      "notes": [
+        "Alex313031 stepped back from the project. gz83 is publishing current builds.",
+        "Pick AVX2 unless your CPU predates roughly 2013."
+      ]
+    },
+    {
+      "id": "thorium-windows-x86",
+      "project": "thorium",
+      "projectName": "Thorium",
+      "maintainer": "Alex313031 and gz83",
+      "platform": "windows",
+      "arch": [
+        "x86"
+      ],
+      "channel": "stable",
+      "version": "152.0.7977.55",
+      "milestone": 152,
+      "releasedAt": "2026-08-23T16:14:11Z",
+      "google": "nosync",
+      "proprietaryCodecs": true,
+      "hevc": true,
+      "widevine": true,
+      "downloads": [
+        {
+          "kind": "installer",
+          "label": "Installer (32-bit, SSE2)",
+          "filename": "thorium_WIN32_SSE2_mini_installer.exe",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/thorium_WIN32_SSE2_mini_installer.exe",
+          "size": 193801216,
+          "sha256": "7073db5d88475d173616d3d3bbd90d4a1a0c8bf99b634cf4739dbdd26396390f",
+          "arch": "x86",
+          "recommended": true
+        },
+        {
+          "kind": "portable",
+          "label": "Portable (32-bit, SSE2)",
+          "filename": "Thorium_WIN32_SSE2_152.0.7977.55.zip",
+          "url": "https://github.com/gz83/thorium/releases/download/M152.0.7977.55/Thorium_WIN32_SSE2_152.0.7977.55.zip",
+          "size": 309585911,
+          "sha256": "767cceed3d9b241291b41345465d0273ccbabdc31e783cb88c01a937ec2417fe",
+          "arch": "x86"
+        }
+      ],
+      "releaseUrl": "https://github.com/gz83/thorium/releases/tag/M152.0.7977.55",
+      "sourceUrl": "https://github.com/gz83/thorium",
+      "freshness": "current",
+      "ageDays": 5,
+      "notes": [
+        "Alex313031 stepped back from the project. gz83 is publishing current builds.",
+        "Pick AVX2 unless your CPU predates roughly 2013."
+      ]
+    },
+    {
+      "id": "ungoogled-chromium-windows-arm64",
+      "project": "ungoogled-chromium",
+      "projectName": "ungoogled-chromium",
+      "maintainer": "ungoogled-software",
+      "platform": "windows",
+      "arch": [
+        "arm64"
+      ],
+      "channel": "stable",
+      "version": "151.0.7922.173",
+      "milestone": 151,
+      "releasedAt": "2026-08-24T20:37:29Z",
+      "google": "ungoogled",
+      "proprietaryCodecs": false,
+      "hevc": false,
+      "widevine": false,
+      "downloads": [
+        {
+          "kind": "installer",
+          "label": "Installer",
+          "filename": "ungoogled-chromium_151.0.7922.173-1.1_installer_arm64.exe",
+          "url": "https://github.com/ungoogled-software/ungoogled-chromium-windows/releases/download/151.0.7922.173-1.1/ungoogled-chromium_151.0.7922.173-1.1_installer_arm64.exe",
+          "size": 131794432,
+          "sha256": "b49164f93bacd944eafe9a2e93bc900af9f5dbc64b0de2d972f0c1190aa6fae3",
+          "arch": "arm64",
+          "recommended": true
+        },
+        {
+          "kind": "portable",
+          "label": "Portable (zip)",
+          "filename": "ungoogled-chromium_151.0.7922.173-1.1_windows_arm64.zip",
+          "url": "https://github.com/ungoogled-software/ungoogled-chromium-windows/releases/download/151.0.7922.173-1.1/ungoogled-chromium_151.0.7922.173-1.1_windows_arm64.zip",
+          "size": 190449715,
+          "sha256": "a32a7fe17f786e12d3b62ffa79edb970bb67051633ab01092373a2ab01bc8bc8",
+          "arch": "arm64"
+        }
+      ],
+      "releaseUrl": "https://github.com/ungoogled-software/ungoogled-chromium-windows/releases/tag/151.0.7922.173-1.1",
+      "sourceUrl": "https://github.com/ungoogled-software/ungoogled-chromium-windows",
+      "freshness": "behind",
+      "ageDays": 4,
+      "notes": [
+        "No Google API keys, so sign-in and sync are absent by design.",
+        "No Widevine, so most paid streaming services will not play.",
+        "Open codecs only. H.264 and AAC content may not play everywhere."
+      ]
+    },
+    {
+      "id": "ungoogled-chromium-windows-x64",
+      "project": "ungoogled-chromium",
+      "projectName": "ungoogled-chromium",
+      "maintainer": "ungoogled-software",
+      "platform": "windows",
+      "arch": [
+        "x64"
+      ],
+      "channel": "stable",
+      "version": "151.0.7922.173",
+      "milestone": 151,
+      "releasedAt": "2026-08-24T20:37:29Z",
+      "google": "ungoogled",
+      "proprietaryCodecs": false,
+      "hevc": false,
+      "widevine": false,
+      "downloads": [
+        {
+          "kind": "installer",
+          "label": "Installer",
+          "filename": "ungoogled-chromium_151.0.7922.173-1.1_installer_x64.exe",
+          "url": "https://github.com/ungoogled-software/ungoogled-chromium-windows/releases/download/151.0.7922.173-1.1/ungoogled-chromium_151.0.7922.173-1.1_installer_x64.exe",
+          "size": 126720512,
+          "sha256": "38291f9f00deb79aaad0e976e907bad21caef0920f3a8ce7f312f2ed54fa5f74",
+          "arch": "x64",
+          "recommended": true
+        },
+        {
+          "kind": "portable",
+          "label": "Portable (zip)",
+          "filename": "ungoogled-chromium_151.0.7922.173-1.1_windows_x64.zip",
+          "url": "https://github.com/ungoogled-software/ungoogled-chromium-windows/releases/download/151.0.7922.173-1.1/ungoogled-chromium_151.0.7922.173-1.1_windows_x64.zip",
+          "size": 197073903,
+          "sha256": "c0f42831708a9a2ea9221df1d07715f57e2365836054cb68cbe6b6191da626e2",
+          "arch": "x64"
+        }
+      ],
+      "releaseUrl": "https://github.com/ungoogled-software/ungoogled-chromium-windows/releases/tag/151.0.7922.173-1.1",
+      "sourceUrl": "https://github.com/ungoogled-software/ungoogled-chromium-windows",
+      "freshness": "behind",
+      "ageDays": 4,
+      "notes": [
+        "No Google API keys, so sign-in and sync are absent by design.",
+        "No Widevine, so most paid streaming services will not play.",
+        "Open codecs only. H.264 and AAC content may not play everywhere."
+      ]
+    },
+    {
+      "id": "ungoogled-chromium-windows-x86",
+      "project": "ungoogled-chromium",
+      "projectName": "ungoogled-chromium",
+      "maintainer": "ungoogled-software",
+      "platform": "windows",
+      "arch": [
+        "x86"
+      ],
+      "channel": "stable",
+      "version": "151.0.7922.173",
+      "milestone": 151,
+      "releasedAt": "2026-08-24T20:37:29Z",
+      "google": "ungoogled",
+      "proprietaryCodecs": false,
+      "hevc": false,
+      "widevine": false,
+      "downloads": [
+        {
+          "kind": "installer",
+          "label": "Installer",
+          "filename": "ungoogled-chromium_151.0.7922.173-1.1_installer_x86.exe",
+          "url": "https://github.com/ungoogled-software/ungoogled-chromium-windows/releases/download/151.0.7922.173-1.1/ungoogled-chromium_151.0.7922.173-1.1_installer_x86.exe",
+          "size": 111726080,
+          "sha256": "09a355c7c0558cbe941ba5fadb52db6c6eca4af518d3c6039ee4674970885efd",
+          "arch": "x86",
+          "recommended": true
+        },
+        {
+          "kind": "portable",
+          "label": "Portable (zip)",
+          "filename": "ungoogled-chromium_151.0.7922.173-1.1_windows_x86.zip",
+          "url": "https://github.com/ungoogled-software/ungoogled-chromium-windows/releases/download/151.0.7922.173-1.1/ungoogled-chromium_151.0.7922.173-1.1_windows_x86.zip",
+          "size": 179354428,
+          "sha256": "6df7c45227e036a33a12af58dcb5e00832d65ef946781425f3a396e782494c91",
+          "arch": "x86"
+        }
+      ],
+      "releaseUrl": "https://github.com/ungoogled-software/ungoogled-chromium-windows/releases/tag/151.0.7922.173-1.1",
+      "sourceUrl": "https://github.com/ungoogled-software/ungoogled-chromium-windows",
+      "freshness": "behind",
+      "ageDays": 4,
+      "notes": [
+        "No Google API keys, so sign-in and sync are absent by design.",
+        "No Widevine, so most paid streaming services will not play.",
+        "Open codecs only. H.264 and AAC content may not play everywhere."
+      ]
+    },
+    {
+      "id": "marmaduke-windows-x64",
+      "project": "marmaduke-windows",
+      "projectName": "Marmaduke ungoogled (Windows)",
+      "maintainer": "Marmaduke",
+      "platform": "windows",
+      "arch": [
+        "x64"
+      ],
+      "channel": "stable",
+      "version": "150.0.7871.252",
+      "milestone": 150,
+      "revision": "1639810",
+      "releasedAt": "2026-08-23T09:07:48Z",
+      "google": "ungoogled",
+      "proprietaryCodecs": true,
+      "hevc": true,
+      "widevine": true,
+      "downloads": [
+        {
+          "kind": "installer",
+          "label": "Installer",
+          "filename": "150.0.7871.252_ungoogled_mini_installer.exe",
+          "url": "https://github.com/macchrome/winchrome/releases/download/v150.7871.252-M150.0.7871.252-r1639810-Win64/150.0.7871.252_ungoogled_mini_installer.exe",
+          "size": 136559104,
+          "sha256": "a4a10e3b349062dc4ed0eee6ae95b98ba7ac00f63b5a46f00ca2808751ad8375",
+          "arch": "x64",
+          "recommended": true
+        },
+        {
+          "kind": "portable",
+          "label": "Portable (7z)",
+          "filename": "ungoogled-chromium-150.0.7871.252-1_Win64.7z",
+          "url": "https://github.com/macchrome/winchrome/releases/download/v150.7871.252-M150.0.7871.252-r1639810-Win64/ungoogled-chromium-150.0.7871.252-1_Win64.7z",
+          "size": 144517958,
+          "sha256": "45c24bf07db006a813ca96e2f937fd5182b5ac6dec5baa85b0636bbe2f60766c",
+          "arch": "x64"
+        }
+      ],
+      "releaseUrl": "https://github.com/macchrome/winchrome/releases/tag/v150.7871.252-M150.0.7871.252-r1639810-Win64",
+      "sourceUrl": "https://github.com/macchrome/winchrome",
+      "freshness": "outdated",
+      "ageDays": 5,
+      "notes": [
+        "Ungoogled patches applied, but Widevine and H.264/H.265/AAC are kept."
+      ]
+    },
+    {
+      "id": "supermium-windows-x86",
+      "project": "supermium",
+      "projectName": "Supermium",
+      "maintainer": "win32ss",
+      "platform": "windows",
+      "arch": [
+        "x86"
+      ],
+      "channel": "stable",
+      "version": "144.0.7559.256",
+      "milestone": 144,
+      "releasedAt": "2026-07-14T20:41:02Z",
+      "google": "sync",
+      "proprietaryCodecs": true,
+      "hevc": false,
+      "widevine": false,
+      "downloads": [
+        {
+          "kind": "installer",
+          "label": "Installer (32-bit)",
+          "filename": "supermium_144_32_setup.exe",
+          "url": "https://github.com/win32ss/supermium/releases/download/v144-r5/supermium_144_32_setup.exe",
+          "size": 114847363,
+          "sha256": "0c663aeef3a5b9cf080fcd5e7b8c3a843ab6f0980513e71e7544f20367137c8a",
+          "arch": "x86",
+          "recommended": true
+        },
+        {
+          "kind": "portable",
+          "label": "Portable (32-bit)",
+          "filename": "supermium_144_32_nonsetup.zip",
+          "url": "https://github.com/win32ss/supermium/releases/download/v144-r5/supermium_144_32_nonsetup.zip",
+          "size": 153211908,
+          "sha256": "17acfcdf89ea651905053b50b0fce5a28db19cb2c69ed5579c7b177806ed6d31",
+          "arch": "x86"
+        }
+      ],
+      "releaseUrl": "https://github.com/win32ss/supermium/releases/tag/v144-r5",
+      "sourceUrl": "https://github.com/win32ss/supermium",
+      "freshness": "outdated",
+      "ageDays": 45,
+      "notes": [
+        "Runs on Windows XP and later. Nothing else current does.",
+        "Supports Google sign-in and sync."
+      ]
+    },
+    {
+      "id": "supermium-windows-x64",
+      "project": "supermium",
+      "projectName": "Supermium",
+      "maintainer": "win32ss",
+      "platform": "windows",
+      "arch": [
+        "x64"
+      ],
+      "channel": "stable",
+      "version": "144.0.7559.256",
+      "milestone": 144,
+      "releasedAt": "2026-07-14T20:41:02Z",
+      "google": "sync",
+      "proprietaryCodecs": true,
+      "hevc": false,
+      "widevine": false,
+      "downloads": [
+        {
+          "kind": "installer",
+          "label": "Installer (64-bit)",
+          "filename": "supermium_144_64_setup.exe",
+          "url": "https://github.com/win32ss/supermium/releases/download/v144-r5/supermium_144_64_setup.exe",
+          "size": 129661283,
+          "sha256": "9289739ffed53dba4f4bde4ce7b9b7303ea27617e1d8f179793bcd607057da58",
+          "arch": "x64",
+          "recommended": true
+        },
+        {
+          "kind": "installer",
+          "label": "Installer (Windows 10/11)",
+          "filename": "supermium_144_64_setup_win10_11.exe",
+          "url": "https://github.com/win32ss/supermium/releases/download/v144-r5/supermium_144_64_setup_win10_11.exe",
+          "size": 128636638,
+          "sha256": "ccab398b616597744c460361db14681fd619907647a22340ef813cfb60eddc3c",
+          "arch": "x64"
+        },
+        {
+          "kind": "portable",
+          "label": "Portable (64-bit)",
+          "filename": "supermium_144_64_nonsetup.zip",
+          "url": "https://github.com/win32ss/supermium/releases/download/v144-r5/supermium_144_64_nonsetup.zip",
+          "size": 175790157,
+          "sha256": "805232e5cde1bf6971748bc7fb6a2cb09fdfce9ceb91062a1814b228139956ca",
+          "arch": "x64"
+        }
+      ],
+      "releaseUrl": "https://github.com/win32ss/supermium/releases/tag/v144-r5",
+      "sourceUrl": "https://github.com/win32ss/supermium",
+      "freshness": "outdated",
+      "ageDays": 45,
+      "notes": [
+        "Runs on Windows XP and later. Nothing else current does.",
+        "Supports Google sign-in and sync."
+      ]
+    }
+  ],
+  "distros": [
+    {
+      "repo": "alpine_edge",
+      "distro": "Alpine Edge",
+      "version": "151.0.7922.173",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "arch",
+      "distro": "Arch Linux",
+      "version": "151.0.7922.173",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "alpine_3_24",
+      "distro": "Alpine 3.24",
+      "version": "151.0.7922.173",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "aur",
+      "distro": "Arch User Repository",
+      "version": "154.0.8013.0.r1682640",
+      "status": "ignored",
+      "package": "chromium-snapshot-bin",
+      "project": "chromium"
+    },
+    {
+      "repo": "chocolatey",
+      "distro": "Chocolatey",
+      "version": "151.0.7922.174",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "debian_12",
+      "distro": "Debian 12 (bookworm)",
+      "version": "151.0.7922.173",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "debian_13",
+      "distro": "Debian 13 (trixie)",
+      "version": "151.0.7922.173",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "debian_unstable",
+      "distro": "Debian unstable (sid)",
+      "version": "151.0.7922.173",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "fedora_41",
+      "distro": "Fedora 41",
+      "version": "142.0.7444.175",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "fedora_42",
+      "distro": "Fedora 42",
+      "version": "148.0.7778.96",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "fedora_43",
+      "distro": "Fedora 43",
+      "version": "151.0.7922.173",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "fedora_rawhide",
+      "distro": "Fedora Rawhide",
+      "version": "151.0.7922.173",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "freebsd",
+      "distro": "FreeBSD Ports",
+      "version": "151.0.7922.169",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "gentoo",
+      "distro": "Gentoo",
+      "version": "151.0.7922.169",
+      "status": "outdated",
+      "package": "www-client/chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "homebrew_casks",
+      "distro": "Homebrew Cask",
+      "version": "150.0.7871.224",
+      "status": "outdated",
+      "package": "chromium-gost",
+      "project": "chromium"
+    },
+    {
+      "repo": "manjaro_stable",
+      "distro": "Manjaro (stable)",
+      "version": "151.0.7922.173",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "nix_stable_25_05",
+      "distro": "nixpkgs stable",
+      "version": "143.0.7499.169",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "nix_unstable",
+      "distro": "nixpkgs unstable",
+      "version": "152.0.7977.64",
+      "status": "newest",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "openbsd",
+      "distro": "OpenBSD Ports",
+      "version": "151.0.7922.169",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "openmandriva_rolling",
+      "distro": "OpenMandriva Rolling",
+      "version": "141.0.7390.122",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "opensuse_leap_15_6",
+      "distro": "openSUSE Leap 15.6",
+      "version": "147.0.7727.137",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "opensuse_tumbleweed",
+      "distro": "openSUSE Tumbleweed",
+      "version": "151.0.7922.173",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "pclinuxos",
+      "distro": "PCLinuxOS",
+      "version": "151.0.7922.137",
+      "status": "outdated",
+      "package": "chromium-browser",
+      "project": "chromium"
+    },
+    {
+      "repo": "raspbian_stable",
+      "distro": "Raspberry Pi OS",
+      "version": "151.0.7922.173",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "scoop",
+      "distro": "Scoop",
+      "version": "154.0.8031.0-r1688243",
+      "status": "untrusted",
+      "package": "chromium-dev",
+      "project": "chromium"
+    },
+    {
+      "repo": "termux",
+      "distro": "Termux",
+      "version": "149.0.7827.155",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "void_x86_64",
+      "distro": "Void Linux",
+      "version": "151.0.7922.108",
+      "status": "outdated",
+      "package": "chromium",
+      "project": "chromium"
+    },
+    {
+      "repo": "ubuntu_24_04",
+      "distro": "Ubuntu 24.04 LTS",
+      "version": "1snap1",
+      "status": "outdated",
+      "package": "chromium-browser",
+      "project": "chromium"
+    },
+    {
+      "repo": "ubuntu_25_10",
+      "distro": "Ubuntu 25.10",
+      "version": "1snap1",
+      "status": "outdated",
+      "package": "chromium-browser",
+      "project": "chromium"
+    },
+    {
+      "repo": "ubuntu_26_04",
+      "distro": "Ubuntu 26.04 LTS",
+      "version": "1snap1",
+      "status": "outdated",
+      "package": "chromium-browser",
+      "project": "chromium"
+    },
+    {
+      "repo": "aur",
+      "distro": "Arch User Repository",
+      "version": "151.0.7922.173",
+      "status": "newest",
+      "package": "ungoogled-chromium",
+      "project": "ungoogled-chromium"
+    },
+    {
+      "repo": "chocolatey",
+      "distro": "Chocolatey",
+      "version": "137.0.7151.681",
+      "status": "outdated",
+      "package": "ungoogled-chromium",
+      "project": "ungoogled-chromium"
+    },
+    {
+      "repo": "freebsd",
+      "distro": "FreeBSD Ports",
+      "version": "151.0.7922.169",
+      "status": "outdated",
+      "package": "ungoogled-chromium",
+      "project": "ungoogled-chromium"
+    },
+    {
+      "repo": "gnuguix",
+      "distro": "GNU Guix",
+      "version": "151.0.7922.137-1",
+      "status": "outdated",
+      "package": "ungoogled-chromium-wayland",
+      "project": "ungoogled-chromium"
+    },
+    {
+      "repo": "homebrew_casks",
+      "distro": "Homebrew Cask",
+      "version": "150.0.7871.46-1.1",
+      "status": "outdated",
+      "package": "ungoogled-chromium",
+      "project": "ungoogled-chromium"
+    },
+    {
+      "repo": "nix_stable_25_05",
+      "distro": "nixpkgs stable",
+      "version": "143.0.7499.169",
+      "status": "outdated",
+      "package": "ungoogled-chromium",
+      "project": "ungoogled-chromium"
+    },
+    {
+      "repo": "nix_unstable",
+      "distro": "nixpkgs unstable",
+      "version": "151.0.7922.173",
+      "status": "newest",
+      "package": "ungoogled-chromium",
+      "project": "ungoogled-chromium"
+    },
+    {
+      "repo": "openbsd",
+      "distro": "OpenBSD Ports",
+      "version": "151.0.7922.169",
+      "status": "outdated",
+      "package": "ungoogled-chromium",
+      "project": "ungoogled-chromium"
+    },
+    {
+      "repo": "pclinuxos",
+      "distro": "PCLinuxOS",
+      "version": "151.0.7922.173",
+      "status": "newest",
+      "package": "chromium-ungoogled-browser",
+      "project": "ungoogled-chromium"
+    },
+    {
+      "repo": "scoop",
+      "distro": "Scoop",
+      "version": "151.0.7922.173-1.1",
+      "status": "incorrect",
+      "package": "ungoogled-chromium",
+      "project": "ungoogled-chromium"
+    }
+  ],
+  "errors": []
+}

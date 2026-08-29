@@ -1,0 +1,58 @@
+name: build and deploy
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # every three hours; maintainers publish at unpredictable times
+    - cron: "17 */3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+
+      - name: fetch current build data
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bun run fetch
+
+      - name: generate site
+        env:
+          SITE_URL: ${{ vars.SITE_URL || 'https://amiragassi.github.io' }}
+          BASE_PATH: ${{ vars.BASE_PATH || '/chromiumbuilds' }}
+        run: bun run build
+
+      - name: verify output
+        env:
+          BASE_PATH: ${{ vars.BASE_PATH || '/chromiumbuilds' }}
+        run: bun run verify --no-network
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

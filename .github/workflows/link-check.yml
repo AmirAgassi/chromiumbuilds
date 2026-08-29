@@ -1,0 +1,24 @@
+name: link check
+
+# Deploys are gated on structural checks only, so a GitHub CDN hiccup cannot block the site.
+# This job separately confirms every download URL still resolves and fails loudly if one does not.
+on:
+  schedule:
+    - cron: "41 6 * * *"
+  workflow_dispatch:
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bun run fetch
+      - run: bun run build
+      - name: verify including live download urls
+        run: bun run verify
