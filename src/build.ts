@@ -896,7 +896,7 @@ const CHRLAUNCHER_TYPES: Record<string, { x64: string[]; x86: string[] }> = {
   "dev-codecs-sync": { x64: ["hibbiki-windows-x64"], x86: ["thorium-windows-x86"] },
   "dev-codecs-nosync": { x64: ["marmaduke-windows-x64", "thorium-windows-x64"], x86: ["thorium-windows-x86"] },
   "ungoogled-chromium": {
-    x64: ["marmaduke-windows-x64", "ungoogled-chromium-windows-x64"],
+    x64: ["ungoogled-chromium-windows-x64", "marmaduke-windows-x64"],
     x86: ["ungoogled-chromium-windows-x86"],
   },
   // Convenience aliases for people setting this up fresh.
