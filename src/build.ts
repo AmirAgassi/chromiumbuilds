@@ -17,7 +17,7 @@ import {
   stamp,
   traitTags,
 } from "./render";
-import type { Arch, Build, Manifest, Platform, SnapshotRelease, SnapshotTrack } from "./types";
+import type { Arch, Build, Manifest, Platform, Simd, SnapshotRelease, SnapshotTrack } from "./types";
 
 const OUT = "dist";
 const manifest: Manifest = await Bun.file("data/manifest.json").json();
@@ -905,6 +905,9 @@ const CHRLAUNCHER_TYPES: Record<string, { x64: string[]; x86: string[] }> = {
   thorium: { x64: ["thorium-windows-x64"], x86: ["thorium-windows-x86"] },
 };
 
+/** AVX2 is what Thorium itself recommends; anything newer narrows which CPUs can run it. */
+const SIMD_PREFERENCE: (Simd | undefined)[] = [undefined, "avx2", "avx", "sse4", "sse3", "avx512"];
+
 async function chrlauncherEndpoints() {
   await mkdir(`${OUT}/api/chrlauncher`, { recursive: true });
   const rows: string[] = [];
@@ -915,10 +918,14 @@ async function chrlauncherEndpoints() {
       ["x64", 64],
       ["x86", 32],
     ] as const) {
-      // chrlauncher unpacks the archive itself, so never hand it an installer.
+      // chrlauncher unpacks the archive itself, so never hand it an installer. Where a build ships
+      // per-CPU archives, take the one that starts on the most machines rather than whichever the
+      // maintainer happened to upload first: an AVX-512 build fails to launch on most desktops.
       const usable = arches[archKey].flatMap((id) => {
         const b = builds.find((x) => x.id === id);
-        const archive = b?.downloads.find((d) => d.kind === "portable" || d.kind === "archive");
+        const archive = b?.downloads
+          .filter((d) => d.kind === "portable" || d.kind === "archive")
+          .sort((x, y) => SIMD_PREFERENCE.indexOf(x.simd) - SIMD_PREFERENCE.indexOf(y.simd))[0];
         return b && archive ? [{ b, archive }] : [];
       });
       const file = `windows-${bits}-${type}.txt`;
