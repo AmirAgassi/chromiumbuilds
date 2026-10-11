@@ -1,5 +1,6 @@
 import { mkdir, rm, readdir } from "node:fs/promises";
 import { marked } from "marked";
+import { compareVersions } from "./fetch";
 import { GITHUB_SOURCES, INSTALL_COMMANDS, SNAPSHOT_META } from "./sources";
 import { layout } from "./layout";
 import type { PageMeta } from "./layout";
@@ -907,29 +908,43 @@ const CHRLAUNCHER_TYPES: Record<string, { x64: string[]; x86: string[] }> = {
 async function chrlauncherEndpoints() {
   await mkdir(`${OUT}/api/chrlauncher`, { recursive: true });
   const rows: string[] = [];
+  const fallbacks: string[] = [];
 
   for (const [type, arches] of Object.entries(CHRLAUNCHER_TYPES)) {
     for (const [archKey, bits] of [
       ["x64", 64],
       ["x86", 32],
     ] as const) {
-      const candidates = arches[archKey];
-      let chosen: Build | undefined;
-      let dl: Build["downloads"][number] | undefined;
-      for (const id of candidates) {
+      // chrlauncher unpacks the archive itself, so never hand it an installer.
+      const usable = arches[archKey].flatMap((id) => {
         const b = builds.find((x) => x.id === id);
-        if (!b) continue;
-        // chrlauncher unpacks the archive itself, so never hand it an installer.
-        const archive = b.downloads.find((d) => d.kind === "portable" || d.kind === "archive");
-        if (!archive) continue;
-        chosen = b;
-        dl = archive;
-        break;
-      }
+        const archive = b?.downloads.find((d) => d.kind === "portable" || d.kind === "archive");
+        return b && archive ? [{ b, archive }] : [];
+      });
       const file = `windows-${bits}-${type}.txt`;
-      if (!chosen || !dl) {
+      if (usable.length === 0) {
         note(`chrlauncher ${file}`, "no suitable archive build");
         continue;
+      }
+      // An auto-updater must not keep installing a build that has stopped receiving security
+      // fixes, so a stalled preferred maintainer falls through to the next candidate. The
+      // preference returns on its own once that maintainer catches up.
+      let pick = usable.find((c) => c.b.freshness === "current" || c.b.freshness === "behind");
+      if (!pick) {
+        pick = usable.reduce((a, c) => (compareVersions(c.b.version, a.b.version) > 0 ? c : a));
+        note(`chrlauncher ${file}`, `every candidate is outdated, serving the newest (${pick.b.version})`);
+      }
+      const { b: chosen, archive: dl } = pick;
+      const preferred = usable[0].b;
+      if (chosen !== preferred) {
+        fallbacks.push(
+          `<li><code>${esc(type)}</code> ${bits}-bit: ${esc(preferred.projectName)} is on ${esc(preferred.version)}, so this
+serves ${esc(chosen.projectName)} for now.${
+            preferred.widevine && !chosen.widevine
+              ? " It has no Widevine, so Netflix and similar services will not play until the switch back."
+              : ""
+          }</li>`,
+        );
       }
       const body =
         [
@@ -979,6 +994,11 @@ involved, which is also why it cannot go down the way a single API endpoint can.
 sensible current equivalents:</p>
 <div class="tw"><table><thead><tr><th>ChromiumType</th><th>Architecture</th><th>Now serves</th><th>Version</th></tr></thead>
 <tbody>${rows.join("")}</tbody></table></div>
+<p>Each type has a preferred maintainer. If that maintainer falls two or more major versions behind Chrome
+stable, the type serves the next build on its list until they catch up, because an auto-updater should not keep
+installing a browser that no longer gets security fixes. The fallback can differ in features, and the type switches
+back on its own once the preferred maintainer catches up.</p>
+${fallbacks.length ? `<p>Falling back right now:</p><ul>${fallbacks.join("")}</ul>` : ""}
 
 <h2>What the response looks like</h2>
 <pre><code>$ curl ${esc(abs("/api/chrlauncher/windows-64-stable-codecs-sync.txt"))}
