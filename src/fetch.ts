@@ -250,11 +250,21 @@ async function fetchGithubSource(src: GithubSource, upstream: Upstream): Promise
   }
 
   // Variants split across sibling tags (RobRich publishes one tag per SIMD level and OS).
-  // Take every tag that shares the newest version so all variants land together.
-  const newestVersion = parseVersion(usable[0].tag_name, usable[0].name);
+  // Each variant keeps its own newest version: Windows and Linux are often cut from different
+  // revisions a day apart, and matching on the single newest tag dropped whichever OS lagged.
+  // Tags of the same variant and version (a .deb and an .rpm) are merged later by mergeById.
+  const newestByVariant = new Map<string, string>();
+  for (const rel of usable) {
+    const variant = `${platformHintFromTag(rel.tag_name)}/${simdFromTag(rel.tag_name)}`;
+    const version = parseVersion(rel.tag_name, rel.name);
+    if (!version) continue;
+    const seen = newestByVariant.get(variant);
+    if (!seen || compareVersions(version, seen) > 0) newestByVariant.set(variant, version);
+  }
   const out: Build[] = [];
   for (const rel of usable) {
-    if (parseVersion(rel.tag_name, rel.name) !== newestVersion) continue;
+    const variant = `${platformHintFromTag(rel.tag_name)}/${simdFromTag(rel.tag_name)}`;
+    if (parseVersion(rel.tag_name, rel.name) !== newestByVariant.get(variant)) continue;
     out.push(
       ...buildsFromRelease(src, rel, upstream, platformHintFromTag(rel.tag_name), simdFromTag(rel.tag_name)),
     );
