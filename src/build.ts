@@ -894,6 +894,14 @@ const CHRLAUNCHER_TYPES: Record<string, { x64: string[]; x86: string[] }> = {
   "dev-official": { x64: ["snapshot-win-x64"], x86: ["snapshot-win-x86"] },
   "stable-codecs-sync": { x64: ["hibbiki-windows-x64"], x86: ["thorium-windows-x86", "snapshot-win-x86"] },
   "dev-nosync": { x64: ["robrich-windows-x64-avx2", "robrich-windows-x64-avx"], x86: ["snapshot-win-x86"] },
+  // Woolyss split RobRich by CPU level, and existing chrlauncher.ini files still name these. Each one
+  // only falls back to a lower instruction set, since a higher one will not start on that CPU.
+  "dev-avx-nosync": { x64: ["robrich-windows-x64-avx"], x86: ["snapshot-win-x86"] },
+  "dev-avx2-nosync": { x64: ["robrich-windows-x64-avx2", "robrich-windows-x64-avx"], x86: ["snapshot-win-x86"] },
+  "dev-avx512-nosync": {
+    x64: ["robrich-windows-x64-avx512", "robrich-windows-x64-avx2", "robrich-windows-x64-avx"],
+    x86: ["snapshot-win-x86"],
+  },
   "dev-codecs-sync": { x64: ["hibbiki-windows-x64"], x86: ["thorium-windows-x86"] },
   "dev-codecs-nosync": { x64: ["marmaduke-windows-x64", "thorium-windows-x64"], x86: ["thorium-windows-x86"] },
   "ungoogled-chromium": {
