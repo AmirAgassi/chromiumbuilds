@@ -53,7 +53,7 @@ export const GITHUB_SOURCES: GithubSource[] = [
       { re: /^mini_installer\.exe$/i, platform: "windows", arch: "x64", kind: "installer", label: "Installer", recommended: true },
       { re: /^chrome\.7z$/i, platform: "windows", arch: "x64", kind: "portable", label: "Portable (7z)" },
     ],
-    notes: ["Ships Google API keys, so browser sign-in and sync work.", "Widevine is bundled, so Netflix and Spotify play."],
+    notes: ["Ships Google API keys, so browser sign-in and sync work.", "Widevine is included but without Google's VMP signature, so Netflix, Spotify and other paid streaming may refuse to play or drop to lower quality."],
   },
   {
     id: "ungoogled-chromium",
@@ -204,7 +204,8 @@ export const GITHUB_SOURCES: GithubSource[] = [
     multiTag: true,
     assets: [
       { re: /^mini_installer\.exe$/i, platform: "windows", arch: "x64", kind: "installer", label: "Installer", recommended: true },
-      { re: /^chrome\.zip$/i, platform: "windows", arch: "x64", kind: "portable", label: "Portable (zip)" },
+      // Just the build output zipped, not a portable build: the profile still lands in the user folder.
+      { re: /^chrome\.zip$/i, platform: "windows", arch: "x64", kind: "archive", label: "Archive (zip)" },
       { re: /\.deb$/i, platform: "linux", arch: "x64", kind: "deb", label: "Debian package", recommended: true },
       { re: /\.rpm$/i, platform: "linux", arch: "x64", kind: "rpm", label: "RPM package", recommended: true },
     ],

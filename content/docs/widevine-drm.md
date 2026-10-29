@@ -6,7 +6,7 @@ order: 21
 ---
 
 You install Chromium, open Netflix, and get an error about your browser not being supported. Nothing is
-broken. The build simply does not include Widevine.
+broken. Usually the build simply does not include Widevine.
 
 ## What it is
 
@@ -24,7 +24,7 @@ specific site.
 
 ## Which builds include it
 
-| Build | Widevine |
+| Build | Widevine module |
 | --- | --- |
 | [Hibbiki](/builds/hibbiki/) | Yes |
 | [Marmaduke](/builds/marmaduke-windows/) | Yes |
@@ -35,6 +35,14 @@ specific site.
 | [Official snapshots](/docs/chromium-snapshots/) | No |
 
 Every build card on this site shows a Widevine tag, so you can check before downloading rather than after.
+
+## Having Widevine is not always enough
+
+Official Chrome also carries Google's VMP (Verified Media Path) signature, shipped as `.sig` files next to
+the browser. Some services check for it and refuse to play, or drop to lower quality, when it is missing.
+Third-party builds cannot get that signature, because it comes from Google's licensing programme. So a
+Widevine tag here means the module is present, not that every service will play. Results vary by service
+and change over time.
 
 ## Levels, and why quality is capped
 
@@ -66,7 +74,7 @@ number, you have it. If it is absent, you do not.
 
 <!--faq
 Q: Why does Netflix not work in Chromium?
-A: Netflix requires Widevine DRM, which is proprietary and cannot be bundled with open-source Chromium builds. Use a build that includes it, such as Hibbiki, Marmaduke or Thorium.
+A: Netflix requires Widevine DRM, which is proprietary and cannot be bundled with open-source Chromium builds. Use a build that includes it, such as Hibbiki, Marmaduke or Thorium. Without Google's VMP signature, which only Chrome carries, some services may still refuse to play or lower the quality.
 
 Q: How do I know if my Chromium has Widevine?
 A: Open chrome://components and look for Widevine Content Decryption Module. If it appears with a version number, the module is present.

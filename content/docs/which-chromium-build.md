@@ -22,7 +22,8 @@ Chromium the way it does for Chrome. A build compiled without them will silently
 which people usually experience as "this site is broken" rather than "I am missing a codec".
 
 **Does paid streaming work?** Netflix, Spotify, Amazon Prime and Disney+ need Widevine, Google's DRM module.
-It is closed source, so a build either bundles it or it does not.
+It is closed source, so a build either bundles it or it does not. Even with it, some services also check for a
+Google signature that only Chrome carries, so paid streaming is never guaranteed outside Chrome.
 
 **Which CPU does it need?** Some maintainers compile for newer instruction sets like AVX2 to gain speed. The
 result is faster on a modern processor and refuses to start on an older one.

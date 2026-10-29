@@ -15,7 +15,8 @@ around the edges, and most of them exist for licensing or business reasons rathe
 at all. This is the single most consequential difference and the one people most often overlook.
 
 **Widevine DRM.** Netflix, Spotify, Amazon Prime and Disney+ all require it. It is proprietary and closed
-source, so official Chromium builds cannot ship it. Some third-party builds bundle it anyway.
+source, so official Chromium builds cannot ship it. Some third-party builds bundle it anyway, but only Chrome
+carries Google's VMP signature, and services that check for it may still refuse to play or lower the quality.
 
 **Proprietary media codecs.** H.264 and AAC are patent-encumbered. Google licenses them for Chrome, but that
 licence does not extend to anyone compiling Chromium. Open Chromium builds therefore ship only the free
@@ -61,7 +62,7 @@ Q: Is Chromium the same as Chrome?
 A: They share the great majority of their code and the same rendering engine, so browsing feels identical. Chrome adds an automatic updater, Widevine DRM, the proprietary H.264 and AAC codecs, Google account integration and crash reporting on top of Chromium.
 
 Q: Can Chromium play Netflix?
-A: Only if the specific build includes Widevine DRM. Official Chromium builds do not, so Netflix will not play. Third-party builds from Hibbiki, Marmaduke and Thorium bundle Widevine and do work.
+A: Only if the specific build includes Widevine DRM. Official Chromium builds do not, so Netflix will not play. Third-party builds from Hibbiki, Marmaduke and Thorium bundle Widevine, which is often enough, but services that check for Google's VMP signature may still refuse to play.
 
 Q: Is Chromium faster than Chrome?
 A: Not inherently, since they share an engine. Builds compiled for newer CPU instruction sets, such as Thorium or RobRich's, can be measurably faster than stock Chrome on hardware that supports them.
