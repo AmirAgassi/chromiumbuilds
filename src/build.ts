@@ -523,9 +523,14 @@ async function packagesPage() {
       .sort((a, b) => a.distro.localeCompare(b.distro))
       .map((d) => {
         const cmd = INSTALL_COMMANDS[d.repo]?.[project === "chromium" ? "chromium" : "ungoogled"];
-        return `<tr><td>${esc(d.distro)}</td><td><code>${esc(d.version)}</code></td><td class="wrap-cell">${
-          cmd ? `<code>${esc(cmd)}</code>` : "Not packaged"
-        }</td></tr>`;
+        // Every row here is packaged; without a known command, name the package instead.
+        return `<tr><td>${esc(d.distro)}</td><td>${
+          d.version === "snap"
+            ? "Snap (follows the Snap Store)"
+            : d.version === "rolling"
+              ? "Rolling (newest snapshot)"
+              : `<code>${esc(d.version)}</code>`
+        }</td><td class="wrap-cell">${cmd ? `<code>${esc(cmd)}</code>` : `Package <code>${esc(d.package)}</code>`}</td></tr>`;
       })
       .join("");
 

@@ -553,9 +553,16 @@ async function fetchDistros(): Promise<DistroPackage[]> {
   for (const project of REPOLOGY_PROJECTS) {
     try {
       const pkgs = await json<RepologyPkg[]>(`https://repology.org/api/v1/project/${project}`);
+      // A repo can carry forks and snapshots under the same project (AUR has chromium-snapshot-bin and
+      // chromium-gost), so only the package actually named after the project counts, and never one
+      // Repology itself marks as a snapshot (ignored) or a leftover (legacy).
+      const canonical = [project, `${project}-browser`, `${project}-bin`];
       const best = new Map<string, RepologyPkg>();
       for (const p of pkgs) {
         if (!DISTRO_NAMES[p.repo]) continue;
+        if (p.status === "ignored" || p.status === "legacy") continue;
+        const name = (p.binname ?? p.srcname ?? p.visiblename ?? "").split("/").pop() ?? "";
+        if (!canonical.includes(name)) continue;
         const prev = best.get(p.repo);
         if (!prev || compareVersions(p.version, prev.version) > 0) best.set(p.repo, p);
       }
@@ -563,7 +570,9 @@ async function fetchDistros(): Promise<DistroPackage[]> {
         out.push({
           repo,
           distro: DISTRO_NAMES[repo],
-          version: p.version,
+          // Ubuntu's deb is a stub that installs the snap, so its "1snap1" version means nothing, and
+          // a rolling package (Homebrew's cask fetches the newest snapshot) reports "latest".
+          version: p.version.includes("snap") ? "snap" : p.status === "rolling" && !/^\d/.test(p.version) ? "rolling" : p.version,
           status: p.status ?? "unknown",
           package: p.binname ?? p.srcname ?? project,
           project,
@@ -615,12 +624,17 @@ async function main() {
   const upstream = await fetchUpstream();
   console.log(`  stable ${upstream.stable.version} / dev ${upstream.dev.version}`);
 
+  // Sources that came back with nothing. Every source normally has something, so an empty one
+  // means an upstream hiccup, and deploying would wipe its section and its chrlauncher endpoints.
+  const empty: string[] = [];
+
   console.log("fetching github release sources...");
   const ghBuilds = (
     await Promise.all(
       GITHUB_SOURCES.map(async (s) => {
         const b = await fetchGithubSource(s, upstream);
         console.log(`  ${s.repo.padEnd(52)} ${b.length} build(s)`);
+        if (b.length === 0) empty.push(s.repo);
         return b;
       }),
     )
@@ -629,10 +643,12 @@ async function main() {
   console.log("fetching official snapshots...");
   const snapBuilds = await fetchSnapshots(upstream);
   console.log(`  ${snapBuilds.length} snapshot target(s)`);
+  for (const s of SNAPSHOT_SOURCES) if (!snapBuilds.some((b) => b.id === s.id)) empty.push(`snapshot ${s.bucketPlatform}`);
 
   console.log("fetching snapshot history...");
   const snapshots = await fetchSnapshotHistory();
   for (const t of snapshots) console.log(`  ${t.bucketPlatform.padEnd(12)} ${t.older.length + 1} revision(s), latest ${t.latest.version}`);
+  for (const s of SNAPSHOT_SOURCES) if (!snapshots.some((t) => t.id === s.id)) empty.push(`snapshot history ${s.bucketPlatform}`);
 
   // The snapshot cards guessed the canary version; the history resolves the real one per revision.
   for (const b of snapBuilds) {
@@ -648,6 +664,7 @@ async function main() {
   console.log("fetching distro packages...");
   const distros = await fetchDistros();
   console.log(`  ${distros.length} package(s) across distributions`);
+  for (const p of REPOLOGY_PROJECTS) if (!distros.some((d) => d.project === p)) empty.push(`repology/${p}`);
 
   const builds = mergeById([...ghBuilds, ...snapBuilds]).sort(
     (a, b) =>
@@ -665,13 +682,14 @@ async function main() {
     errors,
   };
 
-  await Bun.write("data/manifest.json", `${JSON.stringify(manifest, null, 2)}\n`);
-  console.log(`\nwrote data/manifest.json: ${builds.length} builds, ${distros.length} distro packages, ${errors.length} error(s)`);
-
-  if (builds.length < 20) {
-    console.error("refusing to continue: implausibly few builds, upstream sources may be broken");
+  // Failing here stops the deploy, so the live site keeps its last good data until the next run.
+  if (empty.length > 0) {
+    console.error(`\nrefusing to write data/manifest.json: no data from ${empty.join(", ")}`);
     process.exit(1);
   }
+
+  await Bun.write("data/manifest.json", `${JSON.stringify(manifest, null, 2)}\n`);
+  console.log(`\nwrote data/manifest.json: ${builds.length} builds, ${distros.length} distro packages, ${errors.length} error(s)`);
 }
 
 if (import.meta.main) await main();
