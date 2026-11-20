@@ -66,8 +66,10 @@ export const GITHUB_SOURCES: GithubSource[] = [
       "Chromium with every Google web service dependency removed or disabled at the source level. No background requests to Google, no sign-in, no Safe Browsing callbacks.",
     channel: "stable",
     google: "ungoogled",
-    proprietaryCodecs: false,
-    hevc: false,
+    // flags.windows.gn has set proprietary_codecs=true and ffmpeg_branding="Chrome" since 2019. Widevine
+    // support is compiled in, but the module is only bundled in Google-branded builds.
+    proprietaryCodecs: true,
+    hevc: true,
     widevine: false,
     assets: [
       { re: /installer_x64\.exe$/i, platform: "windows", arch: "x64", kind: "installer", label: "Installer", recommended: true },
@@ -79,8 +81,8 @@ export const GITHUB_SOURCES: GithubSource[] = [
     ],
     notes: [
       "No Google API keys, so sign-in and sync are absent by design.",
-      "No Widevine, so most paid streaming services will not play.",
-      "Open codecs only. H.264 and AAC content may not play everywhere.",
+      "H.264, AAC and HEVC are compiled in. HEVC decodes through Windows, so it depends on the PC.",
+      "Widevine support is compiled in but the module is not shipped. Copy it in by hand, or most paid streaming will not play.",
     ],
   },
   {
@@ -93,14 +95,18 @@ export const GITHUB_SOURCES: GithubSource[] = [
     blurb: "The official macOS build of ungoogled-chromium, shipped as a signed-adjacent disk image for Intel and Apple silicon.",
     channel: "stable",
     google: "ungoogled",
-    proprietaryCodecs: false,
-    hevc: false,
+    // flags.macos.gn sets proprietary_codecs=true; HEVC follows from it in media_options.gni.
+    proprietaryCodecs: true,
+    hevc: true,
     widevine: false,
     assets: [
       { re: /arm64-macos\.dmg$/i, platform: "macos", arch: "arm64", kind: "dmg", label: "Disk image", recommended: true },
       { re: /x86_64-macos\.dmg$/i, platform: "macos", arch: "x64", kind: "dmg", label: "Disk image", recommended: true },
     ],
-    notes: ["Not notarised by Apple. You must right-click and choose Open the first time."],
+    notes: [
+      "Not notarised by Apple. You must right-click and choose Open the first time.",
+      "H.264, AAC and HEVC are compiled in. Widevine is not shipped but can be copied in from Chrome.",
+    ],
   },
   {
     id: "ungoogled-chromium-linux",
@@ -112,8 +118,9 @@ export const GITHUB_SOURCES: GithubSource[] = [
     blurb: "Portable Linux builds of ungoogled-chromium that run from any directory without a package manager.",
     channel: "stable",
     google: "ungoogled",
-    proprietaryCodecs: false,
-    hevc: false,
+    // flags.linux.gn sets proprietary_codecs=true; HEVC follows from it in media_options.gni.
+    proprietaryCodecs: true,
+    hevc: true,
     widevine: false,
     assets: [
       { re: /x86_64\.AppImage$/i, platform: "linux", arch: "x64", kind: "appimage", label: "AppImage", recommended: true },
@@ -121,7 +128,10 @@ export const GITHUB_SOURCES: GithubSource[] = [
       { re: /arm64\.AppImage$/i, platform: "linux", arch: "arm64", kind: "appimage", label: "AppImage", recommended: true },
       { re: /arm64_linux\.tar\.xz$/i, platform: "linux", arch: "arm64", kind: "archive", label: "Portable (tar.xz)" },
     ],
-    notes: ["AppImage needs the executable bit: chmod +x the file before running it."],
+    notes: [
+      "AppImage needs the executable bit: chmod +x the file before running it.",
+      "H.264, AAC and HEVC are compiled in. HEVC needs hardware decoding support. Widevine is not shipped but can be copied in from Chrome.",
+    ],
   },
   {
     id: "marmaduke-windows",

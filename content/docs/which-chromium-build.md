@@ -36,12 +36,13 @@ stable release closely. It is the least surprising option.
 
 **You want nothing contacting Google, at all.**
 Use [ungoogled-chromium](/builds/ungoogled-chromium/). Google service integration is stripped at the source
-level rather than merely switched off. The trade is real: no sign-in, no bundled Widevine, and open codecs
-only, so expect some video not to play.
+level rather than merely switched off. The trade is real: no sign-in and no bundled Widevine, so paid
+streaming will not play unless you add the module yourself. Ordinary video is fine, since H.264 and AAC are
+compiled in.
 
-**You want the privacy but you also want video to work.**
-Use [Marmaduke's builds](/builds/marmaduke-windows/). Same ungoogled patches, but the proprietary codecs and
-Widevine are kept. This is the usual answer for people who tried ungoogled-chromium and gave up on it.
+**You want the privacy but you also want paid streaming to work.**
+Use [Marmaduke's builds](/builds/marmaduke-windows/). Same ungoogled patches, but Widevine ships with it. This
+is the usual answer for people who tried ungoogled-chromium and could not get Netflix or Spotify going.
 
 **You want it as fast as your hardware allows.**
 Use [Thorium](/builds/thorium/) or [RobRich's builds](/builds/robrich/). Both compile with aggressive
@@ -61,7 +62,7 @@ untested, no auto-update, no codecs, no DRM. Correct for bisecting a bug, wrong 
 | Build | Sign-in and sync | H.264 / AAC | Widevine DRM | Notes |
 | --- | --- | --- | --- | --- |
 | Hibbiki | Yes | Yes, plus H.265 | Yes | Closest to Chrome |
-| ungoogled-chromium | Removed | No | No | Strictest privacy |
+| ungoogled-chromium | Removed | Yes, plus H.265 | Add by hand | Strictest privacy |
 | Marmaduke | Removed | Yes | Yes | Privacy with working media |
 | Thorium | No | Yes, plus H.265 | Yes | Speed, needs a modern CPU |
 | RobRich | No | Yes, plus H.265 | Yes | Development channel, very fast |
@@ -83,7 +84,7 @@ Q: Which Chromium build is the safest to download?
 A: Any build whose checksum you verify against the maintainer's own release page. Every build listed on this site links directly to the maintainer's GitHub release and shows the SHA-256 published there, so you can confirm the file is exactly what they built.
 
 Q: What is the best Chromium build for privacy?
-A: ungoogled-chromium removes Google web service integration at the source level, which is the strictest option. If you also need streaming video and sign-in to work, Marmaduke's builds apply the same patches but keep the proprietary codecs and Widevine.
+A: ungoogled-chromium removes Google web service integration at the source level, which is the strictest option. If you also need paid streaming to work, Marmaduke's builds apply the same patches and ship Widevine.
 
 Q: Do Chromium builds update automatically?
 A: No. Automatic updating is part of Google Chrome, not Chromium. Almost every Chromium build requires you to download and install new versions yourself, which is why an old Chromium is a genuine security risk.

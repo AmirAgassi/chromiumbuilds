@@ -102,7 +102,7 @@ const CHOOSER = [
   },
   {
     b: "You want privacy and working video",
-    p: "Ungoogled patches, but the proprietary codecs and Widevine are kept for video and streaming.",
+    p: "Ungoogled patches, but Widevine ships with it, so paid streaming has a chance to play.",
     href: "/builds/marmaduke-windows/",
     cta: "Marmaduke builds",
   },

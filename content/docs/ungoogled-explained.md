@@ -45,13 +45,12 @@ ungoogled-chromium under the impression it does this is a real misunderstanding 
 | Safe Browsing | No warning before a known phishing or malware site |
 | Sign-in and sync | Bookmarks and passwords do not follow you between machines |
 | Web Store access | Extensions need the store extension or manual CRX installs |
-| Widevine | Netflix, Spotify and Prime do not play |
-| Proprietary codecs | H.264 and AAC media may fail |
+| Widevine | Netflix, Spotify and Prime do not play until you add the module by hand |
 | Auto-update | Same as every Chromium build |
 
-The last three surprise people most often. If they matter to you,
-[Marmaduke's builds](/builds/marmaduke-windows/) apply the same ungoogled patches while keeping Widevine and
-the codecs, which is the middle ground most people actually want.
+The last two surprise people most often. Ordinary video is not on this list: the official builds compile in
+H.264, AAC and H.265. If Widevine matters to you, [Marmaduke's builds](/builds/marmaduke-windows/) apply the
+same ungoogled patches and ship it, which is the middle ground most people actually want.
 
 ## Who it is right for
 

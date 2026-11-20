@@ -28,22 +28,23 @@ reverse, which is a confusing symptom pointing at exactly this cause.
 
 ## H.265 / HEVC
 
-Newer, more efficient, more aggressively licensed. Chrome supports it only with hardware decoding on
-supported systems. A few Chromium builds, notably [Hibbiki](/builds/hibbiki/),
-[Thorium](/builds/thorium/) and [RobRich's](/builds/robrich/), enable broader H.265 support. Builds carrying
-it are tagged **Codecs + H.265** on this site.
+Newer, more efficient, more aggressively licensed. Chromium decodes it through the operating system or GPU
+rather than in software, so it plays only where your hardware and OS support it. Any build compiled with the
+proprietary codecs gets this automatically, including [Hibbiki](/builds/hibbiki/),
+[Thorium](/builds/thorium/), [RobRich's](/builds/robrich/) and official
+[ungoogled-chromium](/builds/ungoogled-chromium/). Builds carrying it are tagged **Codecs + H.265** on this
+site.
 
 Mostly relevant for local files and specialised streaming rather than everyday browsing.
 
 ## Which builds have what
 
-Every build card shows either **Codecs** or **Open codecs only**. In summary: Hibbiki, Marmaduke, Thorium and
-RobRich compile the proprietary codecs in. Official ungoogled-chromium and Google's own snapshots ship open
+Every build card shows either **Codecs** or **Open codecs only**. In summary: Hibbiki, Marmaduke, Thorium,
+RobRich and official ungoogled-chromium compile the proprietary codecs in. Google's own snapshots ship open
 codecs only.
 
-If you picked ungoogled-chromium for privacy and are now finding video broken,
-[Marmaduke's builds](/builds/marmaduke-windows/) apply the same ungoogled patches while keeping the codecs.
-That swap solves this specific problem without giving anything up.
+If video fails in ungoogled-chromium, codecs are not the cause, since it has them. The usual culprit is a
+DRM-protected stream, which needs Widevine: see [Widevine DRM](/docs/widevine-drm/).
 
 ## Checking what you have
 
@@ -68,11 +69,11 @@ build that already includes the codecs is better in essentially every respect.
 
 <!--faq
 Q: Why does video not play in Chromium?
-A: The build is most likely compiled without the proprietary H.264 and AAC codecs, which are patent-encumbered and cannot be freely redistributed. Builds from Hibbiki, Marmaduke, Thorium and RobRich include them.
+A: The build is most likely compiled without the proprietary H.264 and AAC codecs, which are patent-encumbered and cannot be freely redistributed. Builds from Hibbiki, Marmaduke, Thorium, RobRich and official ungoogled-chromium include them.
 
 Q: Why does YouTube work but other video sites do not?
 A: YouTube serves the royalty-free VP9 and AV1 codecs that every Chromium build includes. Sites using H.264 need a build compiled with the proprietary codecs.
 
 Q: Does Chromium support H.265 / HEVC?
-A: Only in builds compiled with it enabled. Hibbiki, Thorium and RobRich's builds carry broader H.265 support and are tagged accordingly on this site.
+A: In builds compiled with the proprietary codecs, and only where the operating system or GPU can decode it. Hibbiki, Thorium, RobRich and official ungoogled-chromium carry it and are tagged accordingly on this site.
 -->
