@@ -1158,6 +1158,21 @@ recorded here.</li>
 <li><b>No ads and no sponsorships.</b> There is no ranking to buy.</li>
 </ul>
 
+<h2 id="what-gets-listed">What gets listed</h2>
+<p>This is a curated list, not a catalogue of every Chromium build on GitHub. chrlauncher installs from this
+site automatically, so a build listed here can end up on someone's machine without them ever looking at it. That
+makes adding a build a trust decision, and the bar is deliberately high. A build needs:</p>
+<ul>
+<li><b>A track record.</b> Roughly a year or more of steady, timely releases.</li>
+<li><b>Public source.</b> The patches and the build recipe live in the repository, not only the binaries.</li>
+<li><b>A build you can trace.</b> Either releases produced by public CI with visible logs, or a maintainer with a
+long, established history.</li>
+<li><b>Real users.</b> Some community use beyond the maintainer.</li>
+<li><b>Honesty about changes.</b> A clear account of what it adds or removes compared to upstream Chromium.</li>
+</ul>
+<p>A build that is not listed is not necessarily bad, often just young. Suggestions are welcome, and a build that
+is not ready yet can be suggested again later.</p>
+
 <h2>Verifying what you download</h2>
 <p>Every checksum shown comes from the release host's own API rather than being computed here, so you can check a
 file against its publisher without trusting this site. The
@@ -1178,8 +1193,9 @@ worth starring, reporting bugs to, and supporting.</p>
 <p>Thanks are also owed to Jerry, who ran woolyss for nineteen years and set the standard this is trying to meet.</p>
 
 <h2>Corrections</h2>
-<p>If a build is mislabelled, missing, or a maintainer would rather not be listed, open an issue on
-<a href="${SITE.repo}" rel="noopener">the repository</a> and it will be fixed.</p>
+<p>If a build is mislabelled, or a maintainer would rather not be listed, open an issue on
+<a href="${SITE.repo}" rel="noopener">the repository</a> and it will be fixed. To suggest a build, check it
+against <a href="#what-gets-listed">what gets listed</a> first.</p>
 </div>`,
     { changefreq: "monthly", priority: "0.4" },
   );
