@@ -8,11 +8,13 @@ import { abs, bytes, esc, relDate, shortDate, url, SITE } from "./site";
 import {
   ARCH_LABEL,
   ARCH_SHORT,
+  DL_ICON,
   PLATFORM_LABEL,
   blurbFor,
   buildList,
   buildSchema,
   faqSchema,
+  freshnessBadge,
   homepageFor,
   stamp,
   traitTags,
@@ -26,11 +28,18 @@ const written: { path: string; changefreq: string; priority: string }[] = [];
 const warnings: string[] = [];
 const note = (source: string, message: string) => warnings.push(`${source}: ${message}`);
 
+/** Tile grids are authored as bare links; give each one the list item a <ul> requires. */
+function tiles(html: string): string {
+  return html.replace(/<ul class="grid-links">([\s\S]*?)<\/ul>/g, (_, inner: string) =>
+    `<ul class="grid-links">${inner.replace(/<a [\s\S]*?<\/a>/g, (a) => `<li>${a}</li>`)}</ul>`,
+  );
+}
+
 async function page(path: string, meta: Omit<PageMeta, "path">, body: string, seo = { changefreq: "weekly", priority: "0.6" }) {
   const full = path.endsWith("/") ? `${path}index.html` : path;
   const file = `${OUT}${full}`;
   await mkdir(file.slice(0, file.lastIndexOf("/")), { recursive: true });
-  await Bun.write(file, layout({ ...meta, path }, body));
+  await Bun.write(file, layout({ ...meta, path }, tiles(body)));
   written.push({ path, ...seo });
 }
 
@@ -173,7 +182,7 @@ function pickCards(): string {
       // Where the pick IS Chromium, the maintained build is the answer to what it cannot do.
       const alt = b.channel === "snapshot" ? maintained(p, a) : undefined;
       blocks.push(`<div hidden id="pick-${p}-${a}">
-<p class="blurb" style="margin-top:-.25rem">Detected ${PLATFORM_LABEL[p]} on ${esc(ARCH_LABEL[a])}.
+<p class="blurb">Detected ${PLATFORM_LABEL[p]} on ${esc(ARCH_LABEL[a])}.
 ${
   alt
     ? `This is Chromium itself, as Google builds it. For one that plays streaming video and updates itself,
@@ -195,7 +204,7 @@ async function home() {
     .map((p) => {
       const rec = recommended(p, archesFor(p)[0]);
       const n = byPlatform(p).length;
-      return `<a href="${url(`/${p}/`)}">${PLATFORM_LABEL[p]}<small>${n} builds${rec ? ` · latest ${esc(rec.version)}` : ""}</small></a>`;
+      return `<li><a href="${url(`/${p}/`)}">${PLATFORM_LABEL[p]}<small>${n} builds</small>${rec ? `<small class="v">latest ${esc(rec.version)}</small>` : ""}</a></li>`;
     })
     .join("");
 
@@ -219,12 +228,16 @@ async function home() {
   ];
 
   const body = `
-<div class="hero">
+<div class="hero home">
+  <span class="eyebrow">Trusted Chromium builds</span>
   <h1>Download Chromium</h1>
+  <p class="lede">${esc(SITE.description)}</p>
   ${stamp(generatedAt, upstream.stable.version)}
+  <h2 class="sr-only">Browse by platform</h2>
+  <ul class="platforms">${platformCards}</ul>
 </div>
 
-<div id="detect" hidden><h2 style="margin-top:1.5rem">Recommended for your system</h2>${pickCards()}</div>
+<div id="detect" class="detect" hidden><h2>Recommended for your system</h2>${pickCards()}</div>
 
 <h2>Which build should I use?</h2>
 <p class="blurb">Chromium has no single official download for end users. Volunteers compile it, and they make different
@@ -235,8 +248,8 @@ ${CHOOSER.map(
 ).join("")}
 </ul>
 
-<h2>Browse by platform</h2>
-<ul class="grid-links">${platformCards}
+<h2>More places to look</h2>
+<ul class="grid-links">
 <a href="${url("/chromium/")}">Official Chromium<small>Google's own per-commit builds</small></a>
 <a href="${url("/bsd/")}">BSD<small>FreeBSD and OpenBSD ports</small></a>
 <a href="${url("/linux/packages/")}">Linux packages<small>${distros.length} distributions tracked</small></a>
@@ -257,24 +270,25 @@ ${sorted(builds.filter((b) => b.channel !== "snapshot"))
   <td><code>${esc(b.version)}</code></td>
   <td>${PLATFORM_LABEL[b.platform]} ${ARCH_SHORT[b.arch[0]]}</td>
   <td>${shortDate(b.releasedAt)}</td>
-  <td>${
+  <td>${freshnessBadge(
+    b.freshness,
     b.freshness === "current"
       ? "Current"
       : b.freshness === "behind"
         ? "One behind"
         : b.freshness === "abandoned"
           ? "No longer updated"
-          : "Outdated"
-  }</td>
+          : "Outdated",
+  )}</td>
 </tr>`,
   )
   .join("")}
 </tbody></table></div>
-<p class="stamp"><a href="${url("/feed.xml")}">Subscribe to the release feed</a> to be told when any of these update.</p>
+<p class="blurb"><a href="${url("/feed.xml")}">Subscribe to the release feed</a> to be told when any of these update.</p>
 
 <h2>Common questions</h2>
-${faq.map((f) => `<h3>${esc(f.q)}</h3><p class="blurb">${esc(f.a)}</p>`).join("")}
-<p><a href="${url("/docs/")}">Read all guides &rarr;</a></p>
+<div class="faq">${faq.map((f) => `<div class="faq-item"><h3>${esc(f.q)}</h3><p>${esc(f.a)}</p></div>`).join("")}</div>
+<p class="more-link"><a href="${url("/docs/")}">Read all guides &rarr;</a></p>
 <script>var B=${JSON.stringify(SITE.base)};${DETECT_SCRIPT}</script>
 `;
 
@@ -325,6 +339,13 @@ ${buildList(forArch, { pickId: recArch?.id })}`;
   <h1>Chromium for ${PLATFORM_LABEL[p]}</h1>
   <p class="lede">${esc(PLATFORM_INTRO[p] ?? "")}</p>
   ${stamp(generatedAt, upstream.stable.version)}
+  ${
+    arches.length > 1
+      ? `<nav aria-label="Architectures"><ul class="jump">${arches
+          .map((a) => `<li><a href="#${a}">${PLATFORM_LABEL[p]} ${esc(ARCH_LABEL[a])}</a></li>`)
+          .join("")}</ul></nav>`
+      : ""
+  }
 </div>
 ${
   rec
@@ -745,14 +766,17 @@ ${[...groups.entries()]
 
   for (const d of docs) {
     const hs = headings(d.html);
-    let html = rewriteLinks(d.html);
+    let html = rewriteLinks(d.html)
+      .replace(/<table>/g, '<div class="tw"><table>')
+      .replace(/<\/table>/g, "</table></div>");
     for (const h of hs) html = html.replace(`<h2>${h.text}</h2>`, `<h2 id="${h.id}">${h.text}</h2>`);
 
     const related = docs.filter((x) => x.slug !== d.slug && x.group === d.group).slice(0, 4);
     const body = `
 <div class="hero"><h1>${esc(d.title)}</h1><p class="lede">${esc(d.description)}</p></div>
+<div class="doc">
+${hs.length > 2 ? `<div class="toc-wrap"><nav class="toc" aria-label="On this page"><b>On this page</b><ul>${hs.map((h) => `<li><a href="#${h.id}">${esc(h.text)}</a></li>`).join("")}</ul></nav></div>` : ""}
 <div class="prose">
-${hs.length > 2 ? `<nav class="toc"><b>On this page</b><ul>${hs.map((h) => `<li><a href="#${h.id}">${esc(h.text)}</a></li>`).join("")}</ul></nav>` : ""}
 ${html}
 ${
   related.length
@@ -761,6 +785,7 @@ ${
         .join("")}</ul>`
     : ""
 }
+</div>
 </div>`;
 
     await page(
@@ -1272,10 +1297,11 @@ ${revisionRows(t.older, true)}</details>`;
 function snapshotCard(t: SnapshotTrack, opts: { hidden?: boolean } = {}): string {
   const r = t.latest;
   return `<div class="build pick"${opts.hidden ? ` hidden id="pick-${t.platform}-${t.arch}"` : ""}>
-<div class="build-head"><h3>${esc(t.title)}</h3><span class="ver">${esc(r.version)}</span></div>
+<div class="build-head"><div class="build-title"><h3>${esc(t.title)}</h3><span class="ver chip">${esc(r.version)}</span></div>
+<span class="by">by <b>The Chromium Authors</b> · ${relDate(r.builtAt)}</span></div>
 <p class="blurb">${esc(t.requirement)}</p>
 ${snapshotFacts(t, r)}
-<div class="dl"><a class="btn big" href="${esc(r.url)}" rel="nofollow noopener">Download Chromium ${esc(r.version)}
+<div class="dl"><a class="btn big" href="${esc(r.url)}" rel="nofollow noopener">${DL_ICON}Download Chromium ${esc(r.version)}
 <small>${esc(t.file.endsWith(".zip") ? "zip" : "archive")}, ${bytes(r.size)}</small></a>
 <a class="btn sec" href="${url(`/chromium/${t.slug}/`)}">About this build</a></div>
 ${opts.hidden ? olderList(t, { scroll: true, heading: "<h4>Older versions</h4>" }) : ""}
@@ -1310,7 +1336,7 @@ async function chromiumHub(tracks: SnapshotTrack[]) {
   ${stamp(generatedAt, upstream.stable.version)}
 </div>
 
-<div id="detect" hidden><h2>Your system</h2>
+<div id="detect" class="detect" hidden><h2>Your system</h2>
 ${tracks.map((t) => snapshotCard(t, { hidden: true })).join("")}
 </div>
 
@@ -1346,8 +1372,8 @@ ${CHOOSER_OTHERS.map(
 </ul>
 
 <h2>Common questions</h2>
-${faq.map((f) => `<h3>${esc(f.q)}</h3><p class="blurb">${esc(f.a)}</p>`).join("")}
-<p><a href="${url("/builds/chromium-snapshot/")}">More about the snapshot build &rarr;</a></p>
+<div class="faq">${faq.map((f) => `<div class="faq-item"><h3>${esc(f.q)}</h3><p>${esc(f.a)}</p></div>`).join("")}</div>
+<p class="more-link"><a href="${url("/builds/chromium-snapshot/")}">More about the snapshot build &rarr;</a></p>
 <script>var B=${JSON.stringify(SITE.base)};${DETECT_SCRIPT}</script>
 `;
 

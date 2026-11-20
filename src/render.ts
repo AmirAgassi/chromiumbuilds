@@ -59,7 +59,7 @@ export function homepageFor(build: Build): string | undefined {
 export function traitTags(build: Build, opts: { omitLimitations?: boolean } = {}): string {
   const t: string[] = [];
   const f = FRESHNESS[build.freshness];
-  t.push(`<span class="tag ${f.cls}" title="${esc(f.title)}">${f.label}</span>`);
+  t.push(`<span class="tag status ${f.cls}" title="${esc(f.title)}">${f.label}</span>`);
 
   if (build.google === "ungoogled")
     t.push('<span class="tag ok" title="Google web service integration removed at the source level.">Ungoogled</span>');
@@ -92,11 +92,21 @@ export function traitTags(build: Build, opts: { omitLimitations?: boolean } = {}
   return `<div class="tags">${t.join("")}</div>`;
 }
 
+/** A plain arrow-into-tray glyph, inline so no request is made for it. */
+export const DL_ICON =
+  '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 2.5v7.5M4.75 6.75 8 10l3.25-3.25M2.75 11.5v1a1 1 0 0 0 1 1h8.5a1 1 0 0 0 1-1v-1"/></svg>';
+
+/** Freshness as a badge, for tables that summarise many builds. */
+export function freshnessBadge(f: Freshness, label?: string): string {
+  const x = FRESHNESS[f];
+  return `<span class="tag status ${x.cls}" title="${esc(x.title)}">${esc(label ?? x.label)}</span>`;
+}
+
 function downloadButton(d: Download, primary: boolean): string {
   const size = d.size ? ` <small>${bytes(d.size)}</small>` : "";
   return `<a class="btn${primary ? "" : " sec"}" href="${esc(d.url)}" rel="noopener nofollow"${
     d.filename ? ` download` : ""
-  } title="${esc(d.filename)}">${esc(d.label)}${size}</a>`;
+  } title="${esc(d.filename)}">${primary ? DL_ICON : ""}${esc(d.label)}${size}</a>`;
 }
 
 function checksums(downloads: Download[]): string {
@@ -117,18 +127,22 @@ export function buildCard(
   const rest = primary.length ? secondary : build.downloads.slice(2);
 
   const platformNote = opts.showPlatform
-    ? `<span class="ver">${PLATFORM_LABEL[build.platform]} · ${ARCH_SHORT[build.arch[0]]}</span>`
-    : `<span class="ver">${ARCH_SHORT[build.arch[0]]}</span>`;
+    ? `<span class="arch">${PLATFORM_LABEL[build.platform]} · ${ARCH_SHORT[build.arch[0]]}</span>`
+    : `<span class="arch">${ARCH_SHORT[build.arch[0]]}</span>`;
 
   return `<li class="build${opts.pick ? " pick" : ""}" id="${esc(build.id)}">
+  ${opts.pick ? '<span class="pick-label">Recommended</span>' : ""}
   <div class="build-head">
-    <h3><a href="${url(`/builds/${build.project}/`)}">${esc(build.projectName)}</a></h3>
-    <span class="ver">${esc(build.version)}</span>
-    ${platformNote}
-    <span class="by">by ${esc(build.maintainer)} · ${build.channel === "snapshot" ? "rebuilt continuously" : relDate(build.releasedAt)}</span>
+    <div class="build-title">
+      <h3><a href="${url(`/builds/${build.project}/`)}">${esc(build.projectName)}</a></h3>
+      <span class="ver chip">${esc(build.version)}</span>
+      ${platformNote}
+    </div>
+    <span class="by">by <b>${esc(build.maintainer)}</b> · ${build.channel === "snapshot" ? "rebuilt continuously" : relDate(build.releasedAt)}</span>
   </div>
   ${blurbFor(build) ? `<p class="blurb">${esc(blurbFor(build))}</p>` : ""}
   ${traitTags(build, { omitLimitations: opts.omitLimitations })}
+  <div class="build-actions">
   <div class="dl">${shown.map((d) => downloadButton(d, true)).join("")}</div>
   ${
     rest.length
@@ -139,6 +153,7 @@ export function buildCard(
   }
   ${opts.extra ?? ""}
   ${checksums(build.downloads)}
+  </div>
 </li>`;
 }
 
