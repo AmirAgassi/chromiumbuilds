@@ -23,7 +23,8 @@ which people usually experience as "this site is broken" rather than "I am missi
 
 **Does paid streaming work?** Netflix, Spotify, Amazon Prime and Disney+ need Widevine, Google's DRM module.
 It is closed source, so a build either bundles it or it does not. Even with it, some services also check for a
-Google signature that only Chrome carries, so paid streaming is never guaranteed outside Chrome.
+Google signature that only browsers licensed by Google carry, such as Chrome and Edge, so paid streaming is
+never guaranteed in a Chromium fork.
 
 **Which CPU does it need?** Some maintainers compile for newer instruction sets like AVX2 to gain speed. The
 result is faster on a modern processor and refuses to start on an older one.
@@ -63,10 +64,10 @@ untested, no auto-update, no codecs, no DRM. Correct for bisecting a bug, wrong 
 | --- | --- | --- | --- | --- |
 | Hibbiki | Yes | Yes, plus H.265 | Yes | Closest to Chrome |
 | ungoogled-chromium | Removed | Yes, plus H.265 | Add by hand | Strictest privacy |
-| Marmaduke | Removed | Yes | Yes | Privacy with working media |
+| Marmaduke | Removed | Yes, plus H.265 | Yes | Privacy with working media |
 | Thorium | No | Yes, plus H.265 | Yes | Speed, needs a modern CPU |
 | RobRich | No | Yes, plus H.265 | Yes | Development channel, very fast |
-| Supermium | Yes | Yes | No | Runs on Windows XP and up |
+| Supermium | Yes | Yes | Add by hand | Runs on Windows XP and up |
 | Official snapshot | No | No | No | Testing only |
 
 ## The one thing every build shares

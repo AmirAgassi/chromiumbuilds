@@ -15,8 +15,9 @@ around the edges, and most of them exist for licensing or business reasons rathe
 at all. This is the single most consequential difference and the one people most often overlook.
 
 **Widevine DRM.** Netflix, Spotify, Amazon Prime and Disney+ all require it. It is proprietary and closed
-source, so official Chromium builds cannot ship it. Some third-party builds bundle it anyway, but only Chrome
-carries Google's VMP signature, and services that check for it may still refuse to play or lower the quality.
+source, so official Chromium builds cannot ship it. Some third-party builds bundle it anyway, but they lack
+Google's VMP signature, which Chrome and licensed browsers like Edge carry and individual forks rarely can get.
+Services that check for it may still refuse to play or lower the quality.
 
 **Proprietary media codecs.** H.264 and AAC are patent-encumbered. Google licenses them for Chrome, but that
 licence does not extend to anyone compiling Chromium. Open Chromium builds therefore ship only the free

@@ -303,6 +303,7 @@ export const GITHUB_SOURCES: GithubSource[] = [
     notes: [
       "Runs on Windows XP and later. Nothing else current does.",
       "Supports Google sign-in and sync.",
+      "Widevine support is compiled in on Windows 7 and up, but the module is not shipped. Copy it in by hand for paid streaming.",
     ],
   },
 ];

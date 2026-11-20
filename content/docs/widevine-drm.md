@@ -31,18 +31,26 @@ specific site.
 | [Thorium](/builds/thorium/) | Yes |
 | [RobRich](/builds/robrich/) | Yes |
 | [ungoogled-chromium](/builds/ungoogled-chromium/) | No, can be added manually |
-| [Supermium](/builds/supermium/) | No |
+| [Supermium](/builds/supermium/) | No, can be added manually |
 | [Official snapshots](/docs/chromium-snapshots/) | No |
 
 Every build card on this site shows a Widevine tag, so you can check before downloading rather than after.
 
 ## Having Widevine is not always enough
 
-Official Chrome also carries Google's VMP (Verified Media Path) signature, shipped as `.sig` files next to
-the browser. Some services check for it and refuse to play, or drop to lower quality, when it is missing.
-Third-party builds cannot get that signature, because it comes from Google's licensing programme. So a
-Widevine tag here means the module is present, not that every service will play. Results vary by service
-and change over time.
+Full Widevine support has two separate parts, and most Chromium forks only have the first:
+
+1. **Support compiled into the browser.** Most forks enable this. Some also ship the Widevine module itself;
+   others leave it out, and you copy it in by hand. "Can be added manually" in the table above means support
+   is compiled in but the module is not shipped.
+2. **The VMP (Verified Media Path) signature.** This comes from Google's Widevine licensing programme and
+   ships as `.sig` files next to the browser. Some services check for it and refuse to play, or drop to lower
+   quality, when it is missing.
+
+Chrome has the signature, and so do browsers whose makers license Widevine from Google, such as Edge, Brave,
+Vivaldi and Firefox. Any third party can apply, but Google controls the programme and its terms, and it is
+rarely viable for the individuals who maintain most forks. So a Widevine tag here means the module is present,
+not that every service will play. Results vary by service and change over time.
 
 ## Levels, and why quality is capped
 
@@ -74,7 +82,7 @@ number, you have it. If it is absent, you do not.
 
 <!--faq
 Q: Why does Netflix not work in Chromium?
-A: Netflix requires Widevine DRM, which is proprietary and cannot be bundled with open-source Chromium builds. Use a build that includes it, such as Hibbiki, Marmaduke or Thorium. Without Google's VMP signature, which only Chrome carries, some services may still refuse to play or lower the quality.
+A: Netflix requires Widevine DRM, which is proprietary and cannot be bundled with open-source Chromium builds. Use a build that includes it, such as Hibbiki, Marmaduke or Thorium. These forks lack Google's VMP signature, which only browsers licensed by Google carry, so some services may still refuse to play or lower the quality.
 
 Q: How do I know if my Chromium has Widevine?
 A: Open chrome://components and look for Widevine Content Decryption Module. If it appears with a version number, the module is present.
