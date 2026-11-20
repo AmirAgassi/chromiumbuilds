@@ -1,7 +1,7 @@
 import { mkdir, rm, readdir } from "node:fs/promises";
 import { marked } from "marked";
 import { compareVersions } from "./fetch";
-import { GITHUB_SOURCES, INSTALL_COMMANDS, SNAPSHOT_META } from "./sources";
+import { GITHUB_SOURCES, SNAPSHOT_META } from "./sources";
 import { layout } from "./layout";
 import type { PageMeta } from "./layout";
 import { abs, bytes, esc, relDate, shortDate, url, SITE } from "./site";
@@ -257,7 +257,15 @@ ${sorted(builds.filter((b) => b.channel !== "snapshot"))
   <td><code>${esc(b.version)}</code></td>
   <td>${PLATFORM_LABEL[b.platform]} ${ARCH_SHORT[b.arch[0]]}</td>
   <td>${shortDate(b.releasedAt)}</td>
-  <td>${b.freshness === "current" ? "Current" : b.freshness === "behind" ? "One behind" : "Outdated"}</td>
+  <td>${
+    b.freshness === "current"
+      ? "Current"
+      : b.freshness === "behind"
+        ? "One behind"
+        : b.freshness === "abandoned"
+          ? "No longer updated"
+          : "Outdated"
+  }</td>
 </tr>`,
   )
   .join("")}
@@ -522,7 +530,7 @@ async function packagesPage() {
       .filter((d) => d.project === project)
       .sort((a, b) => a.distro.localeCompare(b.distro))
       .map((d) => {
-        const cmd = INSTALL_COMMANDS[d.repo]?.[project === "chromium" ? "chromium" : "ungoogled"];
+        const cmd = d.install;
         // Every row here is packaged; without a known command, name the package instead.
         return `<tr><td>${esc(d.distro)}</td><td>${
           d.version === "snap"
@@ -592,7 +600,7 @@ ${
             `<tr><td>${esc(d.distro)}</td><td><code>${esc(d.package)}</code></td><td><code>${esc(
               d.version,
             )}</code></td><td class="wrap-cell"><code>${esc(
-              INSTALL_COMMANDS[d.repo]?.[d.project === "chromium" ? "chromium" : "ungoogled"] ?? "",
+              d.install ?? "",
             )}</code></td></tr>`,
         )
         .join("")
@@ -818,6 +826,8 @@ async function apiPages() {
   await write("/api/v1/builds.json", { generated_at: generatedAt, upstream, count: compact.length, builds: compact });
   await write("/api/v1/upstream.json", upstream);
   await write("/api/v1/distros.json", { generated_at: generatedAt, distros });
+  // Also what the next fetch reads back, so settled milestones are not asked for again.
+  await write("/api/v1/snapshots.json", { generated_at: generatedAt, snapshots });
   for (const p of ["windows", "macos", "linux", "android"] as Platform[]) {
     await write(`/api/v1/${p}.json`, {
       generated_at: generatedAt,
@@ -864,6 +874,7 @@ ${ep("/api/v1/macos.json", "macOS builds only.")}
 ${ep("/api/v1/linux.json", "Linux builds only.")}
 ${ep("/api/v1/android.json", "Android builds only.")}
 ${ep("/api/v1/distros.json", "Chromium version currently packaged by each Linux distribution.")}
+${ep("/api/v1/snapshots.json", "Official Chromium snapshot history: the newest build and one build per major version, per platform.")}
 </tbody></table></div>
 <h2>Example</h2>
 <pre><code># newest Windows x64 build that is level with upstream stable
@@ -872,9 +883,10 @@ curl -s ${esc(abs("/api/v1/windows.json"))} \\
            | "\\(.name) \\(.version) \\(.downloads[0].url)"'</code></pre>
 <h2>Field notes</h2>
 <ul class="notes">
-<li><code>freshness</code> is derived by comparing the build's milestone against upstream stable:
-<code>current</code>, <code>behind</code> (one milestone), <code>outdated</code> (two or more), or
-<code>abandoned</code> (nothing published in a year).</li>
+<li><code>freshness</code> is derived by comparing the build's milestone against the upstream channel it
+tracks (dev builds against dev, everything else against stable): <code>current</code>, <code>behind</code>
+(one milestone), <code>outdated</code> (two or more), or <code>abandoned</code> (six or more with nothing
+published in three months, or nothing published in a year).</li>
 <li><code>sha256</code> comes from the release host itself, not computed here.</li>
 <li><code>google</code> is one of <code>sync</code>, <code>nosync</code>, <code>ungoogled</code> or <code>raw</code>.</li>
 <li>Download URLs point at the maintainer's release host. Nothing is proxied through this site.</li>
@@ -1147,7 +1159,9 @@ was that one page. This site exists so that going away costs people less.</p>
 Google's own build and version services, and regenerates the whole site. That means the versions on this page were
 not typed by anyone, and cannot quietly go stale the way a hand-curated list does.</p>
 <p>Freshness badges are computed, not assigned. A build's milestone is compared against the current upstream
-Chromium stable release, so "outdated" means measurably behind rather than somebody's opinion.</p>
+Chromium release on the channel it tracks, so "outdated" means measurably behind rather than somebody's
+opinion. A build six or more versions behind that has also gone quiet for three months is tucked away as no
+longer updated.</p>
 
 <h2>What it does not do</h2>
 <ul>

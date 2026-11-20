@@ -28,21 +28,21 @@ export const ARCH_SHORT: Record<Arch, string> = {
 };
 
 const FRESHNESS: Record<Freshness, { label: string; cls: string; title: string }> = {
-  current: { label: "Current", cls: "ok", title: "Level with the latest Chromium stable release." },
+  current: { label: "Current", cls: "ok", title: "Level with the latest Chromium release on its channel." },
   behind: {
     label: "One version behind",
     cls: "warn",
-    title: "One milestone behind stable. Usually fine, but it is missing the newest security fixes.",
+    title: "One milestone behind its channel. Usually fine, but it is missing the newest security fixes.",
   },
   outdated: {
     label: "Outdated",
     cls: "bad",
-    title: "Two or more milestones behind stable. It is missing known security fixes.",
+    title: "Two or more milestones behind its channel. It is missing known security fixes.",
   },
   abandoned: {
     label: "No longer updated",
     cls: "bad",
-    title: "Nothing has been published for over a year.",
+    title: "Six or more milestones behind with nothing published in three months, or nothing published for over a year.",
   },
 };
 
@@ -147,16 +147,22 @@ export function buildList(
   opts: { pickId?: string; showPlatform?: boolean; omitLimitations?: boolean; extra?: string } = {},
 ): string {
   if (builds.length === 0) return '<p class="blurb">No builds are currently published for this target.</p>';
-  return `<ul class="builds">${builds
-    .map((b) =>
-      buildCard(b, {
-        pick: b.id === opts.pickId,
-        showPlatform: opts.showPlatform,
-        omitLimitations: opts.omitLimitations,
-        extra: opts.extra,
-      }),
-    )
-    .join("")}</ul>`;
+  const card = (b: Build) =>
+    buildCard(b, {
+      pick: b.id === opts.pickId,
+      showPlatform: opts.showPlatform,
+      omitLimitations: opts.omitLimitations,
+      extra: opts.extra,
+    });
+  // A dead build stays reachable for anyone who needs it, but is not offered alongside live ones.
+  const live = builds.filter((b) => b.freshness !== "abandoned");
+  const dead = builds.filter((b) => b.freshness === "abandoned");
+  const deadList = dead.length
+    ? `<details class="more"><summary>${dead.length} build${dead.length > 1 ? "s" : ""} no longer updated</summary><ul class="builds">${dead
+        .map(card)
+        .join("")}</ul></details>`
+    : "";
+  return `${live.length ? `<ul class="builds">${live.map(card).join("")}</ul>` : '<p class="blurb">Every build for this target has stopped updating.</p>'}${deadList}`;
 }
 
 /** schema.org SoftwareApplication for a build, so search engines can show version and platform. */

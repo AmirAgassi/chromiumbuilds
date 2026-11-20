@@ -1,4 +1,6 @@
-import { GITHUB_SOURCES, REPOLOGY_PROJECTS, SNAPSHOT_META, SNAPSHOT_SOURCES, DISTRO_NAMES } from "./sources";
+import {
+  DISTRO_NAMES, GITHUB_SOURCES, INSTALL_COMMANDS, RELEASE_FAMILIES, REPOLOGY_PROJECTS, SNAPSHOT_META, SNAPSHOT_SOURCES,
+} from "./sources";
 import type { GithubSource, SnapshotSource } from "./sources";
 import type {
   Arch, Build, DistroPackage, Download, Freshness, Manifest,
@@ -123,9 +125,21 @@ function daysSince(iso: string): number {
  * Freshness is derived, never hand-set. A build one milestone behind upstream stable is
  * normal for a volunteer rebuild; two or more behind means you are missing security fixes.
  */
-function freshness(milestone: number, stableMilestone: number, ageDays: number): Freshness {
-  if (ageDays > 365) return "abandoned";
-  const gap = stableMilestone - milestone;
+/**
+ * A build this many majors behind its channel, with no release for ABANDONED_QUIET_DAYS, counts as
+ * dead. Both are needed: Supermium deliberately stays on an older major for Windows XP and backports
+ * fixes into it, so a version gap alone would bury a project that shipped yesterday.
+ */
+const ABANDONED_GAP = 6;
+const ABANDONED_QUIET_DAYS = 90;
+
+/**
+ * `referenceMilestone` is the upstream channel the build tracks. A dev build is measured against dev,
+ * since against stable a dev build stalled for weeks still looks level.
+ */
+function freshness(milestone: number, referenceMilestone: number, ageDays: number): Freshness {
+  const gap = referenceMilestone - milestone;
+  if (ageDays > 365 || (gap >= ABANDONED_GAP && ageDays > ABANDONED_QUIET_DAYS)) return "abandoned";
   if (gap <= 0) return "current";
   if (gap === 1) return "behind";
   return "outdated";
@@ -220,7 +234,11 @@ function buildsFromRelease(
       ),
       releaseUrl: rel.html_url,
       sourceUrl: `https://github.com/${src.repo}`,
-      freshness: freshness(milestone, upstream.stable.milestone, ageDays),
+      freshness: freshness(
+        milestone,
+        src.channel === "dev" ? upstream.dev.milestone : upstream.stable.milestone,
+        ageDays,
+      ),
       ageDays,
       notes: src.notes ?? [],
     });
@@ -337,6 +355,38 @@ const MILESTONE_HISTORY = 40;
 const MILESTONE_SPAN = 4000;
 /** How far back from LAST_CHANGE to look for the newest complete build. */
 const LATEST_SPAN = 1500;
+/**
+ * The history the previous run published. A settled milestone's first build never changes, so its
+ * row is reused instead of asking the bucket again, which is most of a run's requests.
+ */
+const PREVIOUS_HISTORY = process.env.PREVIOUS_HISTORY ?? "https://chromiumbuilds.org/api/v1/snapshots.json";
+/** The newest milestones are always asked again: their first build may not exist yet. */
+const RECHECK_NEWEST = 2;
+
+async function previousHistory(): Promise<Map<string, SnapshotRelease>> {
+  const out = new Map<string, SnapshotRelease>();
+  try {
+    const prev = await json<{ snapshots?: SnapshotTrack[] }>(PREVIOUS_HISTORY, {}, 1);
+    for (const t of prev.snapshots ?? []) for (const r of t.older ?? []) out.set(`${t.id}|${r.milestone}`, r);
+  } catch (e) {
+    console.log(`  no previous history to reuse (${(e as Error).message}), asking the bucket for everything`);
+  }
+  return out;
+}
+
+/** A previous row, only if it is exactly what asking the bucket again would produce. */
+function reusable(r: SnapshotRelease | undefined, s: SnapshotSource, m: Milestone): SnapshotRelease | undefined {
+  if (!r) return undefined;
+  const rev = Number(r.revision);
+  const ok =
+    r.milestone === m.milestone &&
+    r.version === `${m.milestone}.0.${m.branch}.0` &&
+    Number.isInteger(rev) &&
+    rev >= m.branchPos &&
+    rev <= m.branchPos + MILESTONE_SPAN &&
+    r.url === `https://storage.googleapis.com/chromium-browser-snapshots/${s.bucketPlatform}/${rev}/${s.file}`;
+  return ok ? r : undefined;
+}
 
 async function mapLimit<T, R>(items: T[], limit: number, fn: (item: T) => Promise<R>): Promise<R[]> {
   const out = new Array<R>(items.length);
@@ -495,7 +545,16 @@ async function fetchSnapshotHistory(): Promise<SnapshotTrack[]> {
   // seven-digit revisions at the branch point come before any short legacy folder.
   const jobs = SNAPSHOT_SOURCES.flatMap((s) => milestones.map((m) => ({ s, m })));
   const rows = new Map<string, SnapshotRelease[]>();
+  const prev = await previousHistory();
+  const recheck = new Set(milestones.slice(0, RECHECK_NEWEST).map((m) => m.milestone));
+  let reused = 0;
   await mapLimit(jobs, 10, async ({ s, m }) => {
+    const kept = recheck.has(m.milestone) ? undefined : reusable(prev.get(`${s.id}|${m.milestone}`), s, m);
+    if (kept) {
+      reused++;
+      rows.set(s.id, [...(rows.get(s.id) ?? []), kept]);
+      return;
+    }
     try {
       const found = await listRevisions(s.bucketPlatform, s.file, m.branchPos, m.branchPos + MILESTONE_SPAN);
       const first = found[0];
@@ -515,6 +574,7 @@ async function fetchSnapshotHistory(): Promise<SnapshotTrack[]> {
       /* a milestone the bucket no longer holds for this platform is simply not offered */
     }
   });
+  console.log(`  reused ${reused} of ${jobs.length} milestone rows from the previous run`);
 
   return SNAPSHOT_SOURCES.map((s): SnapshotTrack | undefined => {
     const head = latest.get(s.id);
@@ -548,8 +608,49 @@ interface RepologyPkg {
   status?: string;
 }
 
+interface EolCycle {
+  cycle: string;
+  codename?: string | null;
+  lts?: boolean | string;
+  eol: boolean | string;
+  releaseDate?: string;
+}
+
+type Commands = { chromium?: string; ungoogled?: string };
+
+/** Repo names and install commands: the fixed list, plus each family's currently supported releases. */
+async function distroTable(): Promise<{ names: Record<string, string>; commands: Record<string, Commands> }> {
+  const names = { ...DISTRO_NAMES };
+  const commands: Record<string, Commands> = { ...INSTALL_COMMANDS };
+  const today = new Date().toISOString().slice(0, 10);
+  await Promise.all(
+    RELEASE_FAMILIES.map(async (f) => {
+      let cycles: { cycle: string; codename: string | null; lts: boolean }[];
+      try {
+        const all = await json<EolCycle[]>(`https://endoflife.date/api/${f.product}.json`);
+        cycles = all
+          .filter((c) => (!c.releaseDate || c.releaseDate <= today) && (c.eol === false || (typeof c.eol === "string" && c.eol > today)))
+          .sort((a, b) => (b.releaseDate ?? "").localeCompare(a.releaseDate ?? ""))
+          .slice(0, f.keep)
+          .map((c) => ({ cycle: c.cycle, codename: c.codename ?? null, lts: c.lts === true }));
+        if (cycles.length === 0) throw new Error("no supported releases listed");
+      } catch (e) {
+        note(`endoflife.date/${f.product}`, `${(e as Error).message}, using the built-in release list`);
+        cycles = f.fallback.map((cycle) => ({ cycle, codename: null, lts: false }));
+      }
+      for (const c of cycles) {
+        const repo = f.repo(c.cycle);
+        names[repo] = f.name(c.cycle, c.codename, c.lts);
+        commands[repo] = f.install;
+      }
+    }),
+  );
+  return { names, commands };
+}
+
 async function fetchDistros(): Promise<DistroPackage[]> {
   const out: DistroPackage[] = [];
+  const { names, commands } = await distroTable();
   for (const project of REPOLOGY_PROJECTS) {
     try {
       const pkgs = await json<RepologyPkg[]>(`https://repology.org/api/v1/project/${project}`);
@@ -559,7 +660,7 @@ async function fetchDistros(): Promise<DistroPackage[]> {
       const canonical = [project, `${project}-browser`, `${project}-bin`];
       const best = new Map<string, RepologyPkg>();
       for (const p of pkgs) {
-        if (!DISTRO_NAMES[p.repo]) continue;
+        if (!names[p.repo]) continue;
         if (p.status === "ignored" || p.status === "legacy") continue;
         const name = (p.binname ?? p.srcname ?? p.visiblename ?? "").split("/").pop() ?? "";
         if (!canonical.includes(name)) continue;
@@ -569,7 +670,8 @@ async function fetchDistros(): Promise<DistroPackage[]> {
       for (const [repo, p] of best) {
         out.push({
           repo,
-          distro: DISTRO_NAMES[repo],
+          distro: names[repo],
+          install: commands[repo]?.[project === "chromium" ? "chromium" : "ungoogled"],
           // Ubuntu's deb is a stub that installs the snap, so its "1snap1" version means nothing, and
           // a rolling package (Homebrew's cask fetches the newest snapshot) reports "latest".
           version: p.version.includes("snap") ? "snap" : p.status === "rolling" && !/^\d/.test(p.version) ? "rolling" : p.version,

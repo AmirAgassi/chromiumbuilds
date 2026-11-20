@@ -87,6 +87,8 @@ export interface DistroPackage {
   status: string;
   package: string;
   project: "chromium" | "ungoogled-chromium";
+  /** The command that installs it, where one is known. */
+  install?: string;
 }
 
 export interface Manifest {

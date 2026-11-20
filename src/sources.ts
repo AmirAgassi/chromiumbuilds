@@ -351,30 +351,86 @@ export const SNAPSHOT_META = {
 /** Distro packages resolved through the Repology API. */
 export const REPOLOGY_PROJECTS = ["chromium", "ungoogled-chromium"] as const;
 
-/** Repology repo id -> human name. Anything unlisted is skipped rather than guessed at. */
+/**
+ * Distributions with numbered releases. Which releases are still supported comes from endoflife.date
+ * at fetch time, so a new Fedora or Ubuntu appears and a dead one drops off without editing this file.
+ * `fallback` is used only when endoflife.date cannot be reached.
+ */
+export interface ReleaseFamily {
+  /** endoflife.date product id. */
+  product: string;
+  /** Repology repo id for a release cycle. */
+  repo: (cycle: string) => string;
+  name: (cycle: string, codename: string | null, lts: boolean) => string;
+  install: { chromium?: string; ungoogled?: string };
+  /** How many of the newest supported releases to list. */
+  keep: number;
+  fallback: string[];
+}
+
+const dotted = (c: string) => c.replace(/\./g, "_");
+
+export const RELEASE_FAMILIES: ReleaseFamily[] = [
+  {
+    product: "debian",
+    repo: (c) => `debian_${c}`,
+    name: (c, code) => `Debian ${c}${code ? ` (${code.toLowerCase()})` : ""}`,
+    install: { chromium: "sudo apt install chromium" },
+    keep: 2,
+    fallback: ["13", "12"],
+  },
+  {
+    product: "ubuntu",
+    repo: (c) => `ubuntu_${dotted(c)}`,
+    name: (c, _code, lts) => `Ubuntu ${c}${lts ? " LTS" : ""}`,
+    install: { chromium: "sudo snap install chromium" },
+    keep: 3,
+    fallback: ["26.10", "26.04", "24.04"],
+  },
+  {
+    product: "fedora",
+    repo: (c) => `fedora_${c}`,
+    name: (c) => `Fedora ${c}`,
+    install: { chromium: "sudo dnf install chromium" },
+    keep: 3,
+    fallback: ["44", "43"],
+  },
+  {
+    product: "alpine-linux",
+    repo: (c) => `alpine_${dotted(c)}`,
+    name: (c) => `Alpine ${c}`,
+    install: { chromium: "sudo apk add chromium" },
+    keep: 2,
+    fallback: ["3.24"],
+  },
+  {
+    product: "nixos",
+    repo: (c) => `nix_stable_${dotted(c)}`,
+    name: (c) => `nixpkgs ${c}`,
+    install: { chromium: "nix-env -iA nixpkgs.chromium", ungoogled: "nix-env -iA nixpkgs.ungoogled-chromium" },
+    keep: 1,
+    fallback: ["26.05"],
+  },
+];
+
+/**
+ * Repology repo id -> human name, for repos without numbered releases (rolling, ports trees, package
+ * managers). Numbered releases come from RELEASE_FAMILIES. Anything unlisted is skipped, not guessed at.
+ */
 export const DISTRO_NAMES: Record<string, string> = {
   arch: "Arch Linux",
   aur: "Arch User Repository",
-  debian_13: "Debian 13 (trixie)",
-  debian_12: "Debian 12 (bookworm)",
   debian_unstable: "Debian unstable (sid)",
-  ubuntu_24_04: "Ubuntu 24.04 LTS",
-  ubuntu_26_04: "Ubuntu 26.04 LTS",
-  ubuntu_26_10: "Ubuntu 26.10",
-  fedora_43: "Fedora 43",
-  fedora_44: "Fedora 44",
   fedora_rawhide: "Fedora Rawhide",
   opensuse_tumbleweed: "openSUSE Tumbleweed",
   gentoo: "Gentoo",
   alpine_edge: "Alpine Edge",
-  alpine_3_24: "Alpine 3.24",
   freebsd: "FreeBSD Ports",
   openbsd: "OpenBSD Ports",
   netbsd_pkgsrc_current: "NetBSD pkgsrc",
   manjaro_stable: "Manjaro (stable)",
   void_x86_64: "Void Linux",
   nix_unstable: "nixpkgs unstable",
-  nix_stable_26_05: "nixpkgs 26.05",
   flathub: "Flathub",
   homebrew_casks: "Homebrew Cask",
   chocolatey: "Chocolatey",
@@ -391,30 +447,21 @@ export const DISTRO_NAMES: Record<string, string> = {
   macports: "MacPorts",
 };
 
-/** Install commands, keyed by the Repology repo id they correspond to. */
+/** Install commands for the repos in DISTRO_NAMES, keyed by Repology repo id. */
 export const INSTALL_COMMANDS: Record<string, { chromium?: string; ungoogled?: string }> = {
   arch: { chromium: "sudo pacman -S chromium" },
   aur: { ungoogled: "yay -S ungoogled-chromium-bin" },
-  debian_13: { chromium: "sudo apt install chromium" },
-  debian_12: { chromium: "sudo apt install chromium" },
   debian_unstable: { chromium: "sudo apt install chromium" },
-  ubuntu_24_04: { chromium: "sudo snap install chromium" },
-  ubuntu_26_04: { chromium: "sudo snap install chromium" },
-  ubuntu_26_10: { chromium: "sudo snap install chromium" },
-  fedora_43: { chromium: "sudo dnf install chromium" },
-  fedora_44: { chromium: "sudo dnf install chromium" },
   fedora_rawhide: { chromium: "sudo dnf install chromium" },
   opensuse_tumbleweed: { chromium: "sudo zypper install chromium" },
   gentoo: { chromium: "sudo emerge www-client/chromium" },
   alpine_edge: { chromium: "sudo apk add chromium" },
-  alpine_3_24: { chromium: "sudo apk add chromium" },
   freebsd: { chromium: "sudo pkg install chromium", ungoogled: "sudo pkg install ungoogled-chromium" },
   openbsd: { chromium: "doas pkg_add chromium", ungoogled: "doas pkg_add ungoogled-chromium" },
   netbsd_pkgsrc_current: { chromium: "pkgin install chromium" },
   manjaro_stable: { chromium: "sudo pacman -S chromium" },
   void_x86_64: { chromium: "sudo xbps-install -S chromium" },
   nix_unstable: { chromium: "nix-env -iA nixpkgs.chromium", ungoogled: "nix-env -iA nixpkgs.ungoogled-chromium" },
-  nix_stable_26_05: { chromium: "nix-env -iA nixpkgs.chromium", ungoogled: "nix-env -iA nixpkgs.ungoogled-chromium" },
   flathub: {
     chromium: "flatpak install flathub org.chromium.Chromium",
     ungoogled: "flatpak install flathub io.github.ungoogled_software.ungoogled_chromium",
