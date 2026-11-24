@@ -67,7 +67,7 @@ untested, no auto-update, no codecs, no DRM. Correct for bisecting a bug, wrong 
 | Marmaduke | Removed | Yes, plus H.265 | Yes | Privacy with working media |
 | Thorium | No | Yes, plus H.265 | Yes | Speed, needs a modern CPU |
 | RobRich | No | Yes, plus H.265 | Yes | Development channel, very fast |
-| Supermium | Yes | Yes | Add by hand | Runs on Windows XP and up |
+| Supermium | Yes | Yes | Windows 7 and up | Runs on Windows XP and up |
 | Official snapshot | No | No | No | Testing only |
 
 ## The one thing every build shares

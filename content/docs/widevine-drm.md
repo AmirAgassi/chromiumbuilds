@@ -24,14 +24,14 @@ specific site.
 
 ## Which builds include it
 
-| Build | Widevine module |
+| Build | Widevine |
 | --- | --- |
 | [Hibbiki](/builds/hibbiki/) | Yes |
 | [Marmaduke](/builds/marmaduke-windows/) | Yes |
 | [Thorium](/builds/thorium/) | Yes |
 | [RobRich](/builds/robrich/) | Yes |
+| [Supermium](/builds/supermium/) | Yes on Windows 7 and up, with a bundled patcher for older Windows. Not on XP or Vista |
 | [ungoogled-chromium](/builds/ungoogled-chromium/) | No, can be added manually |
-| [Supermium](/builds/supermium/) | No, can be added manually |
 | [Official snapshots](/docs/chromium-snapshots/) | No |
 
 Every build card on this site shows a Widevine tag, so you can check before downloading rather than after.
@@ -40,9 +40,11 @@ Every build card on this site shows a Widevine tag, so you can check before down
 
 Full Widevine support has two separate parts, and most Chromium forks only have the first:
 
-1. **Support compiled into the browser.** Most forks enable this. Some also ship the Widevine module itself;
-   others leave it out, and you copy it in by hand. "Can be added manually" in the table above means support
-   is compiled in but the module is not shipped.
+1. **Support compiled into the browser.** Most forks enable this. The Widevine module itself is rarely in
+   the download: like Chrome, the browser fetches it from Google as a component on first use and keeps it in
+   your user data folder, not next to the program files. Builds that remove that download, such as
+   ungoogled-chromium, need the module copied in by hand, which is what "can be added manually" in the table
+   above means.
 2. **The VMP (Verified Media Path) signature.** This comes from Google's Widevine licensing programme and
    ships as `.sig` files next to the browser. Some services check for it and refuse to play, or drop to lower
    quality, when it is missing.

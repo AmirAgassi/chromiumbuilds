@@ -292,7 +292,8 @@ export const GITHUB_SOURCES: GithubSource[] = [
     google: "sync",
     proprietaryCodecs: true,
     hevc: false,
-    widevine: false,
+    // Not shipped in the package: the browser downloads it from Google like Chrome does (Windows 7 and up).
+    widevine: true,
     assets: [
       { re: /_64_setup_win10_11\.exe$/i, platform: "windows", arch: "x64", kind: "installer", label: "Installer (Windows 10/11)" },
       { re: /_64_setup\.exe$/i, platform: "windows", arch: "x64", kind: "installer", label: "Installer (64-bit)", recommended: true },
@@ -303,7 +304,7 @@ export const GITHUB_SOURCES: GithubSource[] = [
     notes: [
       "Runs on Windows XP and later. Nothing else current does.",
       "Supports Google sign-in and sync.",
-      "Widevine support is compiled in on Windows 7 and up, but the module is not shipped. Copy it in by hand for paid streaming.",
+      "On Windows 7 and up the browser downloads Widevine from Google on first use. Supermium includes a patcher for it, which older Windows versions need. No DRM on XP or Vista.",
     ],
   },
 ];
